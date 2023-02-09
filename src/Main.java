@@ -1,18 +1,17 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-
+import Menu.Menu;
 
 public class Main {
-
     public static void main(String[] args) {
 
-        int option;
-
         do {
-            Menu.showMenu();
-            option = Menu.askForInteger("Please choose an option: ", 1, 5);
-            Menu.runSelectedMenu(option);
-        } while (option != 5);
+            switch (Menu.showMainMenu()) {
+                case ORENETES -> Menu.showOrenetesMenu();
+                case OPTION_2 -> System.out.println(2);
+                case OPTION_3 -> System.out.println(3);
+                case OPTION_4 -> System.out.println(4);
+                case EXIT -> System.exit(0);
+            }
+        } while (true);
 
     }
 
