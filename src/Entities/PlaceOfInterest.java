@@ -12,4 +12,21 @@ public class PlaceOfInterest {
 		this.kingdom = kingdom;
 		this.climate = climate;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getKingdom() {
+		return kingdom;
+	}
+
+	public Climate getClimate() {
+		return climate;
+	}
+
 }
