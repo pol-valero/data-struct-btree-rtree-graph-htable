@@ -84,8 +84,6 @@ public class DatasetLoaderF1 {
 
             for (int i = placesLinesNum + 2; i <= routesLinesNum + placesLinesNum + 1; i++) {
                 routes.add(csvLineToRoute(csvLines.get(i)));
-                /*prova = routes.get(i - (placesLinesNum + 2));
-                System.out.println("PlaceA: " + prova.getPlaceA() + " PlaceB: " + prova.getPlaceB() + " TimeE: " + prova.getTimeE() + " TimeA: " + prova.getTimeA() + " Distance: " + prova.getDistance());*/
 
 
             }
