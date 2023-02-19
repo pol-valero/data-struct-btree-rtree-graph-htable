@@ -16,8 +16,8 @@ public class GraphRepresentation {
      */
     public GraphRepresentation(String datasetName) {
 
-        places = (PlaceOfInterest[]) DatasetLoaderF1.loadPlaces(datasetName).toArray();
-        routes = (KnownRoute[]) DatasetLoaderF1.loadRoutes(datasetName).toArray();
+        places = DatasetLoaderF1.loadPlaces(datasetName);
+        routes = DatasetLoaderF1.loadRoutes(datasetName);
 
         placesNum = places.length;
         routesNum = routes.length;

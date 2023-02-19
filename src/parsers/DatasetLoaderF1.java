@@ -44,20 +44,23 @@ public class DatasetLoaderF1 {
         return route;
     }
 
-    public static ArrayList<PlaceOfInterest> loadPlaces(String datasetName) {
+    public static PlaceOfInterest[] loadPlaces(String datasetName) {
 
         int placesLinesNum;
+        int j = 0;
 
         Path path = Path.of("files/" + datasetName);
-        ArrayList<PlaceOfInterest> places = new ArrayList<>();
+        PlaceOfInterest[] places = null;
 
         try {
             List<String> csvLines = Files.readAllLines(path);
 
             placesLinesNum = Integer.parseInt(csvLines.get(0));
+            places = new PlaceOfInterest[placesLinesNum];
 
             for (int i = 1; i <= placesLinesNum; i++) {
-                    places.add(csvLineToPlace(csvLines.get(i)));
+                    places[j] = (csvLineToPlace(csvLines.get(i)));
+                    j++;
             }
 
             return places;
@@ -66,27 +69,28 @@ public class DatasetLoaderF1 {
         }
     }
 
-    public static ArrayList<KnownRoute> loadRoutes(String datasetName) {
+    public static KnownRoute[] loadRoutes(String datasetName) {
 
         int placesLinesNum;
         int routesLinesNum;
+        int j = 0;
 
-        KnownRoute prova;
 
         Path path = Path.of("files/" + datasetName);
-        ArrayList<KnownRoute> routes = new ArrayList<>();
+        KnownRoute[] routes = null;
 
         try {
             List<String> csvLines = Files.readAllLines(path);
 
             placesLinesNum = Integer.parseInt(csvLines.get(0));
             routesLinesNum = Integer.parseInt(csvLines.get(placesLinesNum + 1));
+            routes = new KnownRoute[routesLinesNum];
 
             for (int i = placesLinesNum + 2; i <= routesLinesNum + placesLinesNum + 1; i++) {
-                routes.add(csvLineToRoute(csvLines.get(i)));
-
-
+                routes[j] = csvLineToRoute(csvLines.get(i));
+                j++;
             }
+
             return routes;
         } catch (IOException e) {
             return routes;
