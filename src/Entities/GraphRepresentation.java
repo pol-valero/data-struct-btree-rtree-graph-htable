@@ -1,25 +1,60 @@
 package Entities;
 
-import Entities.KnownRoute;
+import parsers.DatasetLoaderF1;
 
 public class GraphRepresentation {
-    private final int N;
+
+    private int placesNum;
+    private int routesNum;
     private KnownRoute[][] matrix;
+    private PlaceOfInterest[] places;
+    private KnownRoute[] routes;
 
     /**
      * Class constructor
-     * @param N number of nodes
+     * @param datasetName name of the dataset to be loaded
      */
-    public GraphRepresentation(int N) {
-        this.N = N;
-        matrix = new KnownRoute[N][N];
+    public GraphRepresentation(String datasetName) {
 
-        //se inicializa matriz en 0
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j< N; j++) {
+        places = (PlaceOfInterest[]) DatasetLoaderF1.loadPlaces(datasetName).toArray();
+        routes = (KnownRoute[]) DatasetLoaderF1.loadRoutes(datasetName).toArray();
+
+        placesNum = places.length;
+        routesNum = routes.length;
+
+        matrix = new KnownRoute[placesNum][placesNum];
+
+        //We initialize the matrix with null values
+        for(int i = 0; i < placesNum - 1; i++) {
+            for(int j = 0; j < placesNum - 1; j++) {
                 matrix[i][j] = null;
             }
         }
+
+        createGraph();
+
+    }
+
+    private void createGraph() {
+
+        for(int i = 0; i < placesNum - 1; i++) {
+            for(int j = 0; j < placesNum - 1; j++) {
+                matrix[i][j] = findRoute(i, j);
+            }
+        }
+
+
+    }
+
+    private KnownRoute findRoute(int i, int j) {
+
+        for (int k = 0; k < routesNum - 1; k++) {
+            if (routes[k].containsPlaces(i, j)) {
+                return routes[k];
+            }
+        }
+
+        return null;
     }
 
 
@@ -37,8 +72,8 @@ public class GraphRepresentation {
     }
 
     public void print(){
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
+        for(int i = 0; i < placesNum; i++){
+            for(int j = 0; j < placesNum; j++){
                 System.out.print( matrix[i][j] + "  " );
             }
             System.out.println();
