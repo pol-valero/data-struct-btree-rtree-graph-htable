@@ -24,13 +24,6 @@ public class GraphRepresentation {
 
         matrix = new KnownRoute[placesNum][placesNum];
 
-        //We initialize the matrix with null values
-        for(int i = 0; i < placesNum; i++) {
-            for(int j = 0; j < placesNum; j++) {
-                matrix[i][j] = null;
-            }
-        }
-
         createGraph();
 
     }
@@ -57,21 +50,23 @@ public class GraphRepresentation {
         return null;
     }
 
-
-    // TODO: Mostrar primer els regnes que estan connectats directament (sense passar per altres regnes).
-    // TODO: Tenir en compte que podrien haver regnes no connectats (no s'han de mostrar).
-
     public void print(){
+
+        System.out.println("\nGraph representation with adjacency matrix: \n");
         for(int i = 0; i < placesNum; i++){
             for(int j = 0; j < placesNum; j++){
                 if (matrix[i][j] != null) {
                     System.out.print(places[i].getName() + "-" + places[j].getName() + "@dist:" + matrix[i][j].getDistance() + "    ");
                 } else {
-                    System.out.print(matrix[i][j] + "  ");
+                    System.out.print(matrix[i][j] + "    ");
                 }
             }
             System.out.println();
         }
     }
+
+
+    // TODO: Mostrar primer els regnes que estan connectats directament (sense passar per altres regnes).
+    // TODO: Tenir en compte que podrien haver regnes no connectats (no s'han de mostrar).
 
 }
