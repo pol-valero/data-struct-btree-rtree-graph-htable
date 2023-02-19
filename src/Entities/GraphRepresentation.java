@@ -1,4 +1,4 @@
-package Menu;
+package Entities;
 
 import Entities.KnownRoute;
 
@@ -7,8 +7,8 @@ public class GraphRepresentation {
     private KnownRoute[][] matrix;
 
     /**
-     * Constructor de clase
-     * @param N numero de nodos
+     * Class constructor
+     * @param N number of nodes
      */
     public GraphRepresentation(int N) {
         this.N = N;
@@ -21,10 +21,7 @@ public class GraphRepresentation {
             }
         }
     }
-    /**
-     * Añadir numero trayectos a la matriz
-     * @param i,j numero de nodos
-     */
+
 
     // TODO: Mostrar primer els regnes que estan connectats directament (sense passar per altres regnes).
     // TODO: Tenir en compte que podrien haver regnes no connectats (no s'han de mostrar).
@@ -35,8 +32,8 @@ public class GraphRepresentation {
     }
 
     public void remove(int i, int j){
-        if(matrix[i][j]>0)
-            matrix[i][j] -= 1;
+        /*if(matrix[i][j]>0)
+            matrix[i][j] -= 1;*/
     }
 
     public void print(){
