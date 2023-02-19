@@ -56,11 +56,12 @@ public class GraphRepresentation {
         for(int i = 0; i < placesNum; i++){
             for(int j = 0; j < placesNum; j++){
                 if (matrix[i][j] != null) {
-                    System.out.print(places[i].getName() + "-" + places[j].getName() + "@dist:" + matrix[i][j].getDistance() + "    ");
+                    System.out.print(places[i].getName() + "<->" + places[j].getName() + "@dist:" + matrix[i][j].getDistance() + "    ");
                 } else {
                     System.out.print(matrix[i][j] + "    ");
                 }
             }
+            System.out.println();
             System.out.println();
         }
     }

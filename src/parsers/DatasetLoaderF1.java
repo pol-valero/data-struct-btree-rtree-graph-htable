@@ -17,21 +17,7 @@ public class DatasetLoaderF1 {
     private static PlaceOfInterest csvLineToPlace(String csvLine) {
         String[] field = csvLine.split(separator);
 
-        Climate climate = null;
-
-        switch (field[3]) {
-            case "TROPICAL":
-                 climate = Climate.TROPICAL;
-            break;
-            case "CONTINENTAL":
-                 climate = Climate.CONTINENTAL;
-            break;
-            case "POLAR":
-                 climate = Climate.POLAR;
-            break;
-        }
-
-        PlaceOfInterest place = new PlaceOfInterest(Integer.parseInt(field[0]), field[1], field[2], climate);
+        PlaceOfInterest place = new PlaceOfInterest(Integer.parseInt(field[0]), field[1], field[2], Climate.stringToEnum(field[3]));
 
         return place;
     }
