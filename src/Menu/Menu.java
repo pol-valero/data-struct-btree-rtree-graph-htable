@@ -1,5 +1,7 @@
 package Menu;
 
+import Entities.GraphRepresentation;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -20,9 +22,6 @@ public class Menu {
             "D. Tornar enrere" + separator;
     public static final String EXIT = "\u001B[31m "+separator+"Aturant The Hashy Grail..."+separator+" \u001B[0m";
 
-    public static void finished() {
-        executionTime = System.nanoTime() - initialTime;
-    }
 
     // Shows main menu of the program and asks to choose an option.
     public static MainMenuOptions showMainMenu() {
@@ -53,6 +52,10 @@ public class Menu {
 
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu() {
+
+        GraphRepresentation graphRepresentation = new GraphRepresentation("graphsXS.paed");
+        graphRepresentation.print();
+
         System.out.println(separator + ORENETES_MENU);
         String option = askForCharacter("Quina funcionalitat vol executar? ");
 

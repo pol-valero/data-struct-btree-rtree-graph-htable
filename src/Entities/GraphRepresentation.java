@@ -1,48 +1,73 @@
 package Entities;
 
-import Entities.KnownRoute;
+import parsers.DatasetLoaderF1;
 
 public class GraphRepresentation {
-    private final int N;
+
+    private int placesNum;
+    private int routesNum;
     private KnownRoute[][] matrix;
+    private PlaceOfInterest[] places;
+    private KnownRoute[] routes;
 
     /**
      * Class constructor
-     * @param N number of nodes
+     * @param datasetName name of the dataset to be loaded
      */
-    public GraphRepresentation(int N) {
-        this.N = N;
-        matrix = new KnownRoute[N][N];
+    public GraphRepresentation(String datasetName) {
 
-        //se inicializa matriz en 0
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j< N; j++) {
-                matrix[i][j] = null;
+        places = DatasetLoaderF1.loadPlaces(datasetName);
+        routes = DatasetLoaderF1.loadRoutes(datasetName);
+
+        placesNum = places.length;
+        routesNum = routes.length;
+
+        matrix = new KnownRoute[placesNum][placesNum];
+
+        createGraph();
+
+    }
+
+    private void createGraph() {
+
+        for(int i = 0; i < placesNum; i++) {
+            for(int j = 0; j < placesNum; j++) {
+                matrix[i][j] = findRoute(i, j);
             }
+        }
+
+
+    }
+
+    private KnownRoute findRoute(int i, int j) {
+
+        for (int k = 0; k < routesNum; k++) {
+            if (routes[k].containsPlaces(places[i].getId(), places[j].getId())) {
+                return routes[k];
+            }
+        }
+
+        return null;
+    }
+
+    public void print(){
+
+        System.out.println("\nGraph representation with adjacency matrix: \n");
+        for(int i = 0; i < placesNum; i++){
+            for(int j = 0; j < placesNum; j++){
+                if (matrix[i][j] != null) {
+                    System.out.print(places[i].getName() + "<->" + places[j].getName() + "@dist:" + matrix[i][j].getDistance() + "    ");
+                } else {
+                    System.out.print(matrix[i][j] + "    ");
+                }
+            }
+            System.out.println();
+            System.out.println();
         }
     }
 
 
     // TODO: Mostrar primer els regnes que estan connectats directament (sense passar per altres regnes).
     // TODO: Tenir en compte que podrien haver regnes no connectats (no s'han de mostrar).
-
-    public void add(KnownRoute knownRoute){
-        matrix[knownRoute.getPlaceA()][knownRoute.getPlaceB()] = knownRoute;
-        matrix[knownRoute.getPlaceB()][knownRoute.getPlaceA()] = knownRoute;
-    }
-
-    public void remove(int i, int j){
-        /*if(matrix[i][j]>0)
-            matrix[i][j] -= 1;*/
-    }
-
-    public void print(){
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                System.out.print( matrix[i][j] + "  " );
-            }
-            System.out.println();
-        }
-    }
 
 }
