@@ -53,7 +53,7 @@ public class Menu {
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu() {
 
-        GraphRepresentation graphRepresentation = new GraphRepresentation("graphsXS.paed");
+        GraphRepresentation graphRepresentation = new GraphRepresentation("graphsL.paed");
         graphRepresentation.print();
 
         System.out.println(separator + ORENETES_MENU);

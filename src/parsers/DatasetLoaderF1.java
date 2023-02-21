@@ -7,15 +7,14 @@ import Entities.PlaceOfInterest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DatasetLoaderF1 {
 
-    private static String separator = ";";
+    private static final String parseSeparator = ";";
 
     private static PlaceOfInterest csvLineToPlace(String csvLine) {
-        String[] field = csvLine.split(separator);
+        String[] field = csvLine.split(parseSeparator);
 
         PlaceOfInterest place = new PlaceOfInterest(Integer.parseInt(field[0]), field[1], field[2], Climate.stringToEnum(field[3]));
 
@@ -23,7 +22,7 @@ public class DatasetLoaderF1 {
     }
 
     private static KnownRoute csvLineToRoute(String csvLine) {
-        String[] field = csvLine.split(separator);
+        String[] field = csvLine.split(parseSeparator);
 
         KnownRoute route = new KnownRoute(Integer.parseInt(field[0]), Integer.parseInt(field[1]), Float.parseFloat(field[2]), Float.parseFloat(field[3]), Float.parseFloat(field[4]));
 
