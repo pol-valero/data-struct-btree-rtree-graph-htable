@@ -1,6 +1,7 @@
 package Menu;
 
 import Entities.GraphRepresentation;
+import parsers.DatasetLoaderF1;
 
 import java.util.Scanner;
 
@@ -53,7 +54,8 @@ public class Menu {
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu() {
 
-        GraphRepresentation graphRepresentation = new GraphRepresentation("graphsL.paed");
+        String datasetName = "graphsXS.paed";
+        GraphRepresentation graphRepresentation = new GraphRepresentation(DatasetLoaderF1.loadPlaces(datasetName), DatasetLoaderF1.loadRoutes(datasetName));
         graphRepresentation.print();
 
         System.out.println(separator + ORENETES_MENU);

@@ -12,12 +12,12 @@ public class GraphRepresentation {
 
     /**
      * Class constructor
-     * @param datasetName name of the dataset to be loaded
+     * @param places Array of places loaded from the dataset, routes Array of routes loaded from the dataset
      */
-    public GraphRepresentation(String datasetName) {
+    public GraphRepresentation(PlaceOfInterest[] places, KnownRoute[] routes) {
 
-        places = DatasetLoaderF1.loadPlaces(datasetName);
-        routes = DatasetLoaderF1.loadRoutes(datasetName);
+        this.places = places;
+        this.routes = routes;
 
         placesNum = places.length;
         routesNum = routes.length;

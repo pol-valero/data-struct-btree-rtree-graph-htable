@@ -2,7 +2,7 @@ package Algorithms;
 
 import Entities.KnownRoute;
 
-public class mstPrim {
+public class MSTprim {
 
     public static KnownRoute[][] frequentRoutes(KnownRoute[][] routes) {
         KnownRoute[][] mst = new KnownRoute[routes.length][routes.length];
