@@ -5,12 +5,16 @@ public class PlaceOfInterest {
 	private final String name;
 	private final String kingdom;
 	private final Climate climate;
+	private final int rowIndex;
+	private boolean visited;
 
-	public PlaceOfInterest(int id, String name, String kingdom, Climate climate) {
+	public PlaceOfInterest(int id, String name, String kingdom, Climate climate, int rowIndex) {
 		this.id = id;
 		this.name = name;
 		this.kingdom = kingdom;
 		this.climate = climate;
+		this.rowIndex = rowIndex;
+		visited = false;
 	}
 
 	public int getId() {
@@ -29,4 +33,27 @@ public class PlaceOfInterest {
 		return climate;
 	}
 
+	public int getRowIndex() {
+		return rowIndex;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void justVisited() {
+		visited = true;
+	}
+
+	public boolean sameKingdom(PlaceOfInterest otherPlace) {
+		return kingdom.equals(otherPlace.getKingdom());
+	}
+
+	public boolean samePlace(PlaceOfInterest otherPlace) {
+		return (this.id == otherPlace.id);
+	}
+
+	public String showInformation() {
+		return (id + " - " + name + ", " + "Regne de " + kingdom + " (" + climate.enumToString() + ")");
+	}
 }
