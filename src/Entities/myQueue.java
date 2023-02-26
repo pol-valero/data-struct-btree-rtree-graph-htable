@@ -1,3 +1,5 @@
+package Entities;
+
 import Entities.PlaceOfInterest;
 
 // Una clase para representar una queue
