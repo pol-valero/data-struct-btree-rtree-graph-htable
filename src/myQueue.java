@@ -1,7 +1,7 @@
 import Entities.PlaceOfInterest;
 
 // Una clase para representar una queue
-class Queue  {
+class myQueue {
     private PlaceOfInterest[] arr;      // array para almacenar elementos de la queue
     private int front;      // front apunta al elemento frontal en la queue
     private int rear;       // la parte trasera apunta al último elemento de la queue
@@ -9,7 +9,7 @@ class Queue  {
     private int count;      // tamaño actual de la queue
 
     // Constructor para inicializar una queue
-    Queue() {
+    myQueue() {
         arr = new PlaceOfInterest[10];
         capacity = 10;
         front = 0;
