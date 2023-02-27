@@ -31,7 +31,7 @@ public class myArrayList<T> {
 		return false;
 	}
 
-	public Object[] toArray() {
+	public T[] toArray() {
 		return elements;
 	}
 
