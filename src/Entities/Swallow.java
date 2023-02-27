@@ -10,4 +10,12 @@ public class Swallow {
         this.hasCoco = hasCoco;
         this.totalDist = 0;
     }
+
+    public void updateDist(int newDist) {
+        totalDist = newDist;
+    }
+
+    public double getTotalDist() {
+        return totalDist;
+    }
 }

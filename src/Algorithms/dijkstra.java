@@ -3,22 +3,25 @@ package Algorithms;
 import Entities.Graph;
 import Entities.PlaceOfInterest;
 import Entities.Swallow;
+import Entities.myArrayList;
+
+import java.util.ArrayList;
 
 public class dijkstra {
     public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
         int visited = 0;
 
-        PlaceOfInterest camins[] = new PlaceOfInterest[N];
-        camins[0] = initialNode;
+        myArrayList<PlaceOfInterest> camins = new myArrayList<>();
+        camins.add(initialNode);
 
-        double dist[] = new double[N];
+        myArrayList<Double> dist = new myArrayList<>();
         // La distancia del vértice origen hacia el mismo es siempre 0
-        dist[0] = 0;
+        dist.add(0);
 
         // Initialize all distances as INFINITE and visited[] as false
         for (int i = 0; i < N; i++) {
-            dist[i] = Integer.MAX_VALUE;
+            dist.add(Integer.MAX_VALUE);
         }
 
         int actual = 0;
@@ -27,7 +30,7 @@ public class dijkstra {
         // WHILE
         while(visited < graph.getSize() && !finalNode.isVisited()){
 
-            PlaceOfInterest currentNode = camins[actual];
+            PlaceOfInterest currentNode = (PlaceOfInterest) camins.get(actual);
             PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);
 
             // Iterate through all the adjacent nodes.
@@ -35,11 +38,12 @@ public class dijkstra {
 
                 if (!adjacentNode.isVisited()) {
                     adjacentNode.justVisited();
-                    double nova = dist[actual] + graph.getRouteDistance(adjacentNode.getId(), currentNode.getId());
+                    visited++;
+                    double nova = (Double) dist.get(actual) + graph.getRouteDistance(adjacentNode.getId(), currentNode.getId());
                     // Check if the dist of the adjacent is bigger than the new one
-                    if (dist[adj] > nova) {
-                        dist[adj] = nova;
-                        camins[adj] = adjacentNode;
+                    if ((Double) dist.get(adj) > nova) {
+                        dist.set(adj, nova);
+                        camins.set(adj, adjacentNode);
                     }
                 }
                 adj++;
@@ -47,11 +51,17 @@ public class dijkstra {
             actual++;
         }
 
-        updateDist(dist, camins); // Update the total distance of the Swallow
-        return camins;
+        updateDist(dist, camins, initialNode, finalNode); // Update the total distance of the Swallow
+        return camins.toArray();
     }
 
-    private static void updateDist(double[] dist, PlaceOfInterest way[]) {
+    private static void updateDist(myArrayList<Double> dist, myArrayList<PlaceOfInterest> way, PlaceOfInterest initialNode, PlaceOfInterest finalNode) {
+        PlaceOfInterest currentNode = finalNode;
+        PlaceOfInterest nextNode = (PlaceOfInterest) way.get(way.size() - 1);
 
+        while (currentNode != initialNode) {
+            currentNode = nextNode;
+
+        }
     }
 }
