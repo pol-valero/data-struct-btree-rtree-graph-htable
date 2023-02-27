@@ -137,4 +137,9 @@ public class Graph {
 	public PlaceOfInterest[] getPlaces() {
 		return places;
 	}
+
+	// Get distance between two adjacent nodes.
+	public float getRouteDistance(int actualPlace, int adjacentPlace) {
+		return (nodes[actualPlace][adjacentPlace].getDistance());
+	}
 }
