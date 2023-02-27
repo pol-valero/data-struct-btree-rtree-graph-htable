@@ -41,8 +41,8 @@ public class OrenetesMenuLogic {
 		if (firstNode != null && secondNode != null) {
 			System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta " + Menu.separator);
 
-			dijkstra.premiumMessaging(graph, firstNode, secondNode, swallow1);
-			dijkstra.premiumMessaging(graph, firstNode, secondNode, swallow2);
+			PlaceOfInterest[] dist1 = dijkstra.premiumMessaging(graph, firstNode, secondNode, swallow1);
+			PlaceOfInterest[] dist2 = dijkstra.premiumMessaging(graph, firstNode, secondNode, swallow2);
 		}
 		else {
 			System.out.println(Menu.separator + "Un dels llocs seleccionats no existeix.");
