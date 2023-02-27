@@ -2,6 +2,7 @@ package Algorithms;
 
 import Entities.Graph;
 import Entities.PlaceOfInterest;
+import Entities.myQueue;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,10 +10,10 @@ import java.util.Queue;
 public class BFS {
 
 	public static void kindgomExploration(Graph graph, PlaceOfInterest initialNode) {
-		Queue<PlaceOfInterest> kingdomQueue = new LinkedList<>();
-		Queue<PlaceOfInterest> outsideQueue = new LinkedList<>();
-//		myQueue kingdomQueue = new myQueue();
-//		myQueue outsideQueue = new myQueue();
+//		Queue<PlaceOfInterest> kingdomQueue = new LinkedList<>();
+//		Queue<PlaceOfInterest> outsideQueue = new LinkedList<>();
+		myQueue kingdomQueue = new myQueue();
+		myQueue outsideQueue = new myQueue();
 
 		// First initialNode will always be in the same kingdom.
 		kingdomQueue.add(initialNode);
