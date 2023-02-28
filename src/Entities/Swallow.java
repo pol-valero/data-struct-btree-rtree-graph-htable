@@ -11,7 +11,7 @@ public class Swallow {
         this.totalDist = 0;
     }
 
-    public void updateDist(int newDist) {
+    public void updateDist(double newDist) {
         totalDist = newDist;
     }
 

@@ -51,17 +51,21 @@ public class dijkstra {
             actual++;
         }
 
-        updateDist(dist, camins, initialNode, finalNode); // Update the total distance of the Swallow
+        updateDist(dist, camins, initialNode, finalNode, swallow); // Update the total distance of the Swallow
         return camins.toArray();
     }
 
-    private static void updateDist(myArrayList<Double> dist, myArrayList<PlaceOfInterest> way, PlaceOfInterest initialNode, PlaceOfInterest finalNode) {
+    private static void updateDist(myArrayList<Double> dist, myArrayList<PlaceOfInterest> way, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         PlaceOfInterest currentNode = finalNode;
         PlaceOfInterest nextNode = (PlaceOfInterest) way.get(way.size() - 1);
+        double totalDist = 0;
 
         while (currentNode != initialNode) {
+            totalDist = (Double) dist.get(way.indexOf(currentNode));
             currentNode = nextNode;
-
+            way.indexOf(currentNode);
         }
+
+        swallow.updateDist(totalDist);
     }
 }
