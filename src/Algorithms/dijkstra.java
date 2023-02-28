@@ -30,18 +30,20 @@ public class dijkstra {
         // WHILE
         while(visited < graph.getSize() && !finalNode.isVisited()){
 
-            PlaceOfInterest currentNode = (PlaceOfInterest) camins.get(actual);
+            PlaceOfInterest currentNode = camins.get(actual);
             PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);
 
             // Iterate through all the adjacent nodes.
             for (PlaceOfInterest adjacentNode : adjacentNodes) {
 
                 if (!adjacentNode.isVisited()) {
+                    // Comprovar clima
                     adjacentNode.justVisited();
                     visited++;
-                    double nova = ((Double) dist.get(actual)) + graph.getRouteDistance(adjacentNode.getId(), currentNode.getId());
+                     // Comprovar 50 km
+                    double nova = dist.get(actual) + graph.getRouteDistance(adjacentNode.getId(), currentNode.getId());
                     // Check if the dist of the adjacent is bigger than the new one
-                    if ((Double) dist.get(adj) > nova) {
+                    if (dist.get(adj) > nova) {
                         dist.set(adj, nova);
                         camins.set(adj, adjacentNode);
                     }
@@ -57,11 +59,11 @@ public class dijkstra {
 
     private static void updateDist(myArrayList<Double> dist, myArrayList<PlaceOfInterest> way, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         PlaceOfInterest currentNode = finalNode;
-        PlaceOfInterest nextNode = (PlaceOfInterest) way.get(way.size() - 1);
+        PlaceOfInterest nextNode = way.get(way.size() - 1);
         double totalDist = 0;
 
         while (currentNode != initialNode) {
-            totalDist = (Double) dist.get(way.indexOf(currentNode));
+            totalDist = dist.get(way.indexOf(currentNode));
             currentNode = nextNode;
             way.indexOf(currentNode);
         }

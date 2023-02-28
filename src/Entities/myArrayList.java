@@ -67,7 +67,7 @@ public class myArrayList<T> {
 		elements = (T[]) new Object[0];
 	}
 
-	public Object get(int index) {
+	public T get(int index) {
 
 		if (size > index) {
 			return elements[index];
