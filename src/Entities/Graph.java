@@ -5,7 +5,7 @@ import Parsers.DatasetLoaderF1;
 import java.util.ArrayList;
 
 public class Graph {
-	private KnownRoute[][] nodes;
+	private KnownRoute[][] matrix;
 	private int placesNum;	// Columns of the matrix (nodes)
 	private int routesNum;	// Edges between all the nodes
 	private PlaceOfInterest[] places;
@@ -18,14 +18,14 @@ public class Graph {
 		placesNum = places.length;
 		routesNum = routes.length;
 
-		nodes = new KnownRoute[placesNum][placesNum];
+		matrix = new KnownRoute[placesNum][placesNum];
 		createGraph();
 	}
 
 	private void createGraph() {
 		for (int i = 0; i < placesNum; i++) {
 			for (int j = 0; j < placesNum; j++) {
-				nodes[i][j] = findRoute(i, j);
+				matrix[i][j] = findRoute(i, j);
 			}
 		}
 	}
@@ -41,15 +41,15 @@ public class Graph {
 		return null;
 	}
 
-	public void printRelations(){
+	public void printMatrixWithRelations(){
 
 		System.out.println("\nGraph representation with adjacency matrix (showing relations): \n");
 		for(int i = 0; i < placesNum; i++){
 			for(int j = 0; j < placesNum; j++){
-				if (nodes[i][j] != null) {
-					System.out.print(places[i].getName() + "<->" + places[j].getName() + "@dist:" + nodes[i][j].getDistance() + "    ");
+				if (matrix[i][j] != null) {
+					System.out.print(places[i].getName() + "<->" + places[j].getName() + "@dist:" + matrix[i][j].getDistance() + "    ");
 				} else {
-					System.out.print(nodes[i][j] + "    ");
+					System.out.print(matrix[i][j] + "    ");
 				}
 			}
 			System.out.println();
@@ -81,8 +81,8 @@ public class Graph {
 		for(int i = 0; i < placesNum; i++){
 			System.out.printf("%-25s", places[i].getName());	// Name of the place on the left
 			for(int j = 0; j < placesNum; j++){
-				if (nodes[i][j] != null) {
-					System.out.printf("%-20s", nodes[i][j].getDistance());
+				if (matrix[i][j] != null) {
+					System.out.printf("%-20s", matrix[i][j].getDistance());
 				} else {
 					System.out.printf("%-20s", "-1");
 				}
@@ -98,7 +98,7 @@ public class Graph {
 
 		for (int columns = 0; columns < placesNum; columns++) {
 			PlaceOfInterest currentNode = getPlaceByIndex(columns);
-			KnownRoute currentRoute = nodes[rowIndex][columns];
+			KnownRoute currentRoute = matrix[rowIndex][columns];
 
 			// Check if the current node is an adjacent
 			if (currentRoute != null) {	// Check if exists
