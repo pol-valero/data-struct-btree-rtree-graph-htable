@@ -1,7 +1,9 @@
+package Entities;
+
 import Entities.PlaceOfInterest;
 
 // Una clase para representar una queue
-class Queue  {
+public class myQueue {
     private PlaceOfInterest[] arr;      // array para almacenar elementos de la queue
     private int front;      // front apunta al elemento frontal en la queue
     private int rear;       // la parte trasera apunta al último elemento de la queue
@@ -9,7 +11,7 @@ class Queue  {
     private int count;      // tamaño actual de la queue
 
     // Constructor para inicializar una queue
-    Queue() {
+    public myQueue() {
         arr = new PlaceOfInterest[10];
         capacity = 10;
         front = 0;
@@ -18,32 +20,23 @@ class Queue  {
     }
 
     // Función de utilidad para sacar de la queue el elemento frontal
-    private PlaceOfInterest dequeue()
+    public void dequeue()
     {
         // comprobar si hay subdesbordamiento de la queue
-        if (isEmpty())
-        {
+        if (isEmpty()) {
             System.out.println("Underflow\nProgram Terminated");
-            System.exit(-1);
-        } else {
+        }
+        else {
             front++;
             if(front == capacity-1){
-                System.out.println("Removed element: "+arr[front-1]);
+//                System.out.println("Removed element: "+ arr[front - 1]);
                 front = 0;
             } else {
-                System.out.println("Removed element: "+arr[front-1]);
+//                System.out.println("Removed element: "+ arr[front - 1]);
             }
-            capacity--;
+            count--;
         }
 
-        PlaceOfInterest x = arr[front];
-
-        System.out.println("Removing " + x);
-
-        front = (front + 1) % capacity;
-        count--;
-
-        return x;
     }
 
     // Función de utilidad para devolver el elemento frontal de la queue
@@ -55,7 +48,7 @@ class Queue  {
         return arr[front];
     }
 
-    public PlaceOfInterest pull(){
+    public PlaceOfInterest poll(){
         PlaceOfInterest x = peek();
         dequeue();
         return x;
@@ -65,23 +58,18 @@ class Queue  {
     public void add(PlaceOfInterest item)
     {
         // comprobar si hay desbordamiento de la queue
-        if (isFull())
-        {
+        if (isFull()) {
+//            System.out.println("Overflow state. Increase capacity.");
             increaseCapacity();
         } else {
             rear++;
-            if(rear == capacity-1){
+            if(rear == capacity - 1){
                 rear = 0;
             }
             arr[rear] = item;
-            capacity++;
+            count++;
+//            System.out.println("Element " + item+ " is pushed to Queue.");
         }
-
-        System.out.println("Inserting " + item);
-
-        rear = (rear + 1) % capacity;
-        arr[rear] = item;
-        count++;
     }
 
     // Función de utilidad para devolver el tamaño de la queue
@@ -101,7 +89,7 @@ class Queue  {
 
     private void increaseCapacity(){
         //Create new array with double size as the current one.
-        int newCapacity = this.arr.length*2;
+        int newCapacity = this.arr.length * 2;
         PlaceOfInterest[] newArr = new PlaceOfInterest[newCapacity];
         //Copy elements to new array
         int tmpFront = front;
@@ -112,13 +100,13 @@ class Queue  {
             if(tmpFront == this.arr.length){
                 tmpFront = 0;
             }
-            if(capacity == index+1){
+            if(capacity == index + 1){
                 break;
             }
         }
         //Convert new array as queue
         this.arr = newArr;
-        System.out.println("New array capacity: "+this.arr.length);
+//        System.out.println("New array capacity: "+this.arr.length);
         //Reset front and rear values
         this.front = 0;
         this.rear = index;

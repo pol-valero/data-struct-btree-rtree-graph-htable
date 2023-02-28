@@ -13,4 +13,10 @@ public enum Climate {
 			default -> null;
 		};
 	}
+
+	// Transform UPPERCASE climate to Lowercase String.
+	public String enumToString() {
+		String enumString = this.toString();
+		return (enumString.charAt(0) + enumString.substring(1).toLowerCase());
+	}
 }
