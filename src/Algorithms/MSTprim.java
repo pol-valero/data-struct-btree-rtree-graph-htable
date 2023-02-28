@@ -1,13 +1,26 @@
 package Algorithms;
 
+import Entities.Graph;
 import Entities.KnownRoute;
+import Entities.PlaceOfInterest;
 
 public class MSTprim {
 
-    public static KnownRoute[][] frequentRoutes(KnownRoute[][] routes) {
-        KnownRoute[][] mst = new KnownRoute[routes.length][routes.length];
-        KnownRoute origin = routes[0][0];
-        return null;
+    public static void frequentRoutesDetection(Graph graph) {
+
+        KnownRoute[][] mst = new KnownRoute[graph.getSize()][graph.getSize()];
+        PlaceOfInterest origin = graph.getFirstNode();
+        mstPrim(mst, origin);
+        printMST(mst);
+
+    }
+
+    private static void mstPrim (KnownRoute[][] mst, PlaceOfInterest origin) {
+
+    }
+
+    private static void printMST (KnownRoute[][] mst) {
+
     }
 
 

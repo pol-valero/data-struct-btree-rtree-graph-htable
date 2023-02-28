@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Graph {
 	private KnownRoute[][] matrix;
-	private int placesNum;	// Columns of the matrix (nodes)
-	private int routesNum;	// Edges between all the nodes
+	private int placesNum;	// Number of different places in the graph
+	private int routesNum;	// Number of edges between all the nodes
 	private PlaceOfInterest[] places;
 	private KnownRoute[] routes;
 
@@ -136,5 +136,10 @@ public class Graph {
 	// Getter to obtain all the nodes in the graph.
 	public PlaceOfInterest[] getPlaces() {
 		return places;
+	}
+
+	//Getter to obtain the first node
+	public PlaceOfInterest getFirstNode() {
+		return places[0];
 	}
 }
