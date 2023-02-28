@@ -139,7 +139,7 @@ public class Graph {
 	}
 
 	// Get distance between two adjacent nodes.
-	public float getRouteDistance(int actualPlace, int adjacentPlace) {
+	public double getRouteDistance(int actualPlace, int adjacentPlace) {
 		return (nodes[actualPlace][adjacentPlace].getDistance());
 	}
 }

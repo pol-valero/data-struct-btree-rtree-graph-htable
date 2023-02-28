@@ -39,7 +39,7 @@ public class dijkstra {
                 if (!adjacentNode.isVisited()) {
                     adjacentNode.justVisited();
                     visited++;
-                    double nova = (Double) dist.get(actual) + graph.getRouteDistance(adjacentNode.getId(), currentNode.getId());
+                    double nova = ((Double) dist.get(actual)) + graph.getRouteDistance(adjacentNode.getId(), currentNode.getId());
                     // Check if the dist of the adjacent is bigger than the new one
                     if ((Double) dist.get(adj) > nova) {
                         dist.set(adj, nova);
