@@ -126,7 +126,6 @@ public class Menu {
     }
 
     public static boolean askForBoolean(String askMessage) {
-        System.out.println(askMessage);
         String option = "";
         String errorMessage = "Error: Introdueix \"SI\" o \"NO\"." + separator;
 

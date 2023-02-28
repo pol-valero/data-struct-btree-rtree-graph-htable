@@ -17,11 +17,11 @@ public class dijkstra {
 
         myArrayList<Double> dist = new myArrayList<>();
         // La distancia del vértice origen hacia el mismo es siempre 0
-        dist.add(0);
+        dist.add(0.0);
 
         // Initialize all distances as INFINITE and visited[] as false
         for (int i = 0; i < N; i++) {
-            dist.add(Integer.MAX_VALUE);
+            dist.add(Double.MAX_VALUE);
         }
 
         int actual = 0;
@@ -41,7 +41,7 @@ public class dijkstra {
                     adjacentNode.justVisited();
                     visited++;
                      // Comprovar 50 km
-                    double nova = dist.get(actual) + graph.getRouteDistance(adjacentNode.getId(), currentNode.getId());
+                    double nova = dist.get(actual) + graph.getRouteDistance(adjacentNode.getRowIndex(), currentNode.getRowIndex());
                     // Check if the dist of the adjacent is bigger than the new one
                     if (dist.get(adj) > nova) {
                         dist.set(adj, nova);
