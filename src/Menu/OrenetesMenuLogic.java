@@ -41,8 +41,8 @@ public class OrenetesMenuLogic {
 		if (firstNode != null && secondNode != null) {
 
 
-			PlaceOfInterest[] way1 = dijkstra.premiumMessaging(graph, firstNode, secondNode, swallow1);
-			PlaceOfInterest[] way2 = dijkstra.premiumMessaging(graph, firstNode, secondNode, swallow2);
+			PlaceOfInterest[] europeanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
+			PlaceOfInterest[] africanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
 
 			if (swallow1.getTotalDist() < swallow2.getTotalDist()) {
 				System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta europea." + Menu.separator);

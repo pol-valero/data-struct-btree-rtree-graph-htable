@@ -84,7 +84,12 @@ public class Graph {
 				if (nodes[i][j] != null) {
 					System.out.printf("%-20s", nodes[i][j].getDistance());
 				} else {
-					System.out.printf("%-20s", "-1");
+					if (i == j) {
+						System.out.printf("%-20s", "0");
+					}
+					else {
+						System.out.printf("%-20s", "-1");
+					}
 				}
 			}
 			System.out.println();

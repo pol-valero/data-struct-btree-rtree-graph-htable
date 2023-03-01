@@ -63,12 +63,5 @@ public class BFS {
 				}
 			}
 		}
-
-		// Check if there are non-connected nodes (just in case).
-		for (PlaceOfInterest place : graph.getPlaces()) {
-			if (!place.isVisited()) {
-				kindgomExploration(graph, place);
-			}
-		}
 	}
 }

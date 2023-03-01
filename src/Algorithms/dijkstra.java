@@ -5,8 +5,6 @@ import Entities.PlaceOfInterest;
 import Entities.Swallow;
 import Entities.myArrayList;
 
-import java.util.ArrayList;
-
 public class dijkstra {
     public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
@@ -28,10 +26,11 @@ public class dijkstra {
         int adj = 0;
 
         // WHILE
-        while(visited < graph.getSize() && !finalNode.isVisited()){
+        while (visited < N && !finalNode.isVisited()){
 
             PlaceOfInterest currentNode = camins.get(actual);
             PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);
+            adj = 0;
 
             // Iterate through all the adjacent nodes.
             for (PlaceOfInterest adjacentNode : adjacentNodes) {
@@ -52,7 +51,7 @@ public class dijkstra {
             }
             actual++;
         }
-
+        
         updateDist(dist, camins, initialNode, finalNode, swallow); // Update the total distance of the Swallow
         return camins.toArray();
     }
