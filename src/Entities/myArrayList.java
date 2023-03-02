@@ -12,6 +12,11 @@ public class myArrayList<T> {
 		elements = (T[]) new Object[0];
 	}
 
+	public myArrayList(int num) {
+		elements = (T[]) new Object[num];
+		size = num;
+	}
+
 	public int size() {
 		return size;
 	}
@@ -79,7 +84,7 @@ public class myArrayList<T> {
 	@SuppressWarnings("unchecked")
 	public void set(int index, Object newElement) {
 		if (size > index) {
-			size++;
+			//size++;
 			elements[index] = (T) newElement;
 		}
 	}

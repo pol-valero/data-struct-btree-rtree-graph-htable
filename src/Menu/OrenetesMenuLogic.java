@@ -5,6 +5,7 @@ import Algorithms.dijkstra;
 import Entities.Graph;
 import Entities.PlaceOfInterest;
 import Entities.Swallow;
+import Entities.myArrayList;
 
 import static Entities.Climate.POLAR;
 import static Entities.Climate.TROPICAL;
@@ -35,32 +36,32 @@ public class OrenetesMenuLogic {
 		PlaceOfInterest secondNode = graph.getPlaceByID(nodeID2);
 		boolean coco = Menu.askForBoolean("L'oreneta carrega un coco? ");
 
-		Swallow swallow1 = new Swallow(TROPICAL, coco);
-		Swallow swallow2 = new Swallow(POLAR, coco);
+		Swallow europeanSwallow = new Swallow(TROPICAL, coco);
+		Swallow africanSwallow = new Swallow(POLAR, coco);
 
 		if (firstNode != null && secondNode != null) {
 
 
-			PlaceOfInterest[] europeanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
-			PlaceOfInterest[] africanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
+			myArrayList<PlaceOfInterest> europeanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
+			myArrayList<PlaceOfInterest> africanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
 
-			if (swallow1.getTotalDist() < swallow2.getTotalDist()) {
+			//if (europeanSwallow.getTotalDist() < africanSwallow.getTotalDist()) {
 				System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta europea." + Menu.separator);
 				System.out.println(Menu.separator+"\tTemps: ");
-				System.out.println(Menu.separator+"\tDistància: "+ swallow1.getTotalDist());
+				System.out.println(Menu.separator+"\tDistància: "+ europeanSwallow.getTotalDist());
 				System.out.println(Menu.separator+"\tCamí: ");
-				for (int i = 0; i < way1.length; i++) {
-					System.out.println("\t"+(i+1)+". "+way1[i]);
+				for (int i = 0; i < europeanWay.size(); i++) {
+					System.out.println("\t"+(i+1)+". "+europeanWay.get(i).getName());
 				}
-			} else {
+			/*} else {
 				System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta africana." + Menu.separator);
 				System.out.println(Menu.separator+"\tTemps: ");
-				System.out.println(Menu.separator+"\tDistància: "+ swallow2.getTotalDist());
+				System.out.println(Menu.separator+"\tDistància: "+ africanSwallow.getTotalDist());
 				System.out.println(Menu.separator+"\tCamí: ");
-				for (int i = 0; i < way1.length; i++) {
-					System.out.println("\t"+(i+1)+". "+way2[i]);
+				for (int i = 0; i < africanWay.size(); i++) {
+					System.out.println("\t"+(i+1)+". "+africanWay.get(i));
 				}
-			}
+			}*/
 		}
 		else {
 			System.out.println(Menu.separator + "Un dels llocs seleccionats no existeix.");

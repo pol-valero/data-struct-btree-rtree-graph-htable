@@ -147,4 +147,9 @@ public class Graph {
 	public double getRouteDistance(int actualPlace, int adjacentPlace) {
 		return (nodes[actualPlace][adjacentPlace].getDistance());
 	}
+
+	// Get time between two adjacent nodes.
+	public double getRouteTime(int actualPlace, int adjacentPlace) {
+		return (nodes[actualPlace][adjacentPlace].getTime());
+	}
 }
