@@ -66,7 +66,7 @@ public class dijkstra {
             }
 
             visited++; // Comptem quants portem de visitats per saber si ja els hem visitat tots i podem parar
-            currentNode = graph.getPlaceByIndex(getMinNode(time, graph)); // ACTUAL = VALOR MÍNIM DE D NO VISITATS (AGAFAR EL NODE AMB MENYS DISTÀNCIA)
+            currentNode = nodes[getMinNode(time, nodes)]; // ACTUAL = VALOR MÍNIM DE D NO VISITATS (AGAFAR EL NODE AMB MENYS DISTÀNCIA)
             currentNode.justVisited(); // ACTUAL.VISITAT = CERT
         }
 
@@ -94,12 +94,12 @@ public class dijkstra {
         return -1;
     }
 
-    private static int getMinNode(Double[] time, Graph graph) {
+    private static int getMinNode(Double[] time, PlaceOfInterest[] nodes) {
         Double min = Double.MAX_VALUE;
         int minIndex = 0;
 
         for (int i = 0; i < time.length; i++) {
-            if (time[i] < min && !graph.getPlaceByIndex(i).isVisited()) {
+            if (time[i] < min && !nodes[i].isVisited()) {
                 minIndex = i;
                 min = time[i];
             }
@@ -113,7 +113,7 @@ public class dijkstra {
         PlaceOfInterest nextNode = finalNode;
         //double totalTime = 0.0;
 
-        int node = ways.length-1;
+        int node = indexOfWays(nextNode, nodes);
         int counter = 0;
 
         while (counter < ways.length && node != 0) {
