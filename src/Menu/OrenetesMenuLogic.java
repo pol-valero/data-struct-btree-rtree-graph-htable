@@ -1,6 +1,7 @@
 package Menu;
 
 import Algorithms.BFS;
+import Algorithms.MSTprim;
 import Algorithms.dijkstra;
 import Entities.Graph;
 import Entities.PlaceOfInterest;
@@ -30,7 +31,8 @@ public class OrenetesMenuLogic {
 	}
 
 	public static void showFrequentRoutesDetection(Graph graph) {
-
+		System.out.println(Menu.separator + "Conjunt de trajectes que connecten tots els llocs i minimitzen la distància total: " + Menu.separator);
+		MSTprim.frequentRoutesDetection(graph);
 	}
 
 	public static void showPremiumMessaging(int size, Graph graph) {

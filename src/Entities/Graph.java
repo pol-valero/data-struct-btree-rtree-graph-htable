@@ -165,4 +165,12 @@ public class Graph {
 		return matrix[actualPlace][adjacentPlace];
 	}
 
+	public boolean routeExists(int actualPlace, int adjacentPlace) {
+		if(matrix[actualPlace][adjacentPlace] == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

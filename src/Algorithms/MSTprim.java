@@ -17,6 +17,20 @@ public class MSTprim {
 
         knownRoutes = mstPrim(graph, origin);
 
+        printMst(knownRoutes, graph);
+
+    }
+
+    private static void printMst (ArrayList<KnownRoute> knownRoutes, Graph graph) {
+
+        float distance = 0;
+
+        for (KnownRoute knownRoute: knownRoutes) {
+            //System.out.println("\n Place A: " + knownRoute.getPlaceA() + "  Place B: " + knownRoute.getPlaceB());
+            distance += knownRoute.getDistance();
+            System.out.println("\n" + graph.getPlaceByID(knownRoute.getPlaceA()).getName() + " <--> " + graph.getPlaceByID(knownRoute.getPlaceB()).getName());
+        }
+        System.out.println("\n\nDistància a recórrer: " + distance);
     }
 
     private static ArrayList<KnownRoute> mstPrim (Graph graph, PlaceOfInterest origin) {
@@ -28,6 +42,8 @@ public class MSTprim {
         int mstNodeNum = 0;
         float minDist;
 
+        KnownRoute minRoute = null;
+
         int firstNodeIndex = 0;
         int secondNodeIndex = 0;
         boolean validEdgeFound;
@@ -36,6 +52,7 @@ public class MSTprim {
         boolean[] existsInMST = new boolean[graph.getSize()];
 
         existsInMST[origin.getRowIndex()] = true;
+        mstNodeNum = 1;
 
         while (mstNodeNum < totalNodeNum) {
 
@@ -46,12 +63,15 @@ public class MSTprim {
 
                 for (int j = 0; j < totalNodeNum; j++) {
 
-                    firstNodeIndex = i;
-                    secondNodeIndex = j;
+                    if (checkValidEdge(i, j, existsInMST, graph)) {
+                        if (graph.getRouteDistance(i, j) < minDist) {
+                            minDist = graph.getRouteDistance(i, j);
+                            minRoute = graph.getRoute(i, j);
+                            validEdgeFound = true;
 
-                    if (checkValidEdge(firstNodeIndex, secondNodeIndex, existsInMST) && graph.getRouteDistance(firstNodeIndex, secondNodeIndex) < minDist) {
-                        minDist = graph.getRouteDistance(firstNodeIndex, secondNodeIndex);
-                        validEdgeFound = true;
+                            firstNodeIndex = i;
+                            secondNodeIndex = j;
+                        }
                     }
 
                 }
@@ -59,9 +79,10 @@ public class MSTprim {
             }
 
             if (validEdgeFound) {
-                mstRoutes.add(graph.getRoute(firstNodeIndex, secondNodeIndex));
+                mstRoutes.add(minRoute);
                 existsInMST[firstNodeIndex] = true;
                 existsInMST[secondNodeIndex] = true;
+                mstNodeNum++;
             }
 
         }
@@ -70,9 +91,13 @@ public class MSTprim {
 
     }
 
-    private static boolean checkValidEdge(int firstNodeIndex, int secondNodeIndex, boolean[] existsInMST) {
+    private static boolean checkValidEdge(int firstNodeIndex, int secondNodeIndex, boolean[] existsInMST, Graph graph) {
 
         if (firstNodeIndex == secondNodeIndex) {
+            return false;
+        }
+
+        if (!graph.routeExists(firstNodeIndex, secondNodeIndex)) {
             return false;
         }
 
