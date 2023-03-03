@@ -84,7 +84,12 @@ public class Graph {
 				if (matrix[i][j] != null) {
 					System.out.printf("%-20s", matrix[i][j].getDistance());
 				} else {
-					System.out.printf("%-20s", "-1");
+					if (i == j) {
+						System.out.printf("%-20s", "0");
+					}
+					else {
+						System.out.printf("%-20s", "-1");
+					}
 				}
 			}
 			System.out.println();
@@ -137,6 +142,18 @@ public class Graph {
 	public PlaceOfInterest[] getPlaces() {
 		return places;
 	}
+
+
+	// Get distance between two adjacent nodes.
+	public double getRouteDistance(int actualPlace, int adjacentPlace) {
+		return (matrix[actualPlace][adjacentPlace].getDistance());
+	}
+
+	// Get time between two adjacent nodes.
+	public double getRouteTime(int actualPlace, int adjacentPlace) {
+		return (matrix[actualPlace][adjacentPlace].getTime());
+	}
+
 
 	//Getter to obtain the first node
 	public PlaceOfInterest getFirstNode() {
