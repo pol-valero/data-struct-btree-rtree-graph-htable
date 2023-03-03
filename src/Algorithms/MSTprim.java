@@ -4,13 +4,14 @@ import Entities.Graph;
 import Entities.KnownRoute;
 import Entities.PlaceOfInterest;
 
-import java.util.ArrayList;
+import Entities.myArrayList;
+
 
 public class MSTprim {
 
     public static void frequentRoutesDetection(Graph graph) {
 
-        ArrayList<KnownRoute> knownRoutes;
+        myArrayList<KnownRoute> knownRoutes;
 
         //Any node could be selected as the origin. We choose the first node as the origin.
         PlaceOfInterest origin = graph.getFirstNode();
@@ -21,7 +22,7 @@ public class MSTprim {
 
     }
 
-    private static void printMst (ArrayList<KnownRoute> knownRoutes, Graph graph) {
+    private static void printMst (myArrayList<KnownRoute> knownRoutes, Graph graph) {
 
         float distance = 0;
 
@@ -34,9 +35,9 @@ public class MSTprim {
 
     }
 
-    private static ArrayList<KnownRoute> mstPrim (Graph graph, PlaceOfInterest origin) {
+    private static myArrayList<KnownRoute> mstPrim (Graph graph, PlaceOfInterest origin) {
 
-        ArrayList<KnownRoute> mstRoutes = new ArrayList<>();
+        myArrayList<KnownRoute> mstRoutes = new myArrayList<>();
 
         //Number of nodes in the original graph
         int totalNodesNum = graph.getSize();
