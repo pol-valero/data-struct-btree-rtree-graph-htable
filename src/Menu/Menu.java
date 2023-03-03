@@ -68,6 +68,7 @@ public class Menu {
                 return OrenetesMenuOptions.COMMON_ROUTES;
             }
             case "C" -> {
+                OrenetesMenuLogic.showPremiumMessaging(graph.getSize(), graph);
                 return OrenetesMenuOptions.PREMIUM_MESSAGING;
             }
             default -> {
@@ -122,5 +123,33 @@ public class Menu {
         } while (!(option.equals("A") || option.equals("B") || option.equals("C") || option.equals("D")));
 
         return option;
+    }
+
+    public static boolean askForBoolean(String askMessage) {
+        String option = "";
+        String errorMessage = "Error: Introdueix \"SI\" o \"NO\"." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = sc.nextLine();
+                option = option.toUpperCase();
+
+                if (!(option.equals("SI") || option.equals("NO"))) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (!(option.equals("SI") || option.equals("NO")));
+
+        if (option.equals("SI")){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
