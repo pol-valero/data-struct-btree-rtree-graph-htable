@@ -106,7 +106,7 @@ public class Graph {
 			KnownRoute currentRoute = nodes[rowIndex][columns];
 
 			// Check if the current node is an adjacent
-			if (currentRoute != null) {	// Check if exists
+			if (currentRoute != null && currentNode != node) {	// Check if exists
 				if (currentRoute.getDistance() != -1) {	// Check conditions
 					adjacents.add(currentNode);    // Add node to Array
 				}
@@ -143,13 +143,27 @@ public class Graph {
 		return places;
 	}
 
+	public void swapTwoNodes(int index1, int index2){
+		PlaceOfInterest tmp = places[index1];
+		places[index1] = places[index2];
+		places[index2] = tmp;
+
+		places[index1].changeRowIndex(index2);
+		places[index2].changeRowIndex(index1);
+	}
+
 	// Get distance between two adjacent nodes.
 	public double getRouteDistance(int actualPlace, int adjacentPlace) {
 		return (nodes[actualPlace][adjacentPlace].getDistance());
 	}
 
-	// Get time between two adjacent nodes.
-	public double getRouteTime(int actualPlace, int adjacentPlace) {
-		return (nodes[actualPlace][adjacentPlace].getTime());
+	// Get time A between two adjacent nodes.
+	public double getRouteTimeA(int actualPlace, int adjacentPlace) {
+		return (nodes[actualPlace][adjacentPlace].getTimeA());
+	}
+
+	// Get time B between two adjacent nodes.
+	public double getRouteTimeE(int actualPlace, int adjacentPlace) {
+		return (nodes[actualPlace][adjacentPlace].getTimeE());
 	}
 }

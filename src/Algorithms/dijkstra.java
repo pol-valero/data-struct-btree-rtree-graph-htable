@@ -16,8 +16,12 @@ public class dijkstra {
     public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
         int visited = 0;
+        double nova = 0.0;
+        PlaceOfInterest[] nodes = initNodes(graph, initialNode);
         PlaceOfInterest currentNode = initialNode;
-        Collections.swap(Arrays.asList(graph.getPlaces()), initialNode.getRowIndex(), 0);
+
+        //int intialRowIndex = initialNode.getRowIndex();
+        //graph.swapTwoNodes(initialNode.getRowIndex(), 0);
 
         PlaceOfInterest[] camins = new PlaceOfInterest[N];
         camins[0] = initialNode;
@@ -31,7 +35,7 @@ public class dijkstra {
         }
 
         // WHILE
-        while (visited < N && !finalNode.isVisited()){
+        while ( !finalNode.isVisited()){
 
             PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);
 
@@ -43,12 +47,20 @@ public class dijkstra {
                     // Comprovar clima
                     // Comprovar 50 km
 
-                    double nova = time[currentNode.getRowIndex()] + graph.getRouteTime(adjacentNode.getRowIndex(), currentNode.getRowIndex());
+                    if (time[currentNode.getRowIndex()] != Double.MAX_VALUE) {
+                        nova = time[currentNode.getRowIndex()] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                    } else {
+                        nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                    }
+
 
                     // Check if the time of the adjacent is bigger than the new one
-                    if (time[adjacentNode.getRowIndex()] > nova) {
-                        time[adjacentNode.getRowIndex()] = nova;
-                        camins[adjacentNode.getRowIndex()] = currentNode;
+                    if (time[indexOfWays(adjacentNode, nodes)] > nova && graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
+                        time[indexOfWays(adjacentNode, nodes)] = nova;
+                        camins[indexOfWays(adjacentNode, nodes)] = currentNode;
+
+                        //time[adjacentNode.getRowIndex()] = nova;
+                        //camins[adjacentNode.getRowIndex()] = currentNode;
                     }
                 }
             }
@@ -60,7 +72,16 @@ public class dijkstra {
 
         //updateDist(time, camins, initialNode, finalNode, swallow); // Update the total distance of the Swallow
 
-        return camins;
+        //graph.swapTwoNodes(intialRowIndex, 0);
+
+        return finalWay(camins, time, finalNode);
+    }
+
+    private static PlaceOfInterest[] initNodes(Graph graph, PlaceOfInterest initialNode) {
+        PlaceOfInterest[] nodes = graph.getPlaces().clone();
+        nodes[initialNode.getRowIndex()] = graph.getPlaceByIndex(0);
+        nodes[0] = graph.getPlaceByIndex(initialNode.getRowIndex());
+        return nodes;
     }
 
     private static int indexOfWays(PlaceOfInterest element, PlaceOfInterest[] ways) {
@@ -87,17 +108,22 @@ public class dijkstra {
         return minIndex;
     }
 
-    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time) {
+    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time, PlaceOfInterest finalNode) {
         PlaceOfInterest[] finalWay = new PlaceOfInterest[ways.length];
-        PlaceOfInterest nextNode;
+        PlaceOfInterest nextNode = finalNode;
         //double totalTime = 0.0;
 
         int node = ways.length-1;
-        while (node < ways.length && node != 0) {
+        int counter = 0;
+
+        while (counter < ways.length && node != 0) {
+            finalWay[counter] = nextNode;
             nextNode = ways[node];
-            finalWay[node] = nextNode;
-            node = nextNode.getRowIndex();
+            node = indexOfWays(nextNode, ways);
+            counter++;
         }
+
+        finalWay[counter-1] = ways[0];
 
         return finalWay;
     }

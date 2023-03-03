@@ -31,9 +31,6 @@ public class KnownRoute {
 		return timeA;
 	}
 
-	public float getTime() {
-		return Math.abs(timeE-timeA);
-	}
 	public float getDistance() {
 		return distance;
 	}

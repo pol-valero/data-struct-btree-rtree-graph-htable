@@ -5,7 +5,7 @@ public class PlaceOfInterest {
 	private final String name;
 	private final String kingdom;
 	private final Climate climate;
-	private final int rowIndex;
+	private  int rowIndex;
 	private boolean visited;
 
 	public PlaceOfInterest(int id, String name, String kingdom, Climate climate, int rowIndex) {
@@ -55,5 +55,9 @@ public class PlaceOfInterest {
 
 	public String showInformation() {
 		return (id + " - " + name + ", " + "Regne de " + kingdom + " (" + climate.enumToString() + ")");
+	}
+
+	public void changeRowIndex(int newIndex) {
+		rowIndex = newIndex;
 	}
 }
