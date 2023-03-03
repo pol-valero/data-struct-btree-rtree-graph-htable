@@ -47,8 +47,8 @@ public class dijkstra {
                     // Comprovar clima
                     // Comprovar 50 km
 
-                    if (time[currentNode.getRowIndex()] != Double.MAX_VALUE) {
-                        nova = time[currentNode.getRowIndex()] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                    if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
+                        nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
                     } else {
                         nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
                     }
