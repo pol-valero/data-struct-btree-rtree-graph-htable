@@ -1,8 +1,9 @@
 package Entities;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class myArrayList<T> {
+public class myArrayList<T> implements Iterable<T> {
 	private T[] elements;
 	private int size;
 
@@ -152,5 +153,30 @@ public class myArrayList<T> {
 		}
 
 		return null;
+	}
+
+
+	// Implement the interface Iterable and override the method iterator().
+	@Override
+	public Iterator<T> iterator() {
+		return new Iterator<T>() {
+
+			private int index = 0;
+
+			@Override
+			public boolean hasNext() {
+				return elements[index] != null && index < size;
+			}
+
+			@Override
+			public T next() {
+				return elements[index++];
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 }
