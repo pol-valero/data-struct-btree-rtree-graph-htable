@@ -165,7 +165,7 @@ public class myArrayList<T> implements Iterable<T> {
 
 			@Override
 			public boolean hasNext() {
-				return elements[index] != null && index < size;
+				return (index < size) && (elements[index] != null);
 			}
 
 			@Override
