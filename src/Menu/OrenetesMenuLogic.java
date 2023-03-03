@@ -29,6 +29,10 @@ public class OrenetesMenuLogic {
 
 	}
 
+	public static void showFrequentRoutesDetection(Graph graph) {
+
+	}
+
 	public static void showPremiumMessaging(int size, Graph graph) {
 		int nodeID1 = Menu.askForInteger("Quin és el lloc d'origen? ", 0, Integer.MAX_VALUE);
 		PlaceOfInterest firstNode = graph.getPlaceByID(nodeID1);

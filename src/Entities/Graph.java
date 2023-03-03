@@ -145,7 +145,7 @@ public class Graph {
 
 
 	// Get distance between two adjacent nodes.
-	public double getRouteDistance(int actualPlace, int adjacentPlace) {
+	public float getRouteDistance(int actualPlace, int adjacentPlace) {
 		return (matrix[actualPlace][adjacentPlace].getDistance());
 	}
 
@@ -159,4 +159,10 @@ public class Graph {
 	public PlaceOfInterest getFirstNode() {
 		return places[0];
 	}
+
+
+	public KnownRoute getRoute(int actualPlace, int adjacentPlace) {
+		return matrix[actualPlace][adjacentPlace];
+	}
+
 }

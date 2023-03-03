@@ -53,7 +53,7 @@ public class Menu {
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu() {
 
-        Graph graph = new Graph("graphsXS.paed");
+        Graph graph = new Graph("graphsXXS.paed");
         graph.printMatrix();
 
         System.out.println(separator + ORENETES_MENU);
@@ -65,6 +65,7 @@ public class Menu {
                 return OrenetesMenuOptions.KINGDOM_EXPLORATION;
             }
             case "B" -> {
+                OrenetesMenuLogic.showFrequentRoutesDetection(graph);
                 return OrenetesMenuOptions.COMMON_ROUTES;
             }
             case "C" -> {
