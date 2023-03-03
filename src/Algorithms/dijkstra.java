@@ -5,76 +5,97 @@ import Entities.PlaceOfInterest;
 import Entities.Swallow;
 import Entities.myArrayList;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 // Intentar canviar el graph que em passen:
     // Fer un Swap amb el primer lloc amb el lloc inici
 
 public class dijkstra {
-    public static myArrayList<PlaceOfInterest> premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
+    public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
         int visited = 0;
+        PlaceOfInterest currentNode = initialNode;
+        Collections.swap(Arrays.asList(graph.getPlaces()), initialNode.getRowIndex(), 0);
 
-        myArrayList<PlaceOfInterest> camins = new myArrayList<>();
-        camins.add(initialNode);
+        PlaceOfInterest[] camins = new PlaceOfInterest[N];
+        camins[0] = initialNode;
 
-        myArrayList<Double> time = new myArrayList<>();
-        // La distancia del vértice origen hacia el mismo es siempre 0
-        time.add(0.0);
+        Double[] time = new Double[N];
+        time[0] = 0.0;// La distancia del vértice origen hacia el mismo es siempre 0
 
-        // Initialize all distances as INFINITE and visited[] as false
-        for (int i = 0; i < N; i++) {
-            time.add(Double.MAX_VALUE);
+        // Initialize all distances as INFINITE
+        for (int i = 1; i < N; i++) {
+            time[i] = Double.MAX_VALUE;
         }
-
-        int actual = 0;
-        int adj;
 
         // WHILE
         while (visited < N && !finalNode.isVisited()){
-            PlaceOfInterest currentNode = graph.getPlaceByIndex(actual);
+
             PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);
-            adj = 0;
 
             // Iterate through all the adjacent nodes.
             for (PlaceOfInterest adjacentNode : adjacentNodes) {
-
                 if (!adjacentNode.isVisited()) {
-                    // Comprovar clima
                     //adjacentNode.justVisited();
 
-                     // Comprovar 50 km
-                    double nova = time.get(actual) + graph.getRouteTime(adjacentNode.getRowIndex(), currentNode.getRowIndex());
+                    // Comprovar clima
+                    // Comprovar 50 km
+
+                    double nova = time[currentNode.getRowIndex()] + graph.getRouteTime(adjacentNode.getRowIndex(), currentNode.getRowIndex());
+
                     // Check if the time of the adjacent is bigger than the new one
-                    if (time.get(adj) > nova) {
-                        if (adj > camins.size()){
-                            time.add(nova);
-                            camins.add(currentNode);
-                        } else {
-                            time.set(adj, nova);
-                            camins.set(adj, currentNode);
-                        }
+                    if (time[adjacentNode.getRowIndex()] > nova) {
+                        time[adjacentNode.getRowIndex()] = nova;
+                        camins[adjacentNode.getRowIndex()] = currentNode;
                     }
                 }
-                adj++;
             }
-            actual++;
-            visited++;
-            currentNode.justVisited();
+
+            visited++; // Comptem quants portem de visitats per saber si ja els hem visitat tots i podem parar
+            currentNode = graph.getPlaceByIndex(getMinNode(time, graph)); // ACTUAL = VALOR MÍNIM DE D NO VISITATS (AGAFAR EL NODE AMB MENYS DISTÀNCIA)
+            currentNode.justVisited(); // ACTUAL.VISITAT = CERT
         }
 
         //updateDist(time, camins, initialNode, finalNode, swallow); // Update the total distance of the Swallow
 
-        return finalWay(camins, time);
+        return camins;
     }
 
-    private static myArrayList<PlaceOfInterest> finalWay(myArrayList<PlaceOfInterest> ways, myArrayList<Double> time) {
-        myArrayList<PlaceOfInterest> finalWay = new myArrayList<PlaceOfInterest>();
+    private static int indexOfWays(PlaceOfInterest element, PlaceOfInterest[] ways) {
+
+        for (int elementIndex = 0; elementIndex < ways.length; elementIndex++) {
+            if (ways[elementIndex] == element) {
+                return elementIndex;
+            }
+        }
+        return -1;
+    }
+
+    private static int getMinNode(Double[] time, Graph graph) {
+        Double min = Double.MAX_VALUE;
+        int minIndex = 0;
+
+        for (int i = 0; i < time.length; i++) {
+            if (time[i] < min && !graph.getPlaceByIndex(i).isVisited()) {
+                minIndex = i;
+                min = time[i];
+            }
+        }
+
+        return minIndex;
+    }
+
+    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time) {
+        PlaceOfInterest[] finalWay = new PlaceOfInterest[ways.length];
         PlaceOfInterest nextNode;
         //double totalTime = 0.0;
 
-        int node = ways.size()-1;
-        while (node < ways.size() && node != 0) {
-            nextNode = ways.get(node);
-            finalWay.add(nextNode);
+        int node = ways.length-1;
+        while (node < ways.length && node != 0) {
+            nextNode = ways[node];
+            finalWay[node] = nextNode;
             node = nextNode.getRowIndex();
         }
 
