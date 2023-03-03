@@ -1,114 +1,152 @@
 package Entities;
 
-import Entities.PlaceOfInterest;
+public class myQueue<T> {
+    private T[] elements;
+    private int size;
 
-// Una clase para representar una queue
-public class myQueue {
-    private PlaceOfInterest[] arr;      // array para almacenar elementos de la queue
-    private int front;      // front apunta al elemento frontal en la queue
-    private int rear;       // la parte trasera apunta al último elemento de la queue
-    private int capacity;   // capacidad máxima de la queue
-    private int count;      // tamaño actual de la queue
-
-    // Constructor para inicializar una queue
+    // Constructor without initial size (= 0).
+    @SuppressWarnings("unchecked")
     public myQueue() {
-        arr = new PlaceOfInterest[10];
-        capacity = 10;
-        front = 0;
-        rear = -1;
-        count = 0;
+        elements = (T[]) new Object[0];
     }
 
-    // Función de utilidad para sacar de la queue el elemento frontal
-    public void dequeue()
-    {
-        // comprobar si hay subdesbordamiento de la queue
-        if (isEmpty()) {
-            System.out.println("Underflow\nProgram Terminated");
-        }
-        else {
-            front++;
-            if(front == capacity-1){
-//                System.out.println("Removed element: "+ arr[front - 1]);
-                front = 0;
-            } else {
-//                System.out.println("Removed element: "+ arr[front - 1]);
-            }
-            count--;
-        }
-
+    @SuppressWarnings("unchecked")
+    public myQueue(int num) {
+        elements = (T[]) new Object[num];
+        size = num;
     }
 
-    // Función de utilidad para devolver el elemento frontal de la queue
-    private PlaceOfInterest peek() {
-        if (isEmpty()) {
-            System.out.println("Underflow\nProgram Terminated");
-            System.exit(-1);
-        }
-        return arr[front];
-    }
-
-    public PlaceOfInterest poll(){
-        PlaceOfInterest x = peek();
-        dequeue();
-        return x;
-    }
-
-    // Función de utilidad para agregar un elemento a la queue
-    public void add(PlaceOfInterest item)
-    {
-        // comprobar si hay desbordamiento de la queue
-        if (isFull()) {
-//            System.out.println("Overflow state. Increase capacity.");
-            increaseCapacity();
-        } else {
-            rear++;
-            if(rear == capacity - 1){
-                rear = 0;
-            }
-            arr[rear] = item;
-            count++;
-//            System.out.println("Element " + item+ " is pushed to Queue.");
-        }
-    }
-
-    // Función de utilidad para devolver el tamaño de la queue
     public int size() {
-        return count;
+        return size;
     }
 
-    // Función de utilidad para verificar si la queue está vacía o no
     public boolean isEmpty() {
-        return (size() == 0);
+        return (size == 0);
     }
 
-    // Función de utilidad para verificar si la queue está llena o no
-    public boolean isFull() {
-        return (size() == capacity);
-    }
+    public boolean contains(Object o) {
 
-    private void increaseCapacity(){
-        //Create new array with double size as the current one.
-        int newCapacity = this.arr.length * 2;
-        PlaceOfInterest[] newArr = new PlaceOfInterest[newCapacity];
-        //Copy elements to new array
-        int tmpFront = front;
-        int index = -1;
-        while(true){
-            newArr[++index] = this.arr[tmpFront];
-            tmpFront++;
-            if(tmpFront == this.arr.length){
-                tmpFront = 0;
-            }
-            if(capacity == index + 1){
-                break;
+        for (T element : elements) {
+            if (o == element) {
+                return true;
             }
         }
-        //Convert new array as queue
-        this.arr = newArr;
-//        System.out.println("New array capacity: "+this.arr.length);
-        //Reset front and rear values
-        this.front = 0;
-        this.rear = index;
+
+        return false;
+    }
+
+    public T[] toArray() {
+        return elements;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void add(Object o) {
+        size++;
+
+        Object[] temporalArray = new Object[size];
+
+        // Copy all the elements to the new array.
+        for (int i = 0; i < size - 1 ; i++) {
+            temporalArray[i] = elements[i];
+        }
+
+        temporalArray[size - 1] = o;
+        elements = (T[]) temporalArray;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T poll() {
+        if (size > 0) {
+            size--;
+            Object[] temporalArray = new Object[size];
+            T object = elements[0];
+
+            // Shift all the elements one position.
+            for (int i = 1; i < size + 1; i++) {
+                temporalArray[i - 1] = elements[i];
+            }
+
+            elements = (T[]) temporalArray;
+            return object;
+        }
+        return null;
+    }
+
+    public T peek() {
+        if (size > 0) {
+            return elements[0];
+        }
+        return null;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public void clear() {
+        elements = (T[]) new Object[0];
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean remove(int index) {
+        if (size > index) {
+            size--;
+            Object[] temporalArray = new Object[size];
+
+            int objectIndex = 0;
+            for (int i = 0; i <= size; i++) {
+                if (i != index) {
+                    temporalArray[objectIndex] = elements[i];
+                    objectIndex++;
+                }
+            }
+
+            elements = (T[]) temporalArray;
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder array = new StringBuilder();
+
+        for (int i = 0; i < size; i++) {
+            if (i == size - 1) {
+                array.append(elements[i]);
+            }
+            else {
+                array.append(elements[i]).append(" ");
+            }
+        }
+
+        return String.valueOf(array);
+    }
+
+    public int indexOf(Object o) {
+
+        for (int elementIndex = 0; elementIndex < size; elementIndex++) {
+            if (elements[elementIndex] == o) {
+                return elementIndex;
+            }
+        }
+
+        return -1;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T[] subList(int fromIndex, int toIndex) {
+
+        if (fromIndex < size && toIndex < size) {
+            int offset = fromIndex - toIndex;
+            Object[] temporalArray = new Object[offset];
+
+            for (int i = 0; i < offset; i++) {
+                temporalArray[i] = elements[fromIndex + i];
+            }
+
+            return (T[]) temporalArray;
+        }
+
+        return null;
     }
 }

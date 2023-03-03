@@ -12,6 +12,12 @@ public class myArrayList<T> {
 		elements = (T[]) new Object[0];
 	}
 
+	@SuppressWarnings("unchecked")
+	public myArrayList(int num) {
+		elements = (T[]) new Object[num];
+		size = num;
+	}
+
 	public int size() {
 		return size;
 	}
@@ -67,7 +73,7 @@ public class myArrayList<T> {
 		elements = (T[]) new Object[0];
 	}
 
-	public Object get(int index) {
+	public T get(int index) {
 
 		if (size > index) {
 			return elements[index];
@@ -79,22 +85,7 @@ public class myArrayList<T> {
 	@SuppressWarnings("unchecked")
 	public void set(int index, Object newElement) {
 		if (size > index) {
-			size++;
-			Object[] temporalArray = new Object[size];
-
-			// Copy array until index
-			for (int i = 0; i < index; i++) {
-				temporalArray[i] = elements[i];
-			}
-
-			temporalArray[index] = newElement;
-
-			// Copy rest of array
-			for (int i = 0; i < size; i++) {
-				temporalArray[i + index + 1] = elements[index + i];
-			}
-
-			elements = (T[]) temporalArray;
+			elements[index] = (T) newElement;
 		}
 	}
 

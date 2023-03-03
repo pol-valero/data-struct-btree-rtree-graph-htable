@@ -14,7 +14,7 @@ public class OrenetesMenuLogic {
 			System.out.println(Menu.separator + currentNode.showInformation() + Menu.separator);
 			System.out.println("Els llocs del Regne de " + currentNode.getKingdom() + " als que es pot arribar són:" + Menu.separator);
 
-			BFS.kindgomExploration(graph, currentNode);
+			BFS.kingdomExploration(graph, currentNode);
 		}
 		else {
 			System.out.println(Menu.separator + "El lloc seleccionat no existeix.");
