@@ -160,11 +160,12 @@ public class Graph {
 		return places[0];
 	}
 
-
+	//Gets the route with all the info between the two nodes.
 	public KnownRoute getRoute(int actualPlace, int adjacentPlace) {
 		return matrix[actualPlace][adjacentPlace];
 	}
 
+	//Checks if a route between to places exists and returns FALSE if it doesn't
 	public boolean routeExists(int actualPlace, int adjacentPlace) {
 		if(matrix[actualPlace][adjacentPlace] == null) {
 			return false;
