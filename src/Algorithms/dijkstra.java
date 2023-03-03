@@ -74,7 +74,7 @@ public class dijkstra {
 
         //graph.swapTwoNodes(intialRowIndex, 0);
 
-        return finalWay(camins, time, finalNode);
+        return finalWay(camins, time, finalNode, nodes);
     }
 
     private static PlaceOfInterest[] initNodes(Graph graph, PlaceOfInterest initialNode) {
@@ -108,7 +108,7 @@ public class dijkstra {
         return minIndex;
     }
 
-    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time, PlaceOfInterest finalNode) {
+    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time, PlaceOfInterest finalNode, PlaceOfInterest[] nodes) {
         PlaceOfInterest[] finalWay = new PlaceOfInterest[ways.length];
         PlaceOfInterest nextNode = finalNode;
         //double totalTime = 0.0;
@@ -119,11 +119,11 @@ public class dijkstra {
         while (counter < ways.length && node != 0) {
             finalWay[counter] = nextNode;
             nextNode = ways[node];
-            node = indexOfWays(nextNode, ways);
+            node = indexOfWays(nextNode, nodes);
             counter++;
         }
 
-        finalWay[counter-1] = ways[0];
+        finalWay[counter] = ways[0];
 
         return finalWay;
     }
