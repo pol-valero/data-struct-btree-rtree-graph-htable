@@ -8,7 +8,6 @@ import Entities.Swallow;
 public class dijkstra {
     public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
-        double nova;
         int visited = 0;
 
         PlaceOfInterest[] nodes = initNodes(graph, initialNode);
