@@ -1,80 +1,95 @@
 package Algorithms;
 
+import Entities.Climate;
 import Entities.Graph;
 import Entities.PlaceOfInterest;
 import Entities.Swallow;
-import Entities.myArrayList;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-// Intentar canviar el graph que em passen:
-    // Fer un Swap amb el primer lloc amb el lloc inici
 
 public class dijkstra {
     public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
+        double nova;
         int visited = 0;
-        double nova = 0.0;
+
         PlaceOfInterest[] nodes = initNodes(graph, initialNode);
         PlaceOfInterest currentNode = initialNode;
 
-        //int intialRowIndex = initialNode.getRowIndex();
-        //graph.swapTwoNodes(initialNode.getRowIndex(), 0);
-
         PlaceOfInterest[] camins = new PlaceOfInterest[N];
         camins[0] = initialNode;
+
+        Double[] dist = new Double[N];
 
         Double[] time = new Double[N];
         time[0] = 0.0;// La distancia del vértice origen hacia el mismo es siempre 0
 
         // Initialize all distances as INFINITE
         for (int i = 1; i < N; i++) {
+            dist[i] = 0.0;
             time[i] = Double.MAX_VALUE;
         }
 
         // WHILE
-        while ( !finalNode.isVisited()){
+        while (/*!allVisited(nodes)*/visited < N && !finalNode.isVisited()){
 
             PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);
 
             // Iterate through all the adjacent nodes.
             for (PlaceOfInterest adjacentNode : adjacentNodes) {
                 if (!adjacentNode.isVisited()) {
-                    //adjacentNode.justVisited();
-
-                    // Comprovar clima
                     // Comprovar 50 km
 
-                    if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
-                        nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                    // European Swallow
+                    if (swallow.getNotClimate() == Climate.TROPICAL){
+                        if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
+                            nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                        } else {
+                            nova = graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                        }
+
+                        int index = indexOfWays(adjacentNode, nodes);
+                        // Check if the time of the adjacent is bigger than the new one
+                        if (time[index] > nova && graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
+                            time[index] = nova;
+                            camins[index] = currentNode;
+                            dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                        }
                     } else {
-                        nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
-                    }
+                        // African Swallow
+                        if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
+                            nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                        } else {
+                            nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                        }
 
-
-                    // Check if the time of the adjacent is bigger than the new one
-                    if (time[indexOfWays(adjacentNode, nodes)] > nova && graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
-                        time[indexOfWays(adjacentNode, nodes)] = nova;
-                        camins[indexOfWays(adjacentNode, nodes)] = currentNode;
-
-                        //time[adjacentNode.getRowIndex()] = nova;
-                        //camins[adjacentNode.getRowIndex()] = currentNode;
+                        int index = indexOfWays(adjacentNode, nodes);
+                        // Check if the time of the adjacent is bigger than the new one
+                        if (time[index] > nova && graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
+                            time[index] = nova;
+                            camins[index] = currentNode;
+                            dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                        }
                     }
                 }
             }
-
-            visited++; // Comptem quants portem de visitats per saber si ja els hem visitat tots i podem parar
             currentNode = nodes[getMinNode(time, nodes)]; // ACTUAL = VALOR MÍNIM DE D NO VISITATS (AGAFAR EL NODE AMB MENYS DISTÀNCIA)
             currentNode.justVisited(); // ACTUAL.VISITAT = CERT
+            visited++;
         }
+        if(finalNode.isVisited()) {
+            return finalWay(camins, time, finalNode, nodes, swallow, dist);
+        } else {
+            swallow.updateTime(Double.MAX_VALUE);
+            return null;
+        }
+    }
 
-        //updateDist(time, camins, initialNode, finalNode, swallow); // Update the total distance of the Swallow
-
-        //graph.swapTwoNodes(intialRowIndex, 0);
-
-        return finalWay(camins, time, finalNode, nodes);
+    private static boolean allVisited(PlaceOfInterest[] nodes) {
+        for (PlaceOfInterest node : nodes) {
+            if (!node.isVisited()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static PlaceOfInterest[] initNodes(Graph graph, PlaceOfInterest initialNode) {
@@ -85,7 +100,6 @@ public class dijkstra {
     }
 
     private static int indexOfWays(PlaceOfInterest element, PlaceOfInterest[] ways) {
-
         for (int elementIndex = 0; elementIndex < ways.length; elementIndex++) {
             if (ways[elementIndex] == element) {
                 return elementIndex;
@@ -108,37 +122,33 @@ public class dijkstra {
         return minIndex;
     }
 
-    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time, PlaceOfInterest finalNode, PlaceOfInterest[] nodes) {
+    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time, PlaceOfInterest finalNode, PlaceOfInterest[] nodes, Swallow swallow, Double[] dist) {
         PlaceOfInterest[] finalWay = new PlaceOfInterest[ways.length];
         PlaceOfInterest nextNode = finalNode;
-        //double totalTime = 0.0;
+        double totalDist = 0.0;
 
         int node = indexOfWays(nextNode, nodes);
-        int counter = 0;
+        int current = 0;
+        int counter = ways.length-1;
 
-        while (counter < ways.length && node != 0) {
+        while (current < ways.length && node != 0) {
+            nextNode.notVisited();
             finalWay[counter] = nextNode;
+
+            totalDist += dist[node];
+
             nextNode = ways[node];
             node = indexOfWays(nextNode, nodes);
-            counter++;
+            current++;
+            counter--;
         }
 
-        finalWay[counter] = ways[0];
+        finalWay[current] = ways[0];
+
+        int index = indexOfWays(finalNode, nodes);
+        swallow.updateDist(totalDist);
+        swallow.updateTime(time[index]);
 
         return finalWay;
-    }
-
-    private static void updateDist(myArrayList<Double> dist, myArrayList<PlaceOfInterest> way, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
-        PlaceOfInterest currentNode = finalNode;
-        PlaceOfInterest nextNode = way.get(way.size() - 1);
-        double totalDist = 0;
-
-        while (currentNode != initialNode) {
-            totalDist = dist.get(way.indexOf(currentNode));
-            currentNode = nextNode;
-            way.indexOf(currentNode);
-        }
-
-        swallow.updateDist(totalDist);
     }
 }

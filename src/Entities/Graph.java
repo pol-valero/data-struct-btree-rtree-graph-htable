@@ -143,15 +143,6 @@ public class Graph {
 		return places;
 	}
 
-	public void swapTwoNodes(int index1, int index2){
-		PlaceOfInterest tmp = places[index1];
-		places[index1] = places[index2];
-		places[index2] = tmp;
-
-		places[index1].changeRowIndex(index2);
-		places[index2].changeRowIndex(index1);
-	}
-
 	// Get distance between two adjacent nodes.
 	public double getRouteDistance(int actualPlace, int adjacentPlace) {
 		return (nodes[actualPlace][adjacentPlace].getDistance());
