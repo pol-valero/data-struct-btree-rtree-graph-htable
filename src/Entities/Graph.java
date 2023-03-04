@@ -3,12 +3,17 @@ package Entities;
 import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
+//import java.util.Arrays;
+//
+//import static Algorithms.auxiliar.MergeSort.mergeSort;
+//import static Algorithms.auxiliar.BinarySearch.binarySearch;
 
 public class Graph {
 	private KnownRoute[][] nodes;
 	private int placesNum;	// Columns of the matrix (nodes)
 	private int routesNum;	// Edges between all the nodes
 	private PlaceOfInterest[] places;
+//	private PlaceOfInterest[] sortedPlaces;
 	private KnownRoute[] routes;
 
 	public Graph(String datasetName) {
@@ -17,6 +22,11 @@ public class Graph {
 
 		placesNum = places.length;
 		routesNum = routes.length;
+
+//		sortedPlaces = places.clone();
+//
+//		// Sort places using MergeSort and then apply BinarySearch to look for an ID (lower cost).
+//		mergeSort(sortedPlaces, 0, placesNum - 1);
 
 		nodes = new KnownRoute[placesNum][placesNum];
 		createGraph();
@@ -116,6 +126,10 @@ public class Graph {
 	}
 
 	public PlaceOfInterest getPlaceByID(int placeID) {
+
+		// Get the place with the ID using Binary Search (since we use MergeSort for the array).
+//		return binarySearch(sortedPlaces, placeID);
+
 		PlaceOfInterest node = null;
 
 		// Try to get the place with the ID. TODO: QuickSort + Binary Search
