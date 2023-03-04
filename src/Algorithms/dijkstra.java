@@ -37,38 +37,16 @@ public class dijkstra {
             for (PlaceOfInterest adjacentNode : adjacentNodes) {
                 if (!adjacentNode.isVisited()) {
                     // Comprovar 50 km
-
-                    // European Swallow
-                    if (swallow.getNotClimate() == Climate.TROPICAL){
-                        if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
-                            nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
-                        } else {
-                            nova = graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
-                        }
-
-                        int index = indexOfWays(adjacentNode, nodes);
-                        // Check if the time of the adjacent is bigger than the new one
-                        if (time[index] > nova && graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
-                            time[index] = nova;
-                            camins[index] = currentNode;
-                            dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+                    if (swallow.getHasCoco()){
+                        if (graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex()) <= 50) {
+                            // European Swallow
+                            calculateTime(graph, swallow, nodes, currentNode, camins, dist, time, adjacentNode);
                         }
                     } else {
-                        // African Swallow
-                        if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
-                            nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
-                        } else {
-                            nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
-                        }
-
-                        int index = indexOfWays(adjacentNode, nodes);
-                        // Check if the time of the adjacent is bigger than the new one
-                        if (time[index] > nova && graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
-                            time[index] = nova;
-                            camins[index] = currentNode;
-                            dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
-                        }
+                        // European Swallow
+                        calculateTime(graph, swallow, nodes, currentNode, camins, dist, time, adjacentNode);
                     }
+
                 }
             }
             currentNode = nodes[getMinNode(time, nodes)]; // ACTUAL = VALOR MÍNIM DE D NO VISITATS (AGAFAR EL NODE AMB MENYS DISTÀNCIA)
@@ -80,6 +58,40 @@ public class dijkstra {
         } else {
             swallow.updateTime(Double.MAX_VALUE);
             return null;
+        }
+    }
+
+    private static void calculateTime(Graph graph, Swallow swallow, PlaceOfInterest[] nodes, PlaceOfInterest currentNode, PlaceOfInterest[] camins, Double[] dist, Double[] time, PlaceOfInterest adjacentNode) {
+        double nova;
+        if (swallow.getNotClimate() == Climate.TROPICAL){
+            if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
+                nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            } else {
+                nova = graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            }
+
+            int index = indexOfWays(adjacentNode, nodes);
+            // Check if the time of the adjacent is bigger than the new one
+            if (time[index] > nova && graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
+                time[index] = nova;
+                camins[index] = currentNode;
+                dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            }
+        } else {
+            // African Swallow
+            if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
+                nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            } else {
+                nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            }
+
+            int index = indexOfWays(adjacentNode, nodes);
+            // Check if the time of the adjacent is bigger than the new one
+            if (time[index] > nova && graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
+                time[index] = nova;
+                camins[index] = currentNode;
+                dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            }
         }
     }
 
