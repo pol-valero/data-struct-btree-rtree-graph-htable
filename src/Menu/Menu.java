@@ -1,6 +1,6 @@
 package Menu;
 
-import Entities.GraphRepresentation;
+import Entities.Graph;
 
 import java.util.Scanner;
 
@@ -8,7 +8,7 @@ public class Menu {
 
     private static long initialTime;
     private static long executionTime;
-    private final static String separator = System.lineSeparator();
+    public final static String separator = System.lineSeparator();
 
     public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator+separator+
             "1. Sobre orenetes i cocos (Grafs)" +separator +
@@ -53,20 +53,23 @@ public class Menu {
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu() {
 
-        GraphRepresentation graphRepresentation = new GraphRepresentation("graphsXS.paed");
-        graphRepresentation.print();
+        Graph graph = new Graph("graphsXS.paed");
+        graph.printMatrix();
 
         System.out.println(separator + ORENETES_MENU);
         String option = askForCharacter("Quina funcionalitat vol executar? ");
 
         switch (option) {
             case "A" -> {
+                OrenetesMenuLogic.showKingdomExploration(graph.getSize(), graph);
                 return OrenetesMenuOptions.KINGDOM_EXPLORATION;
             }
             case "B" -> {
+                OrenetesMenuLogic.showFrequentRoutesDetection(graph);
                 return OrenetesMenuOptions.COMMON_ROUTES;
             }
             case "C" -> {
+                OrenetesMenuLogic.showPremiumMessaging(graph.getSize(), graph);
                 return OrenetesMenuOptions.PREMIUM_MESSAGING;
             }
             default -> {
@@ -98,6 +101,7 @@ public class Menu {
 
         return option;
     }
+
     public static String askForCharacter(String askMessage) {
         String option = ""; // Assegura que la condición del bucle se siga cumpliendo.
         String errorMessage = "Error: Introdueix un caràcter entre \"A\", \"B\", \"C\" o \"D\"." + separator;
@@ -120,5 +124,33 @@ public class Menu {
         } while (!(option.equals("A") || option.equals("B") || option.equals("C") || option.equals("D")));
 
         return option;
+    }
+
+    public static boolean askForBoolean(String askMessage) {
+        String option = "";
+        String errorMessage = "Error: Introdueix \"SI\" o \"NO\"." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = sc.nextLine();
+                option = option.toUpperCase();
+
+                if (!(option.equals("SI") || option.equals("NO"))) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (!(option.equals("SI") || option.equals("NO")));
+
+        if (option.equals("SI")){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

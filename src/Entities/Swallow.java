@@ -1,0 +1,21 @@
+package Entities;
+
+public class Swallow {
+    private final Climate notClimate;
+    private final boolean hasCoco;
+    private double totalDist;
+
+    public Swallow(Climate notClimate, boolean hasCoco) {
+        this.notClimate = notClimate;
+        this.hasCoco = hasCoco;
+        this.totalDist = 0;
+    }
+
+    public void updateDist(double newDist) {
+        totalDist = newDist;
+    }
+
+    public double getTotalDist() {
+        return totalDist;
+    }
+}
