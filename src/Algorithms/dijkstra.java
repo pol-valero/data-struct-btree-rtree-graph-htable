@@ -27,29 +27,25 @@ public class dijkstra {
             time[i] = Double.MAX_VALUE;
         }
 
-        // WHILE
-        while (/*!allVisited(nodes)*/visited < N && !finalNode.isVisited()){
+        while (visited < N && !finalNode.isVisited()){
 
             PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);
 
             // Iterate through all the adjacent nodes.
             for (PlaceOfInterest adjacentNode : adjacentNodes) {
                 if (!adjacentNode.isVisited()) {
-                    // Comprovar 50 km
+                    // Check if the distance is > 50 km when the swallow has a coco
                     if (swallow.getHasCoco()){
                         if (graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex()) <= 50) {
-                            // European Swallow
                             calculateTime(graph, swallow, nodes, currentNode, camins, dist, time, adjacentNode);
                         }
                     } else {
-                        // European Swallow
                         calculateTime(graph, swallow, nodes, currentNode, camins, dist, time, adjacentNode);
                     }
-
                 }
             }
-            currentNode = nodes[getMinNode(time, nodes)]; // ACTUAL = VALOR MÍNIM DE D NO VISITATS (AGAFAR EL NODE AMB MENYS DISTÀNCIA)
-            currentNode.justVisited(); // ACTUAL.VISITAT = CERT
+            currentNode = nodes[getMinNode(time, nodes)];
+            currentNode.justVisited();
             visited++;
         }
         if(finalNode.isVisited()) {
@@ -63,6 +59,7 @@ public class dijkstra {
     private static void calculateTime(Graph graph, Swallow swallow, PlaceOfInterest[] nodes, PlaceOfInterest currentNode, PlaceOfInterest[] camins, Double[] dist, Double[] time, PlaceOfInterest adjacentNode) {
         double nova;
         if (swallow.getNotClimate() == Climate.TROPICAL){
+            // European Swallow
             if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
                 nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             } else {
@@ -94,15 +91,6 @@ public class dijkstra {
         }
     }
 
-    private static boolean allVisited(PlaceOfInterest[] nodes) {
-        for (PlaceOfInterest node : nodes) {
-            if (!node.isVisited()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private static PlaceOfInterest[] initNodes(Graph graph, PlaceOfInterest initialNode) {
         PlaceOfInterest[] nodes = graph.getPlaces().clone();
         nodes[initialNode.getRowIndex()] = graph.getPlaceByIndex(0);
@@ -129,7 +117,6 @@ public class dijkstra {
                 min = time[i];
             }
         }
-
         return minIndex;
     }
 
