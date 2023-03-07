@@ -4,6 +4,11 @@ import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
 
+//import java.util.Arrays;
+
+import static Algorithms.auxiliar.MergeSort.mergeSort;
+import static Algorithms.auxiliar.BinarySearch.binarySearch;
+
 public class Graph {
 	private KnownRoute[][] nodes;
 	private int placesNum;	// Columns of the matrix (nodes)
@@ -17,6 +22,9 @@ public class Graph {
 
 		placesNum = places.length;
 		routesNum = routes.length;
+
+		// Sort places using MergeSort and then apply BinarySearch to look for an ID (lower cost).
+		mergeSort(places, 0, placesNum - 1);
 
 		nodes = new KnownRoute[placesNum][placesNum];
 		createGraph();
@@ -84,12 +92,7 @@ public class Graph {
 				if (nodes[i][j] != null) {
 					System.out.printf("%-20s", nodes[i][j].getDistance());
 				} else {
-					if (i == j) {
-						System.out.printf("%-20s", "0");
-					}
-					else {
-						System.out.printf("%-20s", "-1");
-					}
+					System.out.printf("%-20s", "-1");
 				}
 			}
 			System.out.println();
@@ -121,17 +124,9 @@ public class Graph {
 	}
 
 	public PlaceOfInterest getPlaceByID(int placeID) {
-		PlaceOfInterest node = null;
 
-		// Try to get the place with the ID. TODO: QuickSort + Binary Search
-		for (PlaceOfInterest place : places) {
-			if (place.getId() == placeID) {
-				node = place;
-				break;
-			}
-		}
-
-		return node;
+		// Get the place with the ID using Binary Search (since we use MergeSort for the array).
+		return binarySearch(places, placeID);
 	}
 
 	public int getSize() {

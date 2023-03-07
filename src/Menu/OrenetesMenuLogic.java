@@ -1,6 +1,7 @@
 package Menu;
 
 import Algorithms.BFS;
+import Algorithms.MSTprim;
 import Algorithms.dijkstra;
 import Entities.Graph;
 import Entities.PlaceOfInterest;
@@ -19,11 +20,16 @@ public class OrenetesMenuLogic {
 			System.out.println(Menu.separator + currentNode.showInformation() + Menu.separator);
 			System.out.println("Els llocs del Regne de " + currentNode.getKingdom() + " als que es pot arribar són:" + Menu.separator);
 
-			BFS.kindgomExploration(graph, currentNode);
+			BFS.kingdomExploration(graph, currentNode);
 		}
 		else {
 			System.out.println(Menu.separator + "El lloc seleccionat no existeix.");
 		}
+	}
+
+	public static void showFrequentRoutesDetection(Graph graph) {
+		System.out.println(Menu.separator + "Conjunt de trajectes que connecten tots els llocs i minimitzen la distància total: " + Menu.separator);
+		MSTprim.frequentRoutesDetection(graph);
 	}
 
 	public static void showPremiumMessaging(int size, Graph graph) {
