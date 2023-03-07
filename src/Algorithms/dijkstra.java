@@ -58,35 +58,37 @@ public class dijkstra {
 
     private static void calculateTime(Graph graph, Swallow swallow, PlaceOfInterest[] nodes, PlaceOfInterest currentNode, PlaceOfInterest[] camins, Double[] dist, Double[] time, PlaceOfInterest adjacentNode) {
         double nova;
+
+        int indexCurrentNode = indexOfWays(currentNode, nodes);
+        int indexAdjacentNode = indexOfWays(adjacentNode, nodes);
+
         if (swallow.getNotClimate() == Climate.TROPICAL){
             // European Swallow
-            if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
-                nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            if (time[indexCurrentNode] != Double.MAX_VALUE) {
+                nova = time[indexCurrentNode] + graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             } else {
                 nova = graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             }
 
-            int index = indexOfWays(adjacentNode, nodes);
             // Check if the time of the adjacent is bigger than the new one
-            if (time[index] > nova && graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
-                time[index] = nova;
-                camins[index] = currentNode;
-                dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            if (time[indexAdjacentNode] > nova && graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
+                time[indexAdjacentNode] = nova;
+                camins[indexAdjacentNode] = currentNode;
+                dist[indexAdjacentNode] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             }
         } else {
             // African Swallow
-            if (time[indexOfWays(currentNode, nodes)] != Double.MAX_VALUE) {
-                nova = time[indexOfWays(currentNode, nodes)] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            if (time[indexCurrentNode] != Double.MAX_VALUE) {
+                nova = time[indexCurrentNode] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             } else {
                 nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             }
 
-            int index = indexOfWays(adjacentNode, nodes);
             // Check if the time of the adjacent is bigger than the new one
-            if (time[index] > nova && graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
-                time[index] = nova;
-                camins[index] = currentNode;
-                dist[index] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
+            if (time[indexAdjacentNode] > nova && graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex()) != -1) {
+                time[indexAdjacentNode] = nova;
+                camins[indexAdjacentNode] = currentNode;
+                dist[indexAdjacentNode] = graph.getRouteDistance(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             }
         }
     }
