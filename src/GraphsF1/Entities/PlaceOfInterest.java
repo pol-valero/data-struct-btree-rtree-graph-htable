@@ -28,10 +28,6 @@ public class PlaceOfInterest {
 		return kingdom;
 	}
 
-	public Climate getClimate() {
-		return climate;
-	}
-
 	public int getRowIndex() {
 		return rowIndex;
 	}

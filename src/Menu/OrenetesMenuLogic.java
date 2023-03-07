@@ -9,7 +9,8 @@ import GraphsF1.Entities.Swallow;
 
 public class OrenetesMenuLogic {
 
-	public static void showKingdomExploration(Graph graph) {
+	public static void showKingdomExploration() {
+		Graph graph = new Graph(Menu.GRAPH_DATASET);
 		int nodeID = Menu.askForInteger("Quin lloc vol explorar? ", 0, Integer.MAX_VALUE);
 		PlaceOfInterest currentNode = graph.getPlaceByID(nodeID);
 
@@ -24,12 +25,14 @@ public class OrenetesMenuLogic {
 		}
 	}
 
-	public static void showFrequentRoutesDetection(Graph graph) {
+	public static void showFrequentRoutesDetection() {
+		Graph graph = new Graph(Menu.GRAPH_DATASET);
 		System.out.println(Menu.separator + "Conjunt de trajectes que connecten tots els llocs i minimitzen la distància total: " + Menu.separator);
 		MSTprim.frequentRoutesDetection(graph);
 	}
 
-	public static void showPremiumMessaging(Graph graph) {
+	public static void showPremiumMessaging() {
+		Graph graph = new Graph(Menu.GRAPH_DATASET);
 		int nodeID1 = Menu.askForInteger("Quin és el lloc d'origen? ", 0, Integer.MAX_VALUE);
 
 		PlaceOfInterest firstNode = graph.getPlaceByID(nodeID1);

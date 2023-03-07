@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Menu {
 
     public final static String separator = System.lineSeparator();
+    public static String GRAPH_DATASET;
 
     public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator+separator+
             "1. Sobre orenetes i cocos (Grafs)" +separator +
@@ -49,30 +50,17 @@ public class Menu {
     }
 
     // Sub-menu for the ORENETES option (selected previously in the main menu).
-    public static OrenetesMenuOptions showOrenetesMenu() {
-
-        Graph graph = new Graph("graphsXXS.paed");
-        graph.printMatrix();
+    public static OrenetesMenuOptions showOrenetesMenu(String graph_dataset) {
+        GRAPH_DATASET = graph_dataset;
 
         System.out.println(separator + ORENETES_MENU);
         String option = askForCharacter("Quina funcionalitat vol executar? ");
 
         switch (option) {
-            case "A" -> {
-                OrenetesMenuLogic.showKingdomExploration(graph);
-                return OrenetesMenuOptions.KINGDOM_EXPLORATION;
-            }
-            case "B" -> {
-                OrenetesMenuLogic.showFrequentRoutesDetection(graph);
-                return OrenetesMenuOptions.COMMON_ROUTES;
-            }
-            case "C" -> {
-                OrenetesMenuLogic.showPremiumMessaging(graph);
-                return OrenetesMenuOptions.PREMIUM_MESSAGING;
-            }
-            default -> {
-                return OrenetesMenuOptions.PREVIOUS_MENU;
-            }
+            case "A" -> { return OrenetesMenuOptions.KINGDOM_EXPLORATION; }
+            case "B" -> { return OrenetesMenuOptions.COMMON_ROUTES; }
+            case "C" -> { return OrenetesMenuOptions.PREMIUM_MESSAGING; }
+            default -> { return OrenetesMenuOptions.PREVIOUS_MENU; }
         }
     }
 
