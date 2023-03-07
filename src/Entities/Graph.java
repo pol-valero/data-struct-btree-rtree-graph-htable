@@ -4,10 +4,15 @@ import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
 
+//import java.util.Arrays;
+
+import static Algorithms.auxiliar.MergeSort.mergeSort;
+import static Algorithms.auxiliar.BinarySearch.binarySearch;
+
 public class Graph {
-	private KnownRoute[][] matrix;
-	private int placesNum;	// Number of different places in the graph
-	private int routesNum;	// Number of edges between all the nodes
+	private KnownRoute[][] nodes;
+	private int placesNum;	// Columns of the matrix (nodes)
+	private int routesNum;	// Edges between all the nodes
 	private PlaceOfInterest[] places;
 	private KnownRoute[] routes;
 
@@ -18,14 +23,17 @@ public class Graph {
 		placesNum = places.length;
 		routesNum = routes.length;
 
-		matrix = new KnownRoute[placesNum][placesNum];
+		// Sort places using MergeSort and then apply BinarySearch to look for an ID (lower cost).
+		mergeSort(places, 0, placesNum - 1);
+
+		nodes = new KnownRoute[placesNum][placesNum];
 		createGraph();
 	}
 
 	private void createGraph() {
 		for (int i = 0; i < placesNum; i++) {
 			for (int j = 0; j < placesNum; j++) {
-				matrix[i][j] = findRoute(i, j);
+				nodes[i][j] = findRoute(i, j);
 			}
 		}
 	}
@@ -41,15 +49,15 @@ public class Graph {
 		return null;
 	}
 
-	public void printMatrixWithRelations(){
+	public void printRelations(){
 
 		System.out.println("\nGraph representation with adjacency matrix (showing relations): \n");
 		for(int i = 0; i < placesNum; i++){
 			for(int j = 0; j < placesNum; j++){
-				if (matrix[i][j] != null) {
-					System.out.print(places[i].getName() + "<->" + places[j].getName() + "@dist:" + matrix[i][j].getDistance() + "    ");
+				if (nodes[i][j] != null) {
+					System.out.print(places[i].getName() + "<->" + places[j].getName() + "@dist:" + nodes[i][j].getDistance() + "    ");
 				} else {
-					System.out.print(matrix[i][j] + "    ");
+					System.out.print(nodes[i][j] + "    ");
 				}
 			}
 			System.out.println();
@@ -81,15 +89,10 @@ public class Graph {
 		for(int i = 0; i < placesNum; i++){
 			System.out.printf("%-25s", places[i].getName());	// Name of the place on the left
 			for(int j = 0; j < placesNum; j++){
-				if (matrix[i][j] != null) {
-					System.out.printf("%-20s", matrix[i][j].getDistance());
+				if (nodes[i][j] != null) {
+					System.out.printf("%-20s", nodes[i][j].getDistance());
 				} else {
-					if (i == j) {
-						System.out.printf("%-20s", "0");
-					}
-					else {
-						System.out.printf("%-20s", "-1");
-					}
+					System.out.printf("%-20s", "-1");
 				}
 			}
 			System.out.println();
@@ -103,7 +106,7 @@ public class Graph {
 
 		for (int columns = 0; columns < placesNum; columns++) {
 			PlaceOfInterest currentNode = getPlaceByIndex(columns);
-			KnownRoute currentRoute = matrix[rowIndex][columns];
+			KnownRoute currentRoute = nodes[rowIndex][columns];
 
 			// Check if the current node is an adjacent
 			if (currentRoute != null) {	// Check if exists
@@ -121,17 +124,9 @@ public class Graph {
 	}
 
 	public PlaceOfInterest getPlaceByID(int placeID) {
-		PlaceOfInterest node = null;
 
-		// Try to get the place with the ID. TODO: QuickSort + Binary Search
-		for (PlaceOfInterest place : places) {
-			if (place.getId() == placeID) {
-				node = place;
-				break;
-			}
-		}
-
-		return node;
+		// Get the place with the ID using Binary Search (since we use MergeSort for the array).
+		return binarySearch(places, placeID);
 	}
 
 	public int getSize() {
@@ -142,36 +137,4 @@ public class Graph {
 	public PlaceOfInterest[] getPlaces() {
 		return places;
 	}
-
-
-	// Get distance between two adjacent nodes.
-	public float getRouteDistance(int actualPlace, int adjacentPlace) {
-		return (matrix[actualPlace][adjacentPlace].getDistance());
-	}
-
-	// Get time between two adjacent nodes.
-	public double getRouteTime(int actualPlace, int adjacentPlace) {
-		return (matrix[actualPlace][adjacentPlace].getTime());
-	}
-
-
-	//Getter to obtain the first node
-	public PlaceOfInterest getFirstNode() {
-		return places[0];
-	}
-
-	//Gets the route with all the info between the two nodes.
-	public KnownRoute getRoute(int actualPlace, int adjacentPlace) {
-		return matrix[actualPlace][adjacentPlace];
-	}
-
-	//Checks if a route between to places exists and returns FALSE if it doesn't
-	public boolean routeExists(int actualPlace, int adjacentPlace) {
-		if(matrix[actualPlace][adjacentPlace] == null) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
 }
