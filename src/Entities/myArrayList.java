@@ -159,18 +159,18 @@ public class myArrayList<T> implements Iterable<T> {
 	// Implement the interface Iterable and override the method iterator().
 	@Override
 	public Iterator<T> iterator() {
-		Iterator<T> it = new Iterator<T>() {
+		return new Iterator<T>() {
 
-			private int currentIndex = 0;
+			private int index = 0;
 
 			@Override
 			public boolean hasNext() {
-				return currentIndex < size && elements[currentIndex] != null;
+				return (index < size) && (elements[index] != null);
 			}
 
 			@Override
 			public T next() {
-				return elements[currentIndex++];
+				return elements[index++];
 			}
 
 			@Override
@@ -178,6 +178,5 @@ public class myArrayList<T> implements Iterable<T> {
 				throw new UnsupportedOperationException();
 			}
 		};
-		return it;
 	}
 }
