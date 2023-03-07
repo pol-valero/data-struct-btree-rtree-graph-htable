@@ -139,17 +139,17 @@ public class Graph {
 	}
 
 	// Get distance between two adjacent nodes.
-	public double getRouteDistance(int actualPlace, int adjacentPlace) {
+	public float getRouteDistance(int actualPlace, int adjacentPlace) {
 		return (nodes[actualPlace][adjacentPlace].getDistance());
 	}
 
 	// Get time A between two adjacent nodes.
-	public double getRouteTimeA(int actualPlace, int adjacentPlace) {
+	public float getRouteTimeA(int actualPlace, int adjacentPlace) {
 		return (nodes[actualPlace][adjacentPlace].getTimeA());
 	}
 
 	// Get time B between two adjacent nodes.
-	public double getRouteTimeE(int actualPlace, int adjacentPlace) {
+	public float getRouteTimeE(int actualPlace, int adjacentPlace) {
 		return (nodes[actualPlace][adjacentPlace].getTimeE());
 	}
 }

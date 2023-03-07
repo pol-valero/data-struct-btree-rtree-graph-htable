@@ -5,6 +5,8 @@ import Entities.Graph;
 import Entities.PlaceOfInterest;
 import Entities.Swallow;
 
+import java.util.Arrays;
+
 public class dijkstra {
     public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
@@ -16,16 +18,15 @@ public class dijkstra {
         PlaceOfInterest[] camins = new PlaceOfInterest[N];
         camins[0] = initialNode;
 
-        Double[] dist = new Double[N];
-
-        Double[] time = new Double[N];
-        time[0] = 0.0;// La distancia del vértice origen hacia el mismo es siempre 0
+        Float[] dist = new Float[N];
+        Float[] time = new Float[N];
 
         // Initialize all distances as INFINITE
-        for (int i = 1; i < N; i++) {
-            dist[i] = 0.0;
-            time[i] = Double.MAX_VALUE;
+        for (int i = 0; i < N; i++) {
+            dist[i] = 0.0f;
+            time[i] = Float.MAX_VALUE;
         }
+        time[0] = 0.0f;// La distancia del vértice origen hacia el mismo es siempre 0
 
         while (visited < N && !finalNode.isVisited()){
 
@@ -51,20 +52,20 @@ public class dijkstra {
         if(finalNode.isVisited()) {
             return finalWay(camins, time, finalNode, nodes, swallow, dist);
         } else {
-            swallow.updateTime(Double.MAX_VALUE);
+            swallow.updateTime(Float.MAX_VALUE);
             return null;
         }
     }
 
-    private static void calculateTime(Graph graph, Swallow swallow, PlaceOfInterest[] nodes, PlaceOfInterest currentNode, PlaceOfInterest[] camins, Double[] dist, Double[] time, PlaceOfInterest adjacentNode) {
-        double nova;
+    private static void calculateTime(Graph graph, Swallow swallow, PlaceOfInterest[] nodes, PlaceOfInterest currentNode, PlaceOfInterest[] camins, Float[] dist, Float[] time, PlaceOfInterest adjacentNode) {
+        float nova;
 
         int indexCurrentNode = indexOfWays(currentNode, nodes);
         int indexAdjacentNode = indexOfWays(adjacentNode, nodes);
 
         if (swallow.getNotClimate() == Climate.TROPICAL){
             // European Swallow
-            if (time[indexCurrentNode] != Double.MAX_VALUE) {
+            if (time[indexCurrentNode] != Float.MAX_VALUE) {
                 nova = time[indexCurrentNode] + graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             } else {
                 nova = graph.getRouteTimeE(currentNode.getRowIndex(), adjacentNode.getRowIndex());
@@ -78,7 +79,7 @@ public class dijkstra {
             }
         } else {
             // African Swallow
-            if (time[indexCurrentNode] != Double.MAX_VALUE) {
+            if (time[indexCurrentNode] != Float.MAX_VALUE) {
                 nova = time[indexCurrentNode] + graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
             } else {
                 nova = graph.getRouteTimeA(currentNode.getRowIndex(), adjacentNode.getRowIndex());
@@ -109,8 +110,8 @@ public class dijkstra {
         return -1;
     }
 
-    private static int getMinNode(Double[] time, PlaceOfInterest[] nodes) {
-        Double min = Double.MAX_VALUE;
+    private static int getMinNode(Float[] time, PlaceOfInterest[] nodes) {
+        float min = Float.MAX_VALUE;
         int minIndex = 0;
 
         for (int i = 0; i < time.length; i++) {
@@ -122,10 +123,10 @@ public class dijkstra {
         return minIndex;
     }
 
-    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Double[] time, PlaceOfInterest finalNode, PlaceOfInterest[] nodes, Swallow swallow, Double[] dist) {
+    private static PlaceOfInterest[] finalWay(PlaceOfInterest[] ways, Float[] time, PlaceOfInterest finalNode, PlaceOfInterest[] nodes, Swallow swallow, Float[] dist) {
         PlaceOfInterest[] finalWay = new PlaceOfInterest[ways.length];
         PlaceOfInterest nextNode = finalNode;
-        double totalDist = 0.0;
+        float totalDist = 0.0f;
 
         int node = indexOfWays(nextNode, nodes);
         int current = 0;
