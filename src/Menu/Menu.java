@@ -1,6 +1,6 @@
 package Menu;
 
-import Entities.Graph;
+import GraphsF1.Entities.Graph;
 
 import java.util.Scanner;
 
@@ -59,7 +59,7 @@ public class Menu {
 
         switch (option) {
             case "A" -> {
-                OrenetesMenuLogic.showKingdomExploration(graph.getSize(), graph);
+                OrenetesMenuLogic.showKingdomExploration(graph);
                 return OrenetesMenuOptions.KINGDOM_EXPLORATION;
             }
             case "B" -> {
@@ -67,7 +67,7 @@ public class Menu {
                 return OrenetesMenuOptions.COMMON_ROUTES;
             }
             case "C" -> {
-                OrenetesMenuLogic.showPremiumMessaging(graph.getSize(), graph);
+                OrenetesMenuLogic.showPremiumMessaging(graph);
                 return OrenetesMenuOptions.PREMIUM_MESSAGING;
             }
             default -> {
@@ -145,10 +145,6 @@ public class Menu {
 
         } while (!(option.equals("SI") || option.equals("NO")));
 
-        if (option.equals("SI")){
-            return true;
-        } else {
-            return false;
-        }
+        return option.equals("SI");
     }
 }

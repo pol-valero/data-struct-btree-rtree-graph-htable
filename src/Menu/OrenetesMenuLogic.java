@@ -1,18 +1,15 @@
 package Menu;
 
-import Algorithms.BFS;
-import Algorithms.MSTprim;
-import Algorithms.dijkstra;
-import Entities.Graph;
-import Entities.PlaceOfInterest;
-import Entities.Swallow;
-
-import static Entities.Climate.POLAR;
-import static Entities.Climate.TROPICAL;
+import GraphsF1.Algorithms.BFS;
+import GraphsF1.Algorithms.Dijkstra;
+import GraphsF1.Algorithms.MSTprim;
+import GraphsF1.Entities.Graph;
+import GraphsF1.Entities.PlaceOfInterest;
+import GraphsF1.Entities.Swallow;
 
 public class OrenetesMenuLogic {
 
-	public static void showKingdomExploration(int graphSize, Graph graph) {
+	public static void showKingdomExploration(Graph graph) {
 		int nodeID = Menu.askForInteger("Quin lloc vol explorar? ", 0, Integer.MAX_VALUE);
 		PlaceOfInterest currentNode = graph.getPlaceByID(nodeID);
 
@@ -32,7 +29,7 @@ public class OrenetesMenuLogic {
 		MSTprim.frequentRoutesDetection(graph);
 	}
 
-	public static void showPremiumMessaging(int size, Graph graph) {
+	public static void showPremiumMessaging(Graph graph) {
 		int nodeID1 = Menu.askForInteger("Quin és el lloc d'origen? ", 0, Integer.MAX_VALUE);
 
 		PlaceOfInterest firstNode = graph.getPlaceByID(nodeID1);
@@ -41,18 +38,18 @@ public class OrenetesMenuLogic {
 		PlaceOfInterest secondNode = graph.getPlaceByID(nodeID2);
 		boolean coco = Menu.askForBoolean("L'oreneta carrega un coco? ");
 
-		Swallow europeanSwallow = new Swallow(TROPICAL, coco);
-		Swallow africanSwallow = new Swallow(POLAR, coco);
+		Swallow europeanSwallow = new Swallow(Swallow.EUROPEA, coco);
+		Swallow africanSwallow = new Swallow(Swallow.AFRICANA, coco);
 
 		if (firstNode != null && secondNode != null) {
 
-			PlaceOfInterest[] europeanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
-			PlaceOfInterest[] africanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
+			PlaceOfInterest[] europeanWay = Dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
+			PlaceOfInterest[] africanWay = Dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
 
 			if (europeanSwallow.getTotalTime() < africanSwallow.getTotalTime()) {
-				showOutput(europeanSwallow, "europea", europeanWay);
+				showOutput(europeanSwallow, europeanWay);
 			} else {
-				showOutput(africanSwallow, "africana", africanWay);
+				showOutput(africanSwallow, africanWay);
 			}
 
 		}
@@ -61,10 +58,10 @@ public class OrenetesMenuLogic {
 		}
 	}
 
-	private static void showOutput(Swallow swallow, String typeSwallow, PlaceOfInterest[] way) {
-		System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta "+typeSwallow+"." + Menu.separator);
+	private static void showOutput(Swallow swallow, PlaceOfInterest[] way) {
+		System.out.println(Menu.separator + "L'opció més eficient és enviar una oreneta " + swallow.getType() + "." + Menu.separator);
 		System.out.println("\tTemps: " + swallow.getTotalTime());
-		System.out.println("\tDistància: "+ swallow.getTotalDist());
+		System.out.println("\tDistància: " + swallow.getTotalDist());
 		System.out.println("\tCamí: ");
 		int counter = 1;
 		if (way != null) {

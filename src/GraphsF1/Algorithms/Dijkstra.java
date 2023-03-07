@@ -1,13 +1,11 @@
-package Algorithms;
+package GraphsF1.Algorithms;
 
-import Entities.Climate;
-import Entities.Graph;
-import Entities.PlaceOfInterest;
-import Entities.Swallow;
+import GraphsF1.Entities.Climate;
+import GraphsF1.Entities.Graph;
+import GraphsF1.Entities.PlaceOfInterest;
+import GraphsF1.Entities.Swallow;
 
-import java.util.Arrays;
-
-public class dijkstra {
+public class Dijkstra {
     public static PlaceOfInterest[] premiumMessaging(Graph graph, PlaceOfInterest initialNode, PlaceOfInterest finalNode, Swallow swallow) {
         int N = graph.getSize();
         int visited = 0;

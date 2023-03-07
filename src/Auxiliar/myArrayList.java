@@ -1,4 +1,4 @@
-package Entities;
+package Auxiliar;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -159,7 +159,7 @@ public class myArrayList<T> implements Iterable<T> {
 	// Implement the interface Iterable and override the method iterator().
 	@Override
 	public Iterator<T> iterator() {
-		return new Iterator<T>() {
+		return new Iterator<>() {
 
 			private int index = 0;
 

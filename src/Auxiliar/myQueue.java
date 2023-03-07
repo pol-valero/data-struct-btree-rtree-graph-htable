@@ -1,4 +1,4 @@
-package Entities;
+package Auxiliar;
 
 public class myQueue<T> {
     private T[] elements;

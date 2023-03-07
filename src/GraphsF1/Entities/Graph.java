@@ -1,11 +1,11 @@
-package Entities;
+package GraphsF1.Entities;
 
 import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
 
-import static Algorithms.auxiliar.MergeSort.mergeSort;
-import static Algorithms.auxiliar.BinarySearch.binarySearch;
+import static Auxiliar.Algorithms.MergeSort.mergeSort;
+import static Auxiliar.Algorithms.BinarySearch.binarySearch;
 
 public class Graph {
 	private KnownRoute[][] matrix;

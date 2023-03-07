@@ -1,6 +1,6 @@
-package Algorithms.auxiliar;
+package Auxiliar.Algorithms;
 
-import Entities.PlaceOfInterest;
+import GraphsF1.Entities.PlaceOfInterest;
 
 public class BinarySearch {
 

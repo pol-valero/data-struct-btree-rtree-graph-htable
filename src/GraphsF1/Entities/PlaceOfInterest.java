@@ -1,4 +1,4 @@
-package Entities;
+package GraphsF1.Entities;
 
 public class PlaceOfInterest {
 	private final int id;

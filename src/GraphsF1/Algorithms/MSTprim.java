@@ -1,10 +1,10 @@
-package Algorithms;
+package GraphsF1.Algorithms;
 
-import Entities.Graph;
-import Entities.KnownRoute;
-import Entities.PlaceOfInterest;
+import GraphsF1.Entities.Graph;
+import GraphsF1.Entities.KnownRoute;
+import GraphsF1.Entities.PlaceOfInterest;
 
-import Entities.myArrayList;
+import Auxiliar.myArrayList;
 
 
 public class MSTprim {
@@ -118,11 +118,7 @@ public class MSTprim {
 
         //The edge will be valid (return true) only if one of the nodes is already in the MST and the other one is not.
         //Therefore, if both nodes exist or both nodes don't exist in the MST, we return false as the edge is invalid.
-        if (existsInMST[firstNodeIndex] == existsInMST[secondNodeIndex]) {
-            return false;
-        }
-
-        return true;
+        return existsInMST[firstNodeIndex] != existsInMST[secondNodeIndex];
     }
 
 }

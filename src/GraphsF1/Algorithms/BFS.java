@@ -1,8 +1,8 @@
-package Algorithms;
+package GraphsF1.Algorithms;
 
-import Entities.Graph;
-import Entities.PlaceOfInterest;
-import Entities.myQueue;
+import GraphsF1.Entities.Graph;
+import GraphsF1.Entities.PlaceOfInterest;
+import Auxiliar.myQueue;
 
 public class BFS {
 

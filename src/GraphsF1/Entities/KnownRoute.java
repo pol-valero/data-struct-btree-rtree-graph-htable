@@ -1,4 +1,4 @@
-package Entities;
+package GraphsF1.Entities;
 
 public class KnownRoute {
 	private final int placeA;

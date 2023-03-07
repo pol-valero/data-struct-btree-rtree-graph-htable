@@ -1,7 +1,7 @@
-package Algorithms;
+package GraphsF1.Algorithms;
 
-import Entities.Graph;
-import Entities.PlaceOfInterest;
+import GraphsF1.Entities.Graph;
+import GraphsF1.Entities.PlaceOfInterest;
 
 public class DFS {
 

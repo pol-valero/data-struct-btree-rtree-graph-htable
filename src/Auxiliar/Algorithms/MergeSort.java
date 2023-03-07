@@ -1,6 +1,6 @@
-package Algorithms.auxiliar;
+package Auxiliar.Algorithms;
 
-import Entities.PlaceOfInterest;
+import GraphsF1.Entities.PlaceOfInterest;
 
 public class MergeSort {
 	// MergeSort sort algorithm in ascendent order, used to sort the nodes by ID to then apply Binary Search and look for their ID, with cost O(n · log[n])

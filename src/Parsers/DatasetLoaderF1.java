@@ -1,8 +1,8 @@
 package Parsers;
 
-import Entities.Climate;
-import Entities.KnownRoute;
-import Entities.PlaceOfInterest;
+import GraphsF1.Entities.Climate;
+import GraphsF1.Entities.KnownRoute;
+import GraphsF1.Entities.PlaceOfInterest;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,17 +16,13 @@ public class DatasetLoaderF1 {
     private static PlaceOfInterest csvLineToPlace(String csvLine) {
         String[] field = csvLine.split(parseSeparator);
 
-        PlaceOfInterest place = new PlaceOfInterest(Integer.parseInt(field[0]), field[1], field[2], Climate.stringToEnum(field[3]));
-
-        return place;
+        return new PlaceOfInterest(Integer.parseInt(field[0]), field[1], field[2], Climate.stringToEnum(field[3]));
     }
 
     private static KnownRoute csvLineToRoute(String csvLine) {
         String[] field = csvLine.split(parseSeparator);
 
-        KnownRoute route = new KnownRoute(Integer.parseInt(field[0]), Integer.parseInt(field[1]), Float.parseFloat(field[2]), Float.parseFloat(field[3]), Float.parseFloat(field[4]));
-
-        return route;
+        return new KnownRoute(Integer.parseInt(field[0]), Integer.parseInt(field[1]), Float.parseFloat(field[2]), Float.parseFloat(field[3]), Float.parseFloat(field[4]));
     }
 
     public static PlaceOfInterest[] loadPlaces(String datasetName) {
