@@ -13,10 +13,10 @@ public class DatasetLoaderF1 {
 
     private static final String parseSeparator = ";";
 
-    private static PlaceOfInterest csvLineToPlace(String csvLine, int rowIndex) {
+    private static PlaceOfInterest csvLineToPlace(String csvLine) {
         String[] field = csvLine.split(parseSeparator);
 
-        PlaceOfInterest place = new PlaceOfInterest(Integer.parseInt(field[0]), field[1], field[2], Climate.stringToEnum(field[3]), rowIndex);
+        PlaceOfInterest place = new PlaceOfInterest(Integer.parseInt(field[0]), field[1], field[2], Climate.stringToEnum(field[3]));
 
         return place;
     }
@@ -44,7 +44,7 @@ public class DatasetLoaderF1 {
             places = new PlaceOfInterest[placesLinesNum];
 
             for (int i = 1; i <= placesLinesNum; i++) {
-                    places[j] = (csvLineToPlace(csvLines.get(i), j));
+                    places[j] = (csvLineToPlace(csvLines.get(i)));
                     j++;
             }
 

@@ -4,8 +4,6 @@ import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
 
-//import java.util.Arrays;
-
 import static Algorithms.auxiliar.MergeSort.mergeSort;
 import static Algorithms.auxiliar.BinarySearch.binarySearch;
 

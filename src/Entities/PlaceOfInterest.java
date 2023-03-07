@@ -5,15 +5,14 @@ public class PlaceOfInterest {
 	private final String name;
 	private final String kingdom;
 	private final Climate climate;
-	private final int rowIndex;
+	private int rowIndex;
 	private boolean visited;
 
-	public PlaceOfInterest(int id, String name, String kingdom, Climate climate, int rowIndex) {
+	public PlaceOfInterest(int id, String name, String kingdom, Climate climate) {
 		this.id = id;
 		this.name = name;
 		this.kingdom = kingdom;
 		this.climate = climate;
-		this.rowIndex = rowIndex;
 		visited = false;
 	}
 
@@ -58,5 +57,9 @@ public class PlaceOfInterest {
 	}
 	public void notVisited(){
 		visited = false;
+	}
+
+	public void setRowIndex(int rowIndex) {
+		this.rowIndex = rowIndex;
 	}
 }

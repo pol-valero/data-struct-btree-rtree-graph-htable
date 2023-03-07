@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private static long initialTime;
-    private static long executionTime;
     public final static String separator = System.lineSeparator();
 
     public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator+separator+
@@ -53,7 +51,7 @@ public class Menu {
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu() {
 
-        Graph graph = new Graph("graphsXS.paed");
+        Graph graph = new Graph("graphsXXS.paed");
         graph.printMatrix();
 
         System.out.println(separator + ORENETES_MENU);

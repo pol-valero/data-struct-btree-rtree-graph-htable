@@ -3,6 +3,7 @@ package Algorithms.auxiliar;
 import Entities.PlaceOfInterest;
 
 public class MergeSort {
+	// MergeSort sort algorithm in ascendent order, used to sort the nodes by ID to then apply Binary Search and look for their ID, with cost O(n · log[n])
 	public static void mergeSort(PlaceOfInterest[] nodes, int start, int end) {
 
 		// Cas en què hi ha més d'un element a l'array, i s'ha d'ordenar.
@@ -22,7 +23,7 @@ public class MergeSort {
 		int left = start;       // Posicionar el punter d'inici d'array de la primera meitat a la primera posició.
 		int right = mig + 1;    // Posicionar el punter d'inici d'array de la segona meitat a la posició del mig + 1.
 		int pos = start;        // Posicionar el cursor a la primera posició de l'array.
-		PlaceOfInterest[] temp = new PlaceOfInterest[nodes.length];  // Creació d'una array de vaixells temporals per anar emmagatzemant els vaixells ordenats.
+		PlaceOfInterest[] temp = new PlaceOfInterest[nodes.length];  // Creació d'una array de nodes temporals per anar emmagatzemant els nodes ordenats.
 
 		// Es comprova cada posició de cada meitat mentre no s'hagi arribat al final de cada meitat.
 		while (left <= mig && right <= end) {
@@ -42,13 +43,13 @@ public class MergeSort {
 
 		// Un cop s'ha arribat al final d'una de les dues meitats, es copia cada meitat respectivament.
 		while (left <= mig) {
-			temp[pos] = nodes[left];     // Es copien els vaixells restants de la primera meitat.
+			temp[pos] = nodes[left];     // Es copien els nodes restants de la primera meitat.
 			left++;
 			pos++;
 		}
 
 		while (right <= end) {
-			temp[pos] = nodes[right];    // Es copien els vaixells restants de la segona meitat.
+			temp[pos] = nodes[right];    // Es copien els nodes restants de la segona meitat.
 			right++;
 			pos++;
 		}
@@ -58,6 +59,7 @@ public class MergeSort {
 		// Es fa un swap sencer de l'array, intercanviant els vaixells de l'array a ordenar pels de la temporal, amb l'ordre corresponent.
 		while (aux <= end) {
 			nodes[aux] = temp[aux];
+			nodes[aux].setRowIndex(aux);	// Update node RowIndex since its position in array changed.
 			aux++;
 		}
 	}
