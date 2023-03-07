@@ -6,7 +6,6 @@ import Algorithms.dijkstra;
 import Entities.Graph;
 import Entities.PlaceOfInterest;
 import Entities.Swallow;
-import Entities.myArrayList;
 
 import static Entities.Climate.POLAR;
 import static Entities.Climate.TROPICAL;
@@ -26,8 +25,6 @@ public class OrenetesMenuLogic {
 		else {
 			System.out.println(Menu.separator + "El lloc seleccionat no existeix.");
 		}
-
-
 	}
 
 	public static void showFrequentRoutesDetection(Graph graph) {
@@ -37,8 +34,10 @@ public class OrenetesMenuLogic {
 
 	public static void showPremiumMessaging(int size, Graph graph) {
 		int nodeID1 = Menu.askForInteger("Quin és el lloc d'origen? ", 0, Integer.MAX_VALUE);
+
 		PlaceOfInterest firstNode = graph.getPlaceByID(nodeID1);
 		int nodeID2 = Menu.askForInteger("Quin és el lloc de destí? ", 0, Integer.MAX_VALUE);
+
 		PlaceOfInterest secondNode = graph.getPlaceByID(nodeID2);
 		boolean coco = Menu.askForBoolean("L'oreneta carrega un coco? ");
 
@@ -47,30 +46,35 @@ public class OrenetesMenuLogic {
 
 		if (firstNode != null && secondNode != null) {
 
+			PlaceOfInterest[] europeanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
+			PlaceOfInterest[] africanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
 
-			myArrayList<PlaceOfInterest> europeanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
-			myArrayList<PlaceOfInterest> africanWay = dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
+			if (europeanSwallow.getTotalTime() < africanSwallow.getTotalTime()) {
+				showOutput(europeanSwallow, "europea", europeanWay);
+			} else {
+				showOutput(africanSwallow, "africana", africanWay);
+			}
 
-			//if (europeanSwallow.getTotalDist() < africanSwallow.getTotalDist()) {
-				System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta europea." + Menu.separator);
-				System.out.println(Menu.separator+"\tTemps: ");
-				System.out.println(Menu.separator+"\tDistància: "+ europeanSwallow.getTotalDist());
-				System.out.println(Menu.separator+"\tCamí: ");
-				for (int i = 0; i < europeanWay.size(); i++) {
-					System.out.println("\t"+(i+1)+". "+europeanWay.get(i).getName());
-				}
-			/*} else {
-				System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta africana." + Menu.separator);
-				System.out.println(Menu.separator+"\tTemps: ");
-				System.out.println(Menu.separator+"\tDistància: "+ africanSwallow.getTotalDist());
-				System.out.println(Menu.separator+"\tCamí: ");
-				for (int i = 0; i < africanWay.size(); i++) {
-					System.out.println("\t"+(i+1)+". "+africanWay.get(i));
-				}
-			}*/
 		}
 		else {
 			System.out.println(Menu.separator + "Un dels llocs seleccionats no existeix.");
 		}
+	}
+
+	private static void showOutput(Swallow swallow, String typeSwallow, PlaceOfInterest[] way) {
+		System.out.println(Menu.separator+"L'opció més eficient és enviar una oreneta "+typeSwallow+"." + Menu.separator);
+		System.out.println("\tTemps: " + swallow.getTotalTime());
+		System.out.println("\tDistància: "+ swallow.getTotalDist());
+		System.out.println("\tCamí: ");
+		int counter = 1;
+		if (way != null) {
+			for (PlaceOfInterest placeOfInterest : way) {
+				if (placeOfInterest != null) {
+					System.out.println("\t\t" + (counter) + ". " + placeOfInterest.getName());
+					counter++;
+				}
+			}
+		}
+
 	}
 }

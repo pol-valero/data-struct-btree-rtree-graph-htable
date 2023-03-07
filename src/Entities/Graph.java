@@ -109,7 +109,7 @@ public class Graph {
 			KnownRoute currentRoute = nodes[rowIndex][columns];
 
 			// Check if the current node is an adjacent
-			if (currentRoute != null) {	// Check if exists
+			if (currentRoute != null && currentNode != node) {	// Check if exists
 				if (currentRoute.getDistance() != -1) {	// Check conditions
 					adjacents.add(currentNode);    // Add node to Array
 				}
@@ -136,5 +136,20 @@ public class Graph {
 	// Getter to obtain all the nodes in the graph.
 	public PlaceOfInterest[] getPlaces() {
 		return places;
+	}
+
+	// Get distance between two adjacent nodes.
+	public float getRouteDistance(int actualPlace, int adjacentPlace) {
+		return (nodes[actualPlace][adjacentPlace].getDistance());
+	}
+
+	// Get time A between two adjacent nodes.
+	public float getRouteTimeA(int actualPlace, int adjacentPlace) {
+		return (nodes[actualPlace][adjacentPlace].getTimeA());
+	}
+
+	// Get time B between two adjacent nodes.
+	public float getRouteTimeE(int actualPlace, int adjacentPlace) {
+		return (nodes[actualPlace][adjacentPlace].getTimeE());
 	}
 }

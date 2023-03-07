@@ -56,4 +56,7 @@ public class PlaceOfInterest {
 	public String showInformation() {
 		return (id + " - " + name + ", " + "Regne de " + kingdom + " (" + climate.enumToString() + ")");
 	}
+	public void notVisited(){
+		visited = false;
+	}
 }
