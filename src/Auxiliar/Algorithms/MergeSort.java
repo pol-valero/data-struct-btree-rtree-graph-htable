@@ -15,7 +15,6 @@ public class MergeSort {
 		}
 
 		// Cas trivial en què només hi ha un element a l'array, per tant, start = end.
-		return;
 	}
 
 	// Subfunció de l'algorisme "Merge Sort", que implementa la lògica d'ordenar les sub-arrays alfabèticament.

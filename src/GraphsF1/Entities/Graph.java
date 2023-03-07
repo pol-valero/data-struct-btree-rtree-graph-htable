@@ -8,11 +8,11 @@ import static Auxiliar.Algorithms.MergeSort.mergeSort;
 import static Auxiliar.Algorithms.BinarySearch.binarySearch;
 
 public class Graph {
-	private KnownRoute[][] matrix;
-	private int placesNum;	// Columns of the matrix (nodes)
-	private int routesNum;	// Edges between all the nodes
-	private PlaceOfInterest[] places;
-	private KnownRoute[] routes;
+	private final KnownRoute[][] matrix;
+	private final int placesNum;	// Columns of the matrix (nodes)
+	private final int routesNum;	// Edges between all the nodes
+	private final PlaceOfInterest[] places;
+	private final KnownRoute[] routes;
 
 	public Graph(String datasetName) {
 		places = DatasetLoaderF1.loadPlaces(datasetName);
@@ -163,10 +163,6 @@ public class Graph {
 
 	//Checks if a route between to places exists and returns FALSE if it doesn't
 	public boolean routeExists(int actualPlace, int adjacentPlace) {
-		if(matrix[actualPlace][adjacentPlace] == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return matrix[actualPlace][adjacentPlace] != null;
 	}
 }
