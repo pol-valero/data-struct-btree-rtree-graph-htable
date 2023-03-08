@@ -1,17 +1,16 @@
 package Menu;
 
-import GraphsF1.Entities.Graph;
-
 import java.util.Scanner;
 
 public class Menu {
 
     public final static String separator = System.lineSeparator();
-    public static String GRAPH_DATASET;
+    public static String GRAPHS_DATASET;
+    public static String TREES_DATASET;
 
     public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator+separator+
             "1. Sobre orenetes i cocos (Grafs)" +separator +
-            "2. PER ESPECIFICAR" + separator+
+            "2. Caça de bruixes (Arbres binaris de cerca)" + separator+
             "3. PER ESPECIFICAR" + separator+
             "4. PER ESPECIFICAR" + separator + separator +
             "5. Exit" + separator;
@@ -19,6 +18,14 @@ public class Menu {
             "B. Detecció de trajectes habituals" + separator +
             "C. Missatgeria premium" + separator + separator +
             "D. Tornar enrere" + separator;
+
+    public static final String BRUIXES_MENU = separator + "A. Afegir habitant" + separator +
+            "B. Eliminar habitant" + separator +
+            "C. Representació visual" + separator +
+            "D. Identificació de bruixes" + separator +
+            "E. Batuda" + separator + separator +
+            "F. Tornar enrere" + separator;
+
     public static final String EXIT = "\u001B[31m "+separator+"Aturant The Hashy Grail..."+separator+" \u001B[0m";
 
 
@@ -34,7 +41,7 @@ public class Menu {
                     return MainMenuOptions.ORENETES;
                 }
                 case 2 -> {
-                    return MainMenuOptions.OPTION_2;
+                    return MainMenuOptions.BRUIXES;
                 }
                 case 3 -> {
                     return MainMenuOptions.OPTION_3;
@@ -51,7 +58,7 @@ public class Menu {
 
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu(String graph_dataset) {
-        GRAPH_DATASET = graph_dataset;
+        GRAPHS_DATASET = graph_dataset;
 
         System.out.println(separator + ORENETES_MENU);
         String option = askForCharacter("Quina funcionalitat vol executar? ");
@@ -61,6 +68,23 @@ public class Menu {
             case "B" -> { return OrenetesMenuOptions.COMMON_ROUTES; }
             case "C" -> { return OrenetesMenuOptions.PREMIUM_MESSAGING; }
             default -> { return OrenetesMenuOptions.PREVIOUS_MENU; }
+        }
+    }
+
+    // Sub-menu for the WITCHES option (selected previously in the main menu).
+    public static BruixesMenuOptions showWitchesMenu(String trees_dataset) {
+        TREES_DATASET = trees_dataset;
+
+        System.out.println(separator + BRUIXES_MENU);
+        String option = askForCharacter("Quina funcionalitat vol executar? ");
+
+        switch (option) {
+            case "A" -> { return BruixesMenuOptions.ADD_CITIZEN; }
+            case "B" -> { return BruixesMenuOptions.REMOVE_CITIZEN; }
+            case "C" -> { return BruixesMenuOptions.VISUAL_REPRESENTATION; }
+            case "D" -> { return BruixesMenuOptions.WITCHES_IDENTIFICATION; }
+            case "E" -> { return BruixesMenuOptions.FIGHT; }
+            default -> { return BruixesMenuOptions.EXIT; }
         }
     }
 
