@@ -1,5 +1,8 @@
 package Menu;
 
+import Menu.Bruixes.BruixesMenuOptions;
+import Menu.Orenetes.OrenetesMenuOptions;
+
 import java.util.Scanner;
 
 public class Menu {

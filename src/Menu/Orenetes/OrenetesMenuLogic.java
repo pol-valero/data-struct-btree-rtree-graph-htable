@@ -1,4 +1,4 @@
-package Menu;
+package Menu.Orenetes;
 
 import GraphsF1.Algorithms.BFS;
 import GraphsF1.Algorithms.Dijkstra;
@@ -6,6 +6,7 @@ import GraphsF1.Algorithms.MSTprim;
 import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.PlaceOfInterest;
 import GraphsF1.Entities.Swallow;
+import Menu.Menu;
 
 public class OrenetesMenuLogic {
 

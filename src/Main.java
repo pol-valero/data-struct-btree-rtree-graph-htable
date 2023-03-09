@@ -1,6 +1,6 @@
 import Menu.Menu;
-import Menu.OrenetesMenuLogic;
-import Menu.BruixesMenuLogic;
+import Menu.Orenetes.OrenetesMenuLogic;
+import Menu.Bruixes.BruixesMenuLogic;
 
 
 public class Main {
