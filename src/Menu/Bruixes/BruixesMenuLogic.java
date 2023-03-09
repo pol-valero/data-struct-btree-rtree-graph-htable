@@ -31,11 +31,15 @@ public class BruixesMenuLogic {
 
         long id = Menu.askForInteger("\nIdentificador de l'habitant:  ", 0, Integer.MAX_VALUE);
 
-        String name = tree.findCitizenById(id).getName();
+        Citizen citizen = tree.findCitizenById(id);
 
-        tree.removeCitizen(id);
-
-        System.out.println("\n" + name + " ha estat transformat en un grill.");
+        //Only if the citizen appears in the tree we execute the delete function
+        if (citizen != null) {
+            tree.removeCitizen(id);
+            System.out.println("\n" + citizen.getName() + " ha estat transformat en un grill.");
+        } else {
+            System.out.println("\nEl ID introduït no correspon a cap habitant de l'arbre.");
+        }
 
     }
 
@@ -58,6 +62,7 @@ public class BruixesMenuLogic {
 
     }
 
+    //We only create the tree if it was not already created before
     private static void checkIfTreeCreated() {
         if (tree == null) {
             tree = new TreeImplementation();
