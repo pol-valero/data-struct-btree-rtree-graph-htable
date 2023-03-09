@@ -186,7 +186,7 @@ public class Menu {
         return option;
     }
 
-    //Create a askForFloat that has a range of values
+
     public static float askForFloat (String askMessage, float min, float max) {
         float option = min - 1;   // Asegura que la condición del bucle se siga cumpliendo.
         String errorMessage = "Error: Introdueix un número real entre " + min + " i " + max + "." + separator;

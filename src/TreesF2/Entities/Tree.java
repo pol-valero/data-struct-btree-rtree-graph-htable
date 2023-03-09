@@ -8,6 +8,8 @@ public interface Tree {
 
     void printRepresentation();
 
+    Citizen findCitizenById (long citizenId);
+
     //Other methods have to be added...
 
 }

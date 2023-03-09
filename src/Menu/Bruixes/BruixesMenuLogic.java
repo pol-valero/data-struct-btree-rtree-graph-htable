@@ -14,7 +14,7 @@ public class BruixesMenuLogic {
 
         checkIfTreeCreated();
 
-        int id = Menu.askForInteger("\nIdentificador de l'habitant:  ", 0, Integer.MAX_VALUE);
+        long id = Menu.askForInteger("\nIdentificador de l'habitant:  ", 0, Integer.MAX_VALUE);
         String name = Menu.askForString("Nom de l'habitant:  ");
         float weight = Menu.askForFloat("Pes de l'habitant:  ", 1, 200);
         String kingdom = Menu.askForString("Regne de l'habitant:  ");
@@ -29,6 +29,13 @@ public class BruixesMenuLogic {
 
         checkIfTreeCreated();
 
+        long id = Menu.askForInteger("\nIdentificador de l'habitant:  ", 0, Integer.MAX_VALUE);
+
+        String name = tree.findCitizenById(id).getName();
+
+        tree.removeCitizen(id);
+
+        System.out.println("\n" + name + " ha estat transformat en un grill.");
 
     }
 

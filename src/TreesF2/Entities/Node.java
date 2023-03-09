@@ -16,4 +16,8 @@ public class Node {
         return citizen;
     }
 
+    public void setCitizen (Citizen citizen) {
+        this.citizen = citizen;
+    }
+
 }

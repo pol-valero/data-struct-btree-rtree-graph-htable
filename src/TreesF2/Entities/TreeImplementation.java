@@ -1,18 +1,23 @@
 package TreesF2.Entities;
 
+import Auxiliar.myArrayList;
+
 public class TreeImplementation implements Tree {
 
     private Node root = null;
-
+    private myArrayList<Citizen> citizens = new myArrayList<>();
 
     @Override
     public void addCitizen(Citizen citizen) {
+        citizens.add(citizen);
         root = add(root, citizen);
     }
 
     @Override
     public void removeCitizen(long citizenId) {
-
+        Citizen citizen = findCitizenById(citizenId);
+        root = remove(root, citizen);
+        citizens.remove(citizen);
     }
 
     @Override
@@ -101,6 +106,65 @@ public class TreeImplementation implements Tree {
         }
 
         return currentNode;
+    }
+
+    private Node remove (Node currentNode, Citizen citizen) {
+        if (currentNode == null) {
+            return null;
+        }
+
+        if (citizen.getWeight() > currentNode.getCitizen().getWeight()) {
+            currentNode.left = remove(currentNode.left, citizen);
+            return currentNode;
+        }
+
+        if (citizen.getWeight() == currentNode.getCitizen().getWeight()) {
+            //Node to delete found
+
+            if (currentNode.right == null && currentNode.left == null) {
+                return null;
+            }
+
+            if (currentNode.right == null) {
+                return currentNode.left;
+            }
+
+            if (currentNode.left == null) {
+                return currentNode.right;
+            }
+        }
+
+        if (citizen.getWeight() < currentNode.getCitizen().getWeight()) {
+            currentNode.right = remove(currentNode.right, citizen);
+            return currentNode;
+        }
+
+        //
+        Node tempNode = findMinNode(currentNode.left);
+        currentNode.setCitizen(tempNode.getCitizen());
+        currentNode.left = remove(currentNode.left, tempNode.getCitizen());
+
+        return currentNode;
+
+    }
+
+    public Citizen findCitizenById (long citizenId) {
+
+        for (Citizen citizen : citizens) {
+            if (citizen.getId() == citizenId) {
+                return citizen;
+            }
+        }
+
+        return null;
+    }
+
+    //
+    private Node findMinNode(Node node) {
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node;
     }
 
 }
