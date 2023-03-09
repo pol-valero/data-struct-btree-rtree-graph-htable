@@ -19,12 +19,12 @@ public class DatasetLoaderF2 {
         return new Citizen(Long.parseLong(field[0]), field[1], Float.parseFloat(field[2]), field[3]);
     }
 
-    public static void loadCitizens(String datasetName, Tree tree) {
+    public static void loadCitizens(String pathName, Tree tree) {
 
         Citizen citizen;
         int citizenLinesNum;
 
-        Path path = Path.of("files/trees/" + datasetName);
+        Path path = Path.of(pathName);
 
         try {
 

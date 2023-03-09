@@ -85,7 +85,10 @@ public class TreeImplementation implements Tree {
         System.out.println(citizen.getName() + " (" + citizen.getId() + ", Regne de " + citizen.getKingdom() + "): " + citizen.getWeight() + "kg");
     }
 
+
     private Node add(Node currentNode, Citizen citizen) {
+
+        //TODO: When adding a node, put in the node the parent node. To do this, could we pass a third parameter "parentNode" to the "add()" function and then assign this parameter to the nodes?
 
         float valueToInsert;
         float currentNodeValue;
@@ -159,7 +162,7 @@ public class TreeImplementation implements Tree {
         return null;
     }
 
-    //
+    //Given a starting node, searches for the right node that has the lowest value
     private Node findMinNode(Node node) {
         while (node.right != null) {
             node = node.right;

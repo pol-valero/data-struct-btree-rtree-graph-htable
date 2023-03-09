@@ -43,14 +43,12 @@ public class BruixesMenuLogic {
 
         checkIfTreeCreated();
 
-
         tree.printRepresentation();
     }
 
     public static void showWitchIdentification() {
 
         checkIfTreeCreated();
-
 
     }
 
