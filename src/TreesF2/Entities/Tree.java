@@ -6,7 +6,7 @@ public interface Tree {
 
     void removeCitizen (long citizenId);
 
-    void printTree();
+    void printRepresentation();
 
     //Other methods have to be added...
 

@@ -19,7 +19,7 @@ public class BruixesMenuLogic {
     public static void showTreeRepresentation() {
         tree = new TreeImplementation();
         DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
-        tree.printTree();
+        tree.printRepresentation();
     }
 
     public static void showWitchIdentification() {
