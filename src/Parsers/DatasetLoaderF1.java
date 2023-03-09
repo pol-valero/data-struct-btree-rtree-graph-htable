@@ -30,7 +30,7 @@ public class DatasetLoaderF1 {
         int placesLinesNum;
         int j = 0;
 
-        Path path = Path.of("files/" + datasetName);
+        Path path = Path.of("files/graphs/" + datasetName);
         PlaceOfInterest[] places = null;
 
         try {
@@ -57,7 +57,7 @@ public class DatasetLoaderF1 {
         int j = 0;
 
 
-        Path path = Path.of("files/" + datasetName);
+        Path path = Path.of("files/graphs/" + datasetName);
         KnownRoute[] routes = null;
 
         try {
