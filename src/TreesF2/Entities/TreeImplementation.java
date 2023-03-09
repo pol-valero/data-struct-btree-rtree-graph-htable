@@ -93,9 +93,9 @@ public class TreeImplementation implements Tree {
         currentNodeValue = currentNode.getCitizen().getWeight();
 
         if (valueToInsert < currentNodeValue) {
-            currentNode.left = add(currentNode.left, citizen);
-        } else if (valueToInsert > currentNodeValue){
             currentNode.right = add(currentNode.right, citizen);
+        } else if (valueToInsert > currentNodeValue){
+            currentNode.left = add(currentNode.left, citizen);
         } else {
             return currentNode;
         }

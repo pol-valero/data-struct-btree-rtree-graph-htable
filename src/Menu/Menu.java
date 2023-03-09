@@ -162,4 +162,51 @@ public class Menu {
 
         return option.equals("SI");
     }
+
+    public static String askForString (String askMessage) {
+        String option = "";
+        String errorMessage = "Error: Introdueix una cadena de caràcters." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = sc.nextLine();
+
+                if (option.equals("")) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (option.equals(""));
+
+        return option;
+    }
+
+    //Create a askForFloat that has a range of values
+    public static float askForFloat (String askMessage, float min, float max) {
+        float option = min - 1;   // Asegura que la condición del bucle se siga cumpliendo.
+        String errorMessage = "Error: Introdueix un número real entre " + min + " i " + max + "." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = Float.parseFloat(sc.nextLine());
+
+                if (option < min || option > max) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (option < min || option > max);
+
+        return option;
+    }
 }
