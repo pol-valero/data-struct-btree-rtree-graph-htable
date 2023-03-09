@@ -5,8 +5,8 @@ import Menu.BruixesMenuLogic;
 
 public class Main {
 
-    private final static String GRAPHS_DATASET = "graphsXL.paed";
-    private final static String TREES_DATASET = "treeXXS.paed";
+    private final static String GRAPHS_DATASET = "graphsXXS.paed";
+    private final static String TREES_DATASET = "treeXS.paed";
 
     public static void main(String[] args) {
 
