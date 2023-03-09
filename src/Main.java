@@ -1,9 +1,11 @@
 import Menu.Menu;
 import Menu.OrenetesMenuLogic;
+import Menu.BruixesMenuLogic;
+
 
 public class Main {
 
-    private final static String GRAPHS_DATASET = "graphsXXS.paed";
+    private final static String GRAPHS_DATASET = "graphsXL.paed";
     private final static String TREES_DATASET = "treeXXS.paed";
 
     public static void main(String[] args) {
@@ -19,11 +21,11 @@ public class Main {
                 }
                 case BRUIXES -> {
                     switch (Menu.showWitchesMenu(TREES_DATASET)) {
-                        case ADD_CITIZEN -> OrenetesMenuLogic.showKingdomExploration(); // DFS + BFS
-                        case REMOVE_CITIZEN -> OrenetesMenuLogic.showFrequentRoutesDetection();  // MST Prim
-                        case VISUAL_REPRESENTATION -> OrenetesMenuLogic.showPremiumMessaging();     // Djikstra
-                        case WITCHES_IDENTIFICATION -> OrenetesMenuLogic.showPremiumMessaging();     // Djikstra
-                        case FIGHT -> OrenetesMenuLogic.showPremiumMessaging();     // Djikstra
+                        case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();
+                        case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();
+                        case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();
+                        case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();
+                        case BATUDA -> BruixesMenuLogic.showBatuda();
                     }
                 }
                 case OPTION_3 -> System.out.println(3);

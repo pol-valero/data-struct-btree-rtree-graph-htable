@@ -83,7 +83,7 @@ public class Menu {
             case "B" -> { return BruixesMenuOptions.REMOVE_CITIZEN; }
             case "C" -> { return BruixesMenuOptions.VISUAL_REPRESENTATION; }
             case "D" -> { return BruixesMenuOptions.WITCHES_IDENTIFICATION; }
-            case "E" -> { return BruixesMenuOptions.FIGHT; }
+            case "E" -> { return BruixesMenuOptions.BATUDA; }
             default -> { return BruixesMenuOptions.EXIT; }
         }
     }
