@@ -2,7 +2,7 @@ package Parsers;
 
 
 import TreesF2.Entities.Citizen;
-import com.sun.source.tree.Tree;
+import TreesF2.Entities.Tree;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,7 +35,7 @@ public class DatasetLoaderF2 {
             for (int i = 1; i <= citizenLinesNum; i++) {
                 citizen = (csvLineToCitizen(csvLines.get(i)));
                 //System.out.println("Id: " + citizen.getId() + "  Name: " + citizen.getName() + "  Weight: " + citizen.getWeight() + "  Kingdom: " + citizen.getKingdom());
-                //tree.add(citizen);
+                tree.addCitizen(citizen);
             }
 
         } catch (IOException e) {
