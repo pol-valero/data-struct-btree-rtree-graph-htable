@@ -8,7 +8,7 @@ import TreesF2.Entities.Tree;
 public class BinaryTree implements Tree {
 
     private Node root = null;   //Root node of the tree. From this node we can obtain all the other nodes.
-    private MyArrayList<Citizen> citizens = new MyArrayList<>(); //List of all the citizens that are currently in the tree
+    private final MyArrayList<Citizen> citizens = new MyArrayList<>(); //List of all the citizens that are currently in the tree
 
     @Override
     public void addCitizen(Citizen citizen) {
@@ -132,9 +132,8 @@ public class BinaryTree implements Tree {
             return currentNode;
         }
 
+        // Node to delete found
         if (citizen.getWeight() == currentNode.getCitizenWeight()) {
-
-            //Node to delete found
 
             //If the node does not have children, we return null (replacing this node with null in the parent)
             if (currentNode.right == null && currentNode.left == null) {
@@ -143,10 +142,12 @@ public class BinaryTree implements Tree {
 
             //If the node only has one child, we return the child (replacing this node with the node's child in the parent)
             if (currentNode.right == null) {
+                currentNode.left.parent = currentNode.parent;
                 return currentNode.left;
             }
 
             if (currentNode.left == null) {
+                currentNode.right.parent = currentNode.parent;
                 return currentNode.right;
             }
             /////////////////////////////////
@@ -165,7 +166,6 @@ public class BinaryTree implements Tree {
         currentNode.left = remove(currentNode.left, tempNode.getCitizen()); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
 
         return currentNode;
-
     }
 
     @Override

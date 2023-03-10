@@ -11,25 +11,22 @@ public class BruixesMenuLogic {
     private static Tree tree;
 
     public static void showAddCitizen() {
-
         checkIfTreeCreated();
 
-        long id = Menu.askForInteger("\nIdentificador de l'habitant:  ", 0, Integer.MAX_VALUE);
-        String name = Menu.askForString("Nom de l'habitant:  ");
-        float weight = Menu.askForFloat("Pes de l'habitant:  ", 1, 200);
-        String kingdom = Menu.askForString("Regne de l'habitant:  ");
+        long id = Menu.askForInteger("\nIdentificador de l'habitant: ", 0, Integer.MAX_VALUE);
+        String name = Menu.askForString("Nom de l'habitant: ");
+        float weight = Menu.askForFloat("Pes de l'habitant: ", 1, 200);
+        String kingdom = Menu.askForString("Regne de l'habitant: ");
 
         tree.addCitizen(new Citizen(id, name, weight, kingdom));
 
         System.out.println("\n" + name + " ens acompanyarà a partir d'ara.");
-
     }
 
     public static void showRemoveCitizen() {
-
         checkIfTreeCreated();
 
-        long id = Menu.askForInteger("\nIdentificador de l'habitant:  ", 0, Integer.MAX_VALUE);
+        long id = Menu.askForInteger("\nIdentificador de l'habitant: ", 0, Integer.MAX_VALUE);
         Citizen citizen = tree.findCitizenById(id);
 
         //Only if the citizen appears in the tree we execute the delete function

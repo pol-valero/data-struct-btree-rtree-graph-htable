@@ -1,7 +1,8 @@
+import Menu.Bruixes.BruixesMenuOptions;
 import Menu.Menu;
 import Menu.Orenetes.OrenetesMenuLogic;
 import Menu.Bruixes.BruixesMenuLogic;
-
+import Menu.Orenetes.OrenetesMenuOptions;
 
 public class Main {
 
@@ -12,22 +13,33 @@ public class Main {
 
         do {
             switch (Menu.showMainMenu()) {
-                case ORENETES -> {  // Graphs (phase 1)
-                    switch (Menu.showOrenetesMenu(GRAPHS_DATASET)) {
-                        case KINGDOM_EXPLORATION -> OrenetesMenuLogic.showKingdomExploration(); // DFS + BFS
-                        case COMMON_ROUTES -> OrenetesMenuLogic.showFrequentRoutesDetection();  // MST Prim
-                        case PREMIUM_MESSAGING -> OrenetesMenuLogic.showPremiumMessaging();     // Djikstra
-                    }
+
+                // Graphs (phase 1)
+                case ORENETES -> { OrenetesMenuOptions orenetesOption;
+                    do {
+                        orenetesOption = Menu.showOrenetesMenu(GRAPHS_DATASET);
+                        switch (orenetesOption) {
+                            case KINGDOM_EXPLORATION -> OrenetesMenuLogic.showKingdomExploration(); // DFS + BFS
+                            case COMMON_ROUTES -> OrenetesMenuLogic.showFrequentRoutesDetection();  // MST Prim
+                            case PREMIUM_MESSAGING -> OrenetesMenuLogic.showPremiumMessaging();     // Djikstra
+                        }
+                    } while (orenetesOption != OrenetesMenuOptions.PREVIOUS_MENU);
                 }
-                case BRUIXES -> {
-                    switch (Menu.showWitchesMenu(TREES_DATASET)) {
-                        case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();
-                        case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();
-                        case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();
-                        case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();
-                        case BATUDA -> BruixesMenuLogic.showBatuda();
-                    }
+
+                // Trees (phase 2)
+                case BRUIXES -> { BruixesMenuOptions bruixesOption;
+                    do {
+                        bruixesOption = Menu.showWitchesMenu(TREES_DATASET);
+                        switch (bruixesOption) {
+                            case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();
+                            case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();
+                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();
+                            case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();
+                            case BATUDA -> BruixesMenuLogic.showBatuda();
+                        }
+                    } while (bruixesOption != BruixesMenuOptions.PREVIOUS_MENU);
                 }
+
                 case OPTION_3 -> System.out.println(3);
                 case OPTION_4 -> System.out.println(4);
                 case EXIT -> {

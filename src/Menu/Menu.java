@@ -64,7 +64,7 @@ public class Menu {
         GRAPHS_DATASET = graph_dataset;
 
         System.out.println(separator + ORENETES_MENU);
-        String option = askForCharacter("Quina funcionalitat vol executar? ");
+        String option = askForCharacter("Quina funcionalitat vol executar? ", 'A', 'D');
 
         switch (option) {
             case "A" -> { return OrenetesMenuOptions.KINGDOM_EXPLORATION; }
@@ -79,7 +79,7 @@ public class Menu {
         TREES_DATASET = trees_dataset;
 
         System.out.println(separator + BRUIXES_MENU);
-        String option = askForCharacter("Quina funcionalitat vol executar? ");
+        String option = askForCharacter("Quina funcionalitat vol executar? ", 'A', 'F');
 
         switch (option) {
             case "A" -> { return BruixesMenuOptions.ADD_CITIZEN; }
@@ -87,7 +87,7 @@ public class Menu {
             case "C" -> { return BruixesMenuOptions.VISUAL_REPRESENTATION; }
             case "D" -> { return BruixesMenuOptions.WITCHES_IDENTIFICATION; }
             case "E" -> { return BruixesMenuOptions.BATUDA; }
-            default -> { return BruixesMenuOptions.EXIT; }
+            default -> { return BruixesMenuOptions.PREVIOUS_MENU; }
         }
     }
 
@@ -115,26 +115,19 @@ public class Menu {
         return option;
     }
 
-    public static String askForCharacter(String askMessage) {
-        String option = ""; // Assegura que la condición del bucle se siga cumpliendo.
-        String errorMessage = "Error: Introdueix un caràcter entre \"A\", \"B\", \"C\" o \"D\"." + separator;
+    public static String askForCharacter(String askMessage, char firstChar, char lastChar) {
+        String option; // Assegura que la condición del bucle se siga cumpliendo.
+        String errorMessage = "Error: Introdueix un caràcter entre " + firstChar + " i " + lastChar + "." + separator;
 
         do {
-            try {
-                Scanner sc = new Scanner(System.in);
-                System.out.print(askMessage);
-                option = sc.nextLine();
-                option = option.toUpperCase();
+            Scanner sc = new Scanner(System.in);
+            System.out.print(askMessage);
+            option = sc.nextLine().toUpperCase();
 
-                if (!(option.equals("A") || option.equals("B") || option.equals("C") || option.equals("D"))) {
-                    System.out.println(errorMessage);
-                }
-
-            } catch (NumberFormatException e) {
+            if (option.length() != 1 || option.charAt(0) < firstChar || option.charAt(0) > lastChar) {
                 System.out.println(errorMessage);
             }
-
-        } while (!(option.equals("A") || option.equals("B") || option.equals("C") || option.equals("D")));
+        } while (option.length() != 1 || option.charAt(0) < firstChar || option.charAt(0) > lastChar);
 
         return option;
     }
