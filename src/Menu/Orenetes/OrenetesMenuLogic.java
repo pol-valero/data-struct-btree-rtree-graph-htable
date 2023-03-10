@@ -1,6 +1,6 @@
 package Menu.Orenetes;
 
-import GraphsF1.Algorithms.BFS;
+import GraphsF1.Algorithms.GraphBFS;
 import GraphsF1.Algorithms.Dijkstra;
 import GraphsF1.Algorithms.MSTprim;
 import GraphsF1.Entities.Graph;
@@ -19,7 +19,7 @@ public class OrenetesMenuLogic {
 			System.out.println(Menu.separator + currentNode.showInformation() + Menu.separator);
 			System.out.println("Els llocs del Regne de " + currentNode.getKingdom() + " als que es pot arribar són:" + Menu.separator);
 
-			BFS.kingdomExploration(graph, currentNode);
+			GraphBFS.kingdomExploration(graph, currentNode);
 		}
 		else {
 			System.out.println(Menu.separator + "El lloc seleccionat no existeix.");

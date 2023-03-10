@@ -28,4 +28,8 @@ public class Citizen {
 	public String getKingdom() {
 		return kingdom;
 	}
+
+	public boolean sameID(long otherID) {
+		return this.id == otherID;
+	}
 }

@@ -1,6 +1,7 @@
 package TreesF2.Entities.Trees;
 
 import Auxiliar.MyArrayList;
+import TreesF2.Algorithms.TreeBFS;
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Node;
 import TreesF2.Entities.Tree;
@@ -170,14 +171,7 @@ public class BinaryTree implements Tree {
 
     @Override
     public Citizen findCitizenById (long citizenId) {
-
-        for (Citizen citizen : citizens) {
-            if (citizen.getId() == citizenId) {
-                return citizen;
-            }
-        }
-
-        return null;
+        return TreeBFS.findCitizenById(root, citizenId);
     }
 
     //Given a starting node, searches for the right node that has the lowest value

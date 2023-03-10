@@ -19,7 +19,7 @@ public class Main {
                     do {
                         orenetesOption = Menu.showOrenetesMenu(GRAPHS_DATASET);
                         switch (orenetesOption) {
-                            case KINGDOM_EXPLORATION -> OrenetesMenuLogic.showKingdomExploration(); // DFS + BFS
+                            case KINGDOM_EXPLORATION -> OrenetesMenuLogic.showKingdomExploration(); // GraphDFS + GraphBFS
                             case COMMON_ROUTES -> OrenetesMenuLogic.showFrequentRoutesDetection();  // MST Prim
                             case PREMIUM_MESSAGING -> OrenetesMenuLogic.showPremiumMessaging();     // Djikstra
                         }

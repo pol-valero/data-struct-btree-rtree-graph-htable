@@ -3,10 +3,10 @@ package GraphsF1.Algorithms;
 import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.PlaceOfInterest;
 
-public class DFS {
+public class GraphDFS {
 
 	public static void kingdomExploration(Graph graph, PlaceOfInterest initialNode) {
-		// Avoid being shown the same node twice (in case it was called from BFS algorithm since it was already visited).
+		// Avoid being shown the same node twice (in case it was called from GraphBFS algorithm since it was already visited).
 		if (!initialNode.isVisited()) {
 			initialNode.justVisited();
 			System.out.println(initialNode.showInformation());

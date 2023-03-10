@@ -4,7 +4,7 @@ import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.PlaceOfInterest;
 import Auxiliar.MyQueue;
 
-public class BFS {
+public class GraphBFS {
 
 	public static void kingdomExploration(Graph graph, PlaceOfInterest initialNode) {
 		MyQueue<PlaceOfInterest> queue = new MyQueue<>();
@@ -20,7 +20,7 @@ public class BFS {
 			// Show the place information if it belongs to the same kingdom.
 			if (currentNode.sameKingdom(initialNode) && !currentNode.samePlace(initialNode)) {
 				System.out.println(currentNode.showInformation());
-				DFS.kingdomExploration(graph, currentNode);
+				GraphDFS.kingdomExploration(graph, currentNode);
 			}
 
 			PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);

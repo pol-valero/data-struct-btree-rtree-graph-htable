@@ -21,6 +21,10 @@ public class Node {
         this.parent = parentNode;
     }
 
+    public boolean sameID(long otherID) {
+        return this.citizen.sameID(otherID);
+    }
+
     public Citizen getCitizen() {
         return citizen;
     }
