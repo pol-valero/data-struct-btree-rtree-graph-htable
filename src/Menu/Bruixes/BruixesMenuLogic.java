@@ -4,7 +4,7 @@ import Menu.Menu;
 import Parsers.DatasetLoaderF2;
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Tree;
-import TreesF2.Entities.TreeImplementation;
+import TreesF2.Entities.Trees.BinaryTree;
 
 public class BruixesMenuLogic {
 
@@ -30,7 +30,6 @@ public class BruixesMenuLogic {
         checkIfTreeCreated();
 
         long id = Menu.askForInteger("\nIdentificador de l'habitant:  ", 0, Integer.MAX_VALUE);
-
         Citizen citizen = tree.findCitizenById(id);
 
         //Only if the citizen appears in the tree we execute the delete function
@@ -44,28 +43,22 @@ public class BruixesMenuLogic {
     }
 
     public static void showTreeRepresentation() {
-
         checkIfTreeCreated();
-
         tree.printRepresentation();
     }
 
     public static void showWitchIdentification() {
-
         checkIfTreeCreated();
-
     }
 
     public static void showBatuda() {
-
         checkIfTreeCreated();
-
     }
 
     //We only create the tree if it was not already created before
     private static void checkIfTreeCreated() {
         if (tree == null) {
-            tree = new TreeImplementation();
+            tree = new BinaryTree();
             DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
         }
     }

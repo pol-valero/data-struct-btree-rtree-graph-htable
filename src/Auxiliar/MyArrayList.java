@@ -3,18 +3,18 @@ package Auxiliar;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class myArrayList<T> implements Iterable<T> {
+public class MyArrayList<T> implements Iterable<T> {
 	private T[] elements;
 	private int size;
 
 	// Constructor without initial size (= 0).
 	@SuppressWarnings("unchecked")
-	public myArrayList() {
+	public MyArrayList() {
 		elements = (T[]) new Object[0];
 	}
 
 	@SuppressWarnings("unchecked")
-	public myArrayList(int num) {
+	public MyArrayList(int num) {
 		elements = (T[]) new Object[num];
 		size = num;
 	}

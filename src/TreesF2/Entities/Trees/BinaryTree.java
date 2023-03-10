@@ -1,16 +1,19 @@
-package TreesF2.Entities;
+package TreesF2.Entities.Trees;
 
-import Auxiliar.myArrayList;
+import Auxiliar.MyArrayList;
+import TreesF2.Entities.Citizen;
+import TreesF2.Entities.Node;
+import TreesF2.Entities.Tree;
 
-public class TreeImplementation implements Tree {
+public class BinaryTree implements Tree {
 
     private Node root = null;   //Root node of the tree. From this node we can obtain all the other nodes.
-    private myArrayList<Citizen> citizens = new myArrayList<>(); //List of all the citizens that are currently in the tree
+    private MyArrayList<Citizen> citizens = new MyArrayList<>(); //List of all the citizens that are currently in the tree
 
     @Override
     public void addCitizen(Citizen citizen) {
         citizens.add(citizen);
-        root = add(root, citizen);
+        root = add(root, citizen, null);    // The parent node of the root will always be NULL.
     }
 
     @Override
@@ -22,7 +25,6 @@ public class TreeImplementation implements Tree {
 
     @Override
     public void printRepresentation() {
-
         System.out.println();
 
         //We print the right part of the tree
@@ -40,7 +42,6 @@ public class TreeImplementation implements Tree {
     }
 
     private void print (String stringIndentation, Node node, boolean rightNode) {
-
         String stringIndentationAux;
 
         if (node.right != null) {
@@ -89,26 +90,23 @@ public class TreeImplementation implements Tree {
     }
 
 
-    private Node add(Node currentNode, Citizen citizen) {
-
-        //TODO: When adding a node, put in the node the parent node. To do this, could we pass a third parameter "parentNode" to the "add()" function and then assign this parameter to the nodes?
-
+    private Node add(Node currentNode, Citizen citizen, Node parentNode) {
         float valueToInsert;
         float currentNodeValue;
 
         //When the current node is null, a new node can be inserted into the position
-        // (we've reached a leaf node, or it is the first node of the tree)
+        // (we've reached a leaf node, or it is the first node of the tree: the root)
         if (currentNode == null) {
-            return new Node(citizen);
+            return new Node(citizen, parentNode);
         }
 
         valueToInsert = citizen.getWeight();
-        currentNodeValue = currentNode.getCitizen().getWeight();
+        currentNodeValue = currentNode.getCitizenWeight();
 
         if (valueToInsert < currentNodeValue) {     //We go to the right child if the value that we want to insert is lower than the current node's value
-            currentNode.right = add(currentNode.right, citizen);
+            currentNode.right = add(currentNode.right, citizen, currentNode);
         } else if (valueToInsert > currentNodeValue) {      //We go to the left child if the value that we want to insert is higher than the current node's value
-            currentNode.left = add(currentNode.left, citizen);
+            currentNode.left = add(currentNode.left, citizen, currentNode);
         } else {
             return currentNode; //We return the currentNode if the value already exists (therefore not adding the new node as it has a duplicated value)
         }
@@ -123,18 +121,18 @@ public class TreeImplementation implements Tree {
         }
 
         //We go to the left child if the value that we want to delete is higher than the current node's value
-        if (citizen.getWeight() > currentNode.getCitizen().getWeight()) {
+        if (citizen.getWeight() > currentNode.getCitizenWeight()) {
             currentNode.left = remove(currentNode.left, citizen);
             return currentNode;
         }
 
         //We go to the right child if the value that we want to delete is lower than the current node's value
-        if (citizen.getWeight() < currentNode.getCitizen().getWeight()) {
+        if (citizen.getWeight() < currentNode.getCitizenWeight()) {
             currentNode.right = remove(currentNode.right, citizen);
             return currentNode;
         }
 
-        if (citizen.getWeight() == currentNode.getCitizen().getWeight()) {
+        if (citizen.getWeight() == currentNode.getCitizenWeight()) {
 
             //Node to delete found
 

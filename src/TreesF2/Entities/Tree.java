@@ -1,5 +1,7 @@
 package TreesF2.Entities;
 
+import TreesF2.Entities.Citizen;
+
 public interface Tree {
 
 

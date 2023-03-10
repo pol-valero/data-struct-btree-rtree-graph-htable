@@ -4,14 +4,14 @@ import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.KnownRoute;
 import GraphsF1.Entities.PlaceOfInterest;
 
-import Auxiliar.myArrayList;
+import Auxiliar.MyArrayList;
 
 
 public class MSTprim {
 
     public static void frequentRoutesDetection(Graph graph) {
 
-        myArrayList<KnownRoute> knownRoutes;
+        MyArrayList<KnownRoute> knownRoutes;
 
         //Any node could be selected as the origin. We choose the first node as the origin.
         PlaceOfInterest origin = graph.getFirstNode();
@@ -22,7 +22,7 @@ public class MSTprim {
 
     }
 
-    private static void printMst (myArrayList<KnownRoute> knownRoutes, Graph graph) {
+    private static void printMst (MyArrayList<KnownRoute> knownRoutes, Graph graph) {
 
         float distance = 0;
 
@@ -35,9 +35,9 @@ public class MSTprim {
 
     }
 
-    private static myArrayList<KnownRoute> mstPrim (Graph graph, PlaceOfInterest origin) {
+    private static MyArrayList<KnownRoute> mstPrim (Graph graph, PlaceOfInterest origin) {
 
-        myArrayList<KnownRoute> mstRoutes = new myArrayList<>();
+        MyArrayList<KnownRoute> mstRoutes = new MyArrayList<>();
 
         //Number of nodes in the original graph
         int totalNodesNum = graph.getSize();

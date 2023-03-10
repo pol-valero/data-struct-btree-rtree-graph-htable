@@ -2,12 +2,12 @@ package GraphsF1.Algorithms;
 
 import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.PlaceOfInterest;
-import Auxiliar.myQueue;
+import Auxiliar.MyQueue;
 
 public class BFS {
 
 	public static void kingdomExploration(Graph graph, PlaceOfInterest initialNode) {
-		myQueue<PlaceOfInterest> queue = new myQueue<>();
+		MyQueue<PlaceOfInterest> queue = new MyQueue<>();
 
 		// First initialNode will always be in the same kingdom.
 		queue.add(initialNode);
