@@ -9,11 +9,9 @@ import TreesF2.Entities.Tree;
 public class BinaryTree implements Tree {
 
     private Node root = null;   //Root node of the tree. From this node we can obtain all the other nodes.
-    private final MyArrayList<Citizen> citizens = new MyArrayList<>(); //List of all the citizens that are currently in the tree
 
     @Override
     public void addCitizen(Citizen citizen) {
-        citizens.add(citizen);
         root = add(root, citizen, null);    // The parent node of the root will always be NULL.
     }
 
@@ -21,7 +19,6 @@ public class BinaryTree implements Tree {
     public void removeCitizen(long citizenId) {
         Citizen citizen = findCitizenById(citizenId);
         root = remove(root, citizen);
-        citizens.remove(citizen);
     }
 
     @Override
