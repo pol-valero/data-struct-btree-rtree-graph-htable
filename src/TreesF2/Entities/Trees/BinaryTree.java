@@ -54,19 +54,45 @@ public class BinaryTree implements Tree {
             print(stringIndentationAux, node.right, true);
         }
 
-        System.out.print(stringIndentation);
-
-        //System.out.print("|");
-
-        //Temporary form of representation until we solve the problem about the lack of space between branches
-        if (rightNode) {
-            System.out.print(" /");
-        } else {
-            System.out.print(" \\");
+        // Juntar las nodos que tienen un padre y un hijo a su izquierda
+        if (node.right == null && node.parent != null && node.parent.left == node && node.left != null) {   // node.parent != null && node.parent.left == node pasaria a node.parent.left == node
+            System.out.println(stringIndentation + "|");
         }
 
-        System.out.print("--- ");
+        System.out.print(stringIndentation);
+
+        // Comprobar los últimos nodos árboles
+        if (!rightNode) {
+            if (node.isLeaf()) {
+                System.out.println("|");   // El espacio ya lo tiene el print lin 57 de identación.
+                System.out.print(stringIndentation);
+            }
+        }
+
+        // Comprobar que es el último nodo de la derecha
+        if (node.right == null && rightNode) {
+            System.out.println();
+            System.out.print(stringIndentation);
+        }
+
+        System.out.print("|--- ");
         nodePrint(node);
+
+        // Comprobar si el padre del nodo está a su izquierda
+        if (node.parent.right == node && node.isLeaf()) {
+            System.out.println(stringIndentation + "|");
+        }
+
+        if (!node.isLeaf() && node.left == null) {
+
+            // Soluciona una | escrita random
+            if (rightNode) {
+                System.out.println(stringIndentation + "|");
+            }
+            else {
+                System.out.println(stringIndentation);
+            }
+        }
 
         if (node.left != null) {
             if (!rightNode) {
@@ -75,6 +101,12 @@ public class BinaryTree implements Tree {
                 stringIndentationAux = stringIndentation + "|     ";
             }
             print(stringIndentationAux, node.left, false);
+        }
+
+        // Testing - Espacio a la izq
+        if (node.isLeaf() && node.parent.left == node) {
+            System.out.println(stringIndentation);
+//            System.out.print(stringIndentation);
         }
 
     }

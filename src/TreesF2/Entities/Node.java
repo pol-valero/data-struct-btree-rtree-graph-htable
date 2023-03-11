@@ -37,4 +37,7 @@ public class Node {
         return citizen.getWeight();
     }
 
+    public boolean isLeaf() {
+        return (right == null && left == null);
+    }
 }
