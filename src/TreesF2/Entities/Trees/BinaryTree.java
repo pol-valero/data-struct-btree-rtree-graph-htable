@@ -1,6 +1,5 @@
 package TreesF2.Entities.Trees;
 
-import Auxiliar.MyArrayList;
 import TreesF2.Algorithms.TreeBFS;
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Node;
@@ -51,14 +50,14 @@ public class BinaryTree implements Tree {
             print(stringIndentationAux, node.right, true);
         }
 
-        // Juntar las nodos que tienen un padre y un hijo a su izquierda
+        // Join the nodes to the parents, just those who have both a child and a parent on their left.
         if (node.right == null && node.parent != null && node.parent.left == node && node.left != null) {   // node.parent != null && node.parent.left == node pasaria a node.parent.left == node
             System.out.println(stringIndentation + "|");
         }
 
         System.out.print(stringIndentation);
 
-        // Comprobar los últimos nodos árboles
+        // Add an indentation to the last nodes of the tree (leaves)
         if (!rightNode) {
             if (node.isLeaf()) {
                 System.out.println("|");   // El espacio ya lo tiene el print lin 57 de identación.
@@ -66,7 +65,7 @@ public class BinaryTree implements Tree {
             }
         }
 
-        // Comprobar que es el último nodo de la derecha
+        // Check if it is the last right node of a branch
         if (node.right == null && rightNode) {
             System.out.println();
             System.out.print(stringIndentation);
@@ -75,14 +74,15 @@ public class BinaryTree implements Tree {
         System.out.print("|--- ");
         nodePrint(node);
 
-        // Comprobar si el padre del nodo está a su izquierda
+        // Check if the parent of the node is on the left.
         if (node.parent.right == node && node.isLeaf()) {
             System.out.println(stringIndentation + "|");
         }
 
+        // Check if a node only has a right child.
         if (!node.isLeaf() && node.left == null) {
 
-            // Soluciona una | escrita random
+            // Solves a problem with a random '|' printed.
             if (rightNode) {
                 System.out.println(stringIndentation + "|");
             }
@@ -100,10 +100,9 @@ public class BinaryTree implements Tree {
             print(stringIndentationAux, node.left, false);
         }
 
-        // Testing - Espacio a la izq
+        // Adding an extra indentation when a leaf node has a parent node to its right.
         if (node.isLeaf() && node.parent.left == node) {
             System.out.println(stringIndentation);
-//            System.out.print(stringIndentation);
         }
 
     }
