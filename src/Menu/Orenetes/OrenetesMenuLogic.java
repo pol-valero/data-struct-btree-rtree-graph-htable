@@ -9,9 +9,19 @@ import GraphsF1.Entities.Swallow;
 import Menu.Menu;
 
 public class OrenetesMenuLogic {
+	private static long initialTime;
+	private static long executionTime;
 
+	public static void finished() {
+		executionTime = System.nanoTime() - initialTime;
+	}
 	public static void showKingdomExploration() {
+
+//		initialTime = System.nanoTime();
 		Graph graph = new Graph(Menu.GRAPHS_DATASET);
+//		finished();
+//		System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
+
 		int nodeID = Menu.askForInteger("Quin lloc vol explorar? ", 0, Integer.MAX_VALUE);
 		PlaceOfInterest currentNode = graph.getPlaceByID(nodeID);
 
@@ -19,7 +29,10 @@ public class OrenetesMenuLogic {
 			System.out.println(Menu.separator + currentNode.showInformation() + Menu.separator);
 			System.out.println("Els llocs del Regne de " + currentNode.getKingdom() + " als que es pot arribar són:" + Menu.separator);
 
+//			initialTime = System.nanoTime();
 			GraphBFS.kingdomExploration(graph, currentNode);
+//			finished();
+//			System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
 		}
 		else {
 			System.out.println(Menu.separator + "El lloc seleccionat no existeix.");
@@ -29,7 +42,11 @@ public class OrenetesMenuLogic {
 	public static void showFrequentRoutesDetection() {
 		Graph graph = new Graph(Menu.GRAPHS_DATASET);
 		System.out.println(Menu.separator + "Conjunt de trajectes que connecten tots els llocs i minimitzen la distància total: " + Menu.separator);
+
+//		initialTime = System.nanoTime();
 		MSTprim.frequentRoutesDetection(graph);
+//		finished();
+//		System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
 	}
 
 	public static void showPremiumMessaging() {
@@ -47,8 +64,12 @@ public class OrenetesMenuLogic {
 
 		if (firstNode != null && secondNode != null) {
 
+
+//			initialTime = System.nanoTime();
 			PlaceOfInterest[] europeanWay = Dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
 			PlaceOfInterest[] africanWay = Dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
+//			finished();
+//			System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
 
 			if (europeanSwallow.getTotalTime() < africanSwallow.getTotalTime()) {
 				showOutput(europeanSwallow, europeanWay);
