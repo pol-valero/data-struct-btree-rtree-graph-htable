@@ -29,10 +29,14 @@ public class Graph {
 	}
 
 	private void createGraph() {
-		for (int i = 0; i < placesNum; i++) {
-			for (int j = 0; j < placesNum; j++) {
-				matrix[i][j] = findRoute(i, j);
-			}
+
+		PlaceOfInterest place1, place2;
+		for (int i = 0; i < routesNum; i++) {
+			place1 = getPlaceByID(routes[i].getPlaceA());
+			place2 = getPlaceByID(routes[i].getPlaceB());
+			matrix[place1.getRowIndex()][place2.getRowIndex()] = routes[i];
+			matrix[place2.getRowIndex()][place1.getRowIndex()] = routes[i];
+
 		}
 	}
 
