@@ -51,7 +51,7 @@ public class BinaryTree implements Tree {
         }
 
         // Join the nodes to the parents, just those who have both a child and a parent on their left.
-        if (node.right == null && node.parent != null && node.parent.left == node && node.left != null) {   // node.parent != null && node.parent.left == node pasaria a node.parent.left == node
+        if (node.right == null && node.parent != null && node.parent.left == node && node.left != null) {   // (node.parent != null && node.parent.left == node) would be (node.parent.left == node)
             System.out.println(stringIndentation + "|");
         }
 
@@ -60,7 +60,7 @@ public class BinaryTree implements Tree {
         // Add an indentation to the last nodes of the tree (leaves)
         if (!rightNode) {
             if (node.isLeaf()) {
-                System.out.println("|");   // El espacio ya lo tiene el print lin 57 de identación.
+                System.out.println("|");    //The space is already contained in the prior print of the indentation
                 System.out.print(stringIndentation);
             }
         }
