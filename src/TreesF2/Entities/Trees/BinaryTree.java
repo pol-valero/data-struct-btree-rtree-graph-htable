@@ -123,10 +123,12 @@ public class BinaryTree implements Tree {
         float valueToInsert;
         float currentNodeValue;
 
-        //When the current node is null, a new node can be inserted into the position
+        // When the current node is null, a new node can be inserted into the position
         // (we've reached a leaf node, or it is the first node of the tree: the root)
         if (currentNode == null) {
-            return new Node(citizen, parentNode);
+            Node node = new Node(citizen, parentNode);
+            node.height = 0;    // Set a height of zero (it is a leaf node).
+            return node;
         }
 
         valueToInsert = citizen.getWeight();
@@ -137,9 +139,12 @@ public class BinaryTree implements Tree {
         } else if (valueToInsert > currentNodeValue) {      //We go to the left child if the value that we want to insert is higher than the current node's value
             currentNode.left = add(currentNode.left, citizen, currentNode);
         } else {
+            currentNode.height = currentNode.calculateHeight();
             return currentNode; //We return the currentNode if the value already exists (therefore not adding the new node as it has a duplicated value)
         }
 
+        // Case where the node is added
+        currentNode.height = currentNode.calculateHeight();
         return currentNode;
     }
 
