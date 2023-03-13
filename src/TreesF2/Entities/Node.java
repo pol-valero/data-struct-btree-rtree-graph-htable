@@ -44,24 +44,31 @@ public class Node {
     }
 
     // Get the height of the current node: maximum between right and left node + 1 (the node itself).
-    public int calculateHeight() {
+    public void calculateHeight() {
 
         // Case were there is no children (leaf node)
         if (right == null && left == null) {
-            return 0;
+            height = 0;
+            return;
         }
 
         // Case where there is no right child
         if (right == null) {
-            return left.height + 1;
+            height = left.height + 1;
+            return;
         }
 
         // Case where is no left child
         if (left == null) {
-            return right.height + 1;
+            height = right.height + 1;
+            return;
         }
 
         // Case where the node has both children
-        return Math.max(right.height, left.height) + 1;
+        height = Math.max(right.height, left.height) + 1;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

@@ -7,7 +7,7 @@ import Menu.Orenetes.OrenetesMenuOptions;
 public class Main {
 
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXL.paed"; // Relative path inside /src folder
-    private final static String TREES_DATASET = "files/trees/treeXXS.paed";     // Relative path inside /src folder
+    private final static String TREES_DATASET = "files/trees/treeXXL.paed";     // Relative path inside /src folder
 
     public static void main(String[] args) {
 

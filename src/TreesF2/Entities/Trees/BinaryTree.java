@@ -139,12 +139,12 @@ public class BinaryTree implements Tree {
         } else if (valueToInsert > currentNodeValue) {      //We go to the left child if the value that we want to insert is higher than the current node's value
             currentNode.left = add(currentNode.left, citizen, currentNode);
         } else {
-            currentNode.height = currentNode.calculateHeight();
+            currentNode.calculateHeight();
             return currentNode; //We return the currentNode if the value already exists (therefore not adding the new node as it has a duplicated value)
         }
 
         // Case where the node is added
-        currentNode.height = currentNode.calculateHeight();
+        currentNode.calculateHeight();
         return currentNode;
     }
 
@@ -157,12 +157,14 @@ public class BinaryTree implements Tree {
         //We go to the left child if the value that we want to delete is higher than the current node's value
         if (citizen.getWeight() > currentNode.getCitizenWeight()) {
             currentNode.left = remove(currentNode.left, citizen);
+            currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
 
         //We go to the right child if the value that we want to delete is lower than the current node's value
         if (citizen.getWeight() < currentNode.getCitizenWeight()) {
             currentNode.right = remove(currentNode.right, citizen);
+            currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
 
@@ -177,11 +179,13 @@ public class BinaryTree implements Tree {
             //If the node only has one child, we return the child (replacing this node with the node's child in the parent)
             if (currentNode.right == null) {
                 currentNode.left.parent = currentNode.parent;
+                currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
                 return currentNode.left;
             }
 
             if (currentNode.left == null) {
                 currentNode.right.parent = currentNode.parent;
+                currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
                 return currentNode.right;
             }
             /////////////////////////////////
@@ -199,6 +203,7 @@ public class BinaryTree implements Tree {
         currentNode.setCitizen(tempNode.getCitizen());  //We change the node's citizen information; effectively eliminating the older node.
         currentNode.left = remove(currentNode.left, tempNode.getCitizen()); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
 
+        currentNode.calculateHeight(); // Re-calculate the height of the current node.
         return currentNode;
     }
 
