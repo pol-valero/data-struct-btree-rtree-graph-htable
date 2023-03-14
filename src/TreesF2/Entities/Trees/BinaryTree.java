@@ -1,9 +1,8 @@
 package TreesF2.Entities.Trees;
 
 import TreesF2.Algorithms.TreeBFS;
-import TreesF2.Entities.Citizen;
-import TreesF2.Entities.Node;
-import TreesF2.Entities.Tree;
+import TreesF2.Entities.*;
+import TreesF2.Entities.Object;
 
 public class BinaryTree implements Tree {
 
@@ -210,6 +209,28 @@ public class BinaryTree implements Tree {
     @Override
     public Citizen findCitizenById (long citizenId) {
         return TreeBFS.findCitizenById(root, citizenId);
+    }
+    @Override
+    public void findWitchByWeight(Object object) {
+        if (object.getObjectType() == ObjectType.WOOD) {
+            findWitchWood(object);
+        } else if (object.getObjectType() == ObjectType.DUCK) {
+            findWitchDuck(object);
+        } else if (object.getObjectType() == ObjectType.STONE) {
+            findWitchStone(object);
+        }
+    }
+
+    private void findWitchDuck(Object object) {
+        // Tots els habitants que pesin igual que l'objecte -> fer una cerca
+    }
+
+    private void findWitchWood(Object object) {
+        // Primer habitant que pesi menys que l'objecte -> esquerra
+    }
+
+    private void findWitchStone(Object object) {
+        // Primer habitant que pesi més que l'objecte -> dreta
     }
 
     //Given a starting node, searches for the right node that has the lowest value

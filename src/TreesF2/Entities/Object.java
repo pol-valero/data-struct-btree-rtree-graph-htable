@@ -10,4 +10,8 @@ public class Object {
 		this.weight = weight;
 		this.type = type;
 	}
+
+	public ObjectType getObjectType(){
+		return type;
+	}
 }

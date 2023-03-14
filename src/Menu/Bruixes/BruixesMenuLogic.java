@@ -53,6 +53,8 @@ public class BruixesMenuLogic {
         ObjectType objectType = Menu.askforObject("Tipus d'objecte: ");
 
         Object object = new Object(name, weight, objectType);
+
+        tree.findWitchByWeight(object);
     }
 
     public static void showBatuda() {

@@ -13,6 +13,8 @@ public interface Tree {
 
     Citizen findCitizenById (long citizenId); //Given an id, it returns the Citizen object that has that id
 
+    void findWitchByWeight(Object object);
+
     //Other methods have to be added...
 
 }
