@@ -228,9 +228,22 @@ public class BinaryTree implements Tree {
         return null;
     }
 
-    public MyArrayList<Citizen> findCitizensInRange(float max, float min, Node node) {
-        //implementacio
-        return null;
+    public void findCitizensInRange(float max, float min, Node node) {
+
+        if (node == null) {
+            return;
+        }
+
+        if (min < node.getCitizenWeight()) {
+            findCitizensInRange(max, min, node.right);
+        }
+
+        if (min <= node.getCitizenWeight() && max >= node.getCitizenWeight()) {
+            System.out.print(node.getCitizenWeight() + " ");
+        }
+
+        findCitizensInRange(max, min, node.left);
+
     }
 
 

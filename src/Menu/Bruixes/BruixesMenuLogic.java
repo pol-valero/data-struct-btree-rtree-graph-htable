@@ -57,7 +57,7 @@ public class BruixesMenuLogic {
         min = Menu.askForFloat("Pes mínim: ", 0.00f, Float.MAX_VALUE);
         max = Menu.askForFloat("Pes màxim: ", 0.00f, Float.MAX_VALUE);
 
-        tree.
+        tree.findCitizensInRange(max, min);
 
     }
 
