@@ -30,7 +30,7 @@ public class BinaryTree implements Tree {
             print("", root.right, true);
         }
 
-        nodePrint(root);    //We print the root node of the tree
+        root.printCitizen(false, true);   // Print the star in front of the citizen just if the Node is the root.
 
         //We print the left part of the tree
         if (root.left != null) {
@@ -73,7 +73,7 @@ public class BinaryTree implements Tree {
         }
 
         System.out.print("|--- ");
-        nodePrint(node);
+        node.printCitizen(false, node.equals(root));   // Print the star in front of the citizen just if the Node is the root.
 
         // Check if the parent of the node is on the left.
         if (node.parent.right == node && node.isLeaf()) {
@@ -106,11 +106,6 @@ public class BinaryTree implements Tree {
             System.out.println(stringIndentation);
         }
 
-    }
-
-    //Prints all the node's information
-    private void nodePrint (Node node) {
-        node.printCitizen(node.equals(root));   // Print the star in front of the citizen just if the Node is the root.
     }
 
     private Node add(Node currentNode, Citizen citizen, Node parentNode) {
@@ -225,7 +220,7 @@ public class BinaryTree implements Tree {
 
             System.out.println("S'ha descobert " + witches.size() + " bruixes!");
             for (Citizen witch : witches) {
-                witch.printInfo(true);
+                witch.printInfo(true, true);
             }
         }
         else {
@@ -247,7 +242,6 @@ public class BinaryTree implements Tree {
 
         // Check if exploring the nodes with a higher value than the current node is interesting: the current node value is below Maximum Value.
         if (node.left != null && node.getCitizenWeight() <= max ) {
-            // Split in two
             findCitizensInRange(max, min, node.left, witches);
         }
     }

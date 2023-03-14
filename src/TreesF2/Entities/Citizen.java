@@ -25,14 +25,19 @@ public class Citizen {
 		return this.id == otherID;
 	}
 
-	public void printInfo(boolean starInFront) {
+	public void printInfo(boolean tabInFront, boolean starInFront) {
 
-		// In case of showing representation, do not print the star in front of the Citizen info.
+		// In case of having tabInFront, a \t will be printed before the Citizen's information.
+		// In case of having starInFront, a star will be printed before the Citizen's information.
+
+		if (tabInFront) {
+			System.out.print("\t");
+		}
+
 		if (starInFront) {
-			System.out.println("* " + name + " (" + id + ", Regne de " + kingdom + "): " + weight + "kg");
+			System.out.print("* ");
 		}
-		else {
-			System.out.println(name + " (" + id + ", Regne de " + kingdom + "): " + weight + "kg");
-		}
+
+		System.out.println(name + " (" + id + ", Regne de " + kingdom + "): " + weight + "kg");
 	}
 }
