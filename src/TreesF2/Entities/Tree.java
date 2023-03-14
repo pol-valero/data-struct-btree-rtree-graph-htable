@@ -1,8 +1,5 @@
 package TreesF2.Entities;
 
-import Auxiliar.MyArrayList;
-import TreesF2.Entities.Citizen;
-
 public interface Tree {
 
 
@@ -16,6 +13,6 @@ public interface Tree {
 
     //Other methods have to be added...
 
-    MyArrayList<Citizen> findCitizensInRange(float max, float min);
+    void findCitizensInRange(float max, float min);
 
 }

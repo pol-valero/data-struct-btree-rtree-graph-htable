@@ -1,6 +1,5 @@
 package TreesF2.Entities.Trees;
 
-import Auxiliar.MyArrayList;
 import TreesF2.Algorithms.TreeBFS;
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Node;
@@ -222,10 +221,9 @@ public class BinaryTree implements Tree {
     }
 
     @Override
-    public MyArrayList<Citizen> findCitizensInRange(float max, float min) {
+    public void findCitizensInRange(float max, float min) {
 
         findCitizensInRange(max, min, root);
-        return null;
     }
 
     public void findCitizensInRange(float max, float min, Node node) {
@@ -234,15 +232,23 @@ public class BinaryTree implements Tree {
             return;
         }
 
-        if (min < node.getCitizenWeight()) {
-            findCitizensInRange(max, min, node.right);
+        // Check if Citizen's weight is higher or equal than the Minimum Weight
+        if (min <= node.getCitizenWeight()) {
+            // Check if the next node has a valid weight
+            if (node.right != null && node.right.getCitizenWeight() >= min) {   // Check first if is null so that not to get a NullPointerException
+                findCitizensInRange(max, min, node.right);
+            }
         }
 
+        // Check if Citizen's weight is between the range
         if (min <= node.getCitizenWeight() && max >= node.getCitizenWeight()) {
             System.out.print(node.getCitizenWeight() + " ");
         }
 
-        findCitizensInRange(max, min, node.left);
+        // Check if the Citizen's weight of the left node is lower or equal to Maximum Weight
+        if (node.left != null && node.left.getCitizenWeight() <= max) {
+            findCitizensInRange(max, min, node.left);
+        }
 
     }
 
