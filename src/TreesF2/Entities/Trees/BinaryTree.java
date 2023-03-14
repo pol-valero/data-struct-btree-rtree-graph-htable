@@ -218,7 +218,15 @@ public class BinaryTree implements Tree {
         // Print all the witches (in case there is any)
         if (witches.size() > 0) {
 
-            System.out.println("S'ha descobert " + witches.size() + " bruixes!");
+            // Take into account if there is only one witch discovered (or +1 one)
+            if (witches.size() == 1) {
+                System.out.println("S'ha descobert " + witches.size() + " bruixa!");
+            }
+            else {
+                System.out.println("S'han descobert " + witches.size() + " bruixes!");
+            }
+
+            // Print all the witches information
             for (Citizen witch : witches) {
                 witch.printInfo(true, true);
             }
