@@ -6,7 +6,7 @@ import TreesF2.Algorithms.TreeBFS;
 // Class used as a shared tree which is implemented as BinaryTree and AVLTree
 public abstract class Tree {
 
-    public Node root;   // Root of the tree (has no father Node)
+    public Node root = null;   // Root of the tree (has no father Node)
 
     // Adds a node to the tree
     public abstract void addCitizen(Citizen citizen);
@@ -108,8 +108,8 @@ public abstract class Tree {
 
     //Given a starting node, searches for the right node that has the lowest value
     public Node findMinNode(Node node) {
-        while (node.right != null) {
-            node = node.right;
+        while (node.left != null) {
+            node = node.left;
         }
         return node;
     }
@@ -144,8 +144,8 @@ public abstract class Tree {
     private void findCitizensInRange(float max, float min, Node node, MyArrayList<Citizen> witches) {
 
         // Check if exploring the nodes with a lower value than the current node is interesting: the current node value is over Minimum Value.
-        if (node.right != null && node.getCitizenWeight() >= min) {
-            findCitizensInRange(max, min, node.right, witches);
+        if (node.left != null && node.getCitizenWeight() >= min) {
+            findCitizensInRange(max, min, node.left, witches);
         }
 
         // Print the node if it meets the requirements: the Citizen's weight is between the limits / bounds (it's a Witch).
@@ -154,8 +154,8 @@ public abstract class Tree {
         }
 
         // Check if exploring the nodes with a higher value than the current node is interesting: the current node value is below Maximum Value.
-        if (node.left != null && node.getCitizenWeight() <= max ) {
-            findCitizensInRange(max, min, node.left, witches);
+        if (node.right != null && node.getCitizenWeight() <= max ) {
+            findCitizensInRange(max, min, node.right, witches);
         }
     }
 
