@@ -1,8 +1,8 @@
 package GraphsF1.Algorithms;
 
+import Auxiliar.MyQueue;
 import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.PlaceOfInterest;
-import Auxiliar.MyQueue;
 
 public class GraphBFS {
 

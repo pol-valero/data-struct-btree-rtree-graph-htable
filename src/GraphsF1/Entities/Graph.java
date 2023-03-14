@@ -4,8 +4,8 @@ import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
 
-import static Auxiliar.Algorithms.MergeSort.mergeSort;
 import static Auxiliar.Algorithms.BinarySearch.binarySearch;
+import static Auxiliar.Algorithms.MergeSort.mergeSort;
 
 public class Graph {
 	private final KnownRoute[][] matrix;
@@ -38,17 +38,6 @@ public class Graph {
 			matrix[place2.getRowIndex()][place1.getRowIndex()] = routes[i];
 
 		}
-	}
-
-	private KnownRoute findRoute(int i, int j) {
-
-		for (int k = 0; k < routesNum; k++) {
-			if (routes[k].containsPlaces(places[i].getId(), places[j].getId())) {
-				return routes[k];
-			}
-		}
-
-		return null;
 	}
 
 	public void printRelations(){

@@ -1,10 +1,9 @@
 package GraphsF1.Algorithms;
 
+import Auxiliar.MyArrayList;
 import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.KnownRoute;
 import GraphsF1.Entities.PlaceOfInterest;
-
-import Auxiliar.MyArrayList;
 
 
 public class MSTprim {

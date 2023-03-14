@@ -1,6 +1,5 @@
 package Parsers;
 
-
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Tree;
 
