@@ -16,43 +16,42 @@ public abstract class Tree {
 
     // Prints all the nodes in the tree with the corresponding branches
     public void printRepresentation() {
-        System.out.println();
 
         //We print the right part of the tree
-        if (root.right != null) {
-            print("", root.right, true);
+        if (root.left != null) {
+            print("", root.left, true);
         }
 
         root.printCitizen(false, true);   // Print the star in front of the citizen just if the Node is the root.
 
         //We print the left part of the tree
-        if (root.left != null) {
-            print("", root.left, false);
+        if (root.right != null) {
+            print("", root.right, false);
         }
 
     }
 
-    private void print(String stringIndentation, Node node, boolean rightNode) {
+    private void print(String stringIndentation, Node node, boolean leftNode) {
         String stringIndentationAux;
 
-        if (node.right != null) {
-            if (rightNode) {
+        if (node.left != null) {
+            if (leftNode) {
                 stringIndentationAux = stringIndentation + "      ";
             } else {
                 stringIndentationAux = stringIndentation + "|     ";
             }
-            print(stringIndentationAux, node.right, true);
+            print(stringIndentationAux, node.left, true);
         }
 
         // Join the nodes to the parents, just those who have both a child and a parent on their left.
-        if (node.right == null && node.parent != null && node.parent.left == node && node.left != null) {   // (node.parent != null && node.parent.left == node) would be (node.parent.left == node)
+        if (node.left == null && node.parent != null && node.parent.right == node && node.right != null) {   // (node.parent != null && node.parent.left == node) would be (node.parent.left == node)
             System.out.println(stringIndentation + "|");
         }
 
         System.out.print(stringIndentation);
 
         // Add an indentation to the last nodes of the tree (leaves)
-        if (!rightNode) {
+        if (!leftNode) {
             if (node.isLeaf()) {
                 System.out.println("|");    //The space is already contained in the prior print of the indentation
                 System.out.print(stringIndentation);
@@ -60,7 +59,7 @@ public abstract class Tree {
         }
 
         // Check if it is the last right node of a branch
-        if (node.right == null && rightNode) {
+        if (node.left == null && leftNode) {
             System.out.println();
             System.out.print(stringIndentation);
         }
@@ -69,33 +68,36 @@ public abstract class Tree {
         node.printCitizen(false, node.equals(root));   // Print the star in front of the citizen just if the Node is the root.
 
         // Check if the parent of the node is on the left.
-        if (node.parent.right == node && node.isLeaf()) {
+        if (node.parent.left == node && node.isLeaf()) {
             System.out.println(stringIndentation + "|");
         }
 
         // Check if a node only has a right child.
-        if (!node.isLeaf() && node.left == null) {
+        if (!node.isLeaf() && node.right == null) {
 
             // Solves a problem with a random '|' printed.
-            if (rightNode) {
+            if (leftNode) {
                 System.out.println(stringIndentation + "|");
             }
             else {
-                System.out.println(stringIndentation);
+                // Avoid printing a line separator at the end.
+                if (!stringIndentation.equals("")) {
+                    System.out.println(stringIndentation);
+                }
             }
         }
 
-        if (node.left != null) {
-            if (!rightNode) {
+        if (node.right != null) {
+            if (!leftNode) {
                 stringIndentationAux = stringIndentation + "      ";
             } else {
                 stringIndentationAux = stringIndentation + "|     ";
             }
-            print(stringIndentationAux, node.left, false);
+            print(stringIndentationAux, node.right, false);
         }
 
         // Adding an extra indentation when a leaf node has a parent node to its right.
-        if (node.isLeaf() && node.parent.left == node) {
+        if (node.isLeaf() && node.parent.right == node) {
             System.out.println(stringIndentation);
         }
 

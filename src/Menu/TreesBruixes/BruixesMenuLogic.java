@@ -63,10 +63,10 @@ public class BruixesMenuLogic {
 
     }
 
-    //We only create the tree if it was not already created before
+    // We only create the tree if it was not already created before
     private static void checkIfTreeCreated() {
         if (tree == null) {
-            tree = new BinaryTree();
+            tree = new BinaryTree();    // Change to "AVLTree" class to use Balanced Tree structure.
             DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
         }
     }

@@ -11,18 +11,18 @@ public class Menu {
     public static String GRAPHS_DATASET;
     public static String TREES_DATASET;
 
-    public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator+separator+
+    public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator + separator+
             "1. Sobre orenetes i cocos (Grafs)" +separator +
             "2. Caça de bruixes (Arbres binaris de cerca)" + separator+
             "3. PER ESPECIFICAR" + separator+
             "4. PER ESPECIFICAR" + separator + separator +
             "5. Exit" + separator;
-    public static final String ORENETES_MENU = separator + "A. Exploració del regne" + separator +
+    public static final String ORENETES_MENU = "A. Exploració del regne" + separator +
             "B. Detecció de trajectes habituals" + separator +
             "C. Missatgeria premium" + separator + separator +
             "D. Tornar enrere" + separator;
 
-    public static final String BRUIXES_MENU = separator + "A. Afegir habitant" + separator +
+    public static final String BRUIXES_MENU = "A. Afegir habitant" + separator +
             "B. Eliminar habitant" + separator +
             "C. Representació visual" + separator +
             "D. Identificació de bruixes" + separator +
