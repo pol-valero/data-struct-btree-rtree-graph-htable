@@ -232,6 +232,7 @@ public class BinaryTree implements Tree {
     private MyArrayList<Citizen> findWitchDuck(Object object, Node currentNode) {
         // Tots els habitants que pesin igual que l'objecte -> fer una cerca
         MyArrayList<Citizen> result = new MyArrayList<>();
+
         if (currentNode != null) {
             if (currentNode.getCitizenWeight() == object.getWeight()) {
                 result.add(currentNode.getCitizen());
