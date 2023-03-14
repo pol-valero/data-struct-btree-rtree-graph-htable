@@ -68,7 +68,8 @@ public class Node {
         height = Math.max(right.height, left.height) + 1;
     }
 
-    public int getHeight() {
-        return height;
+    public void printCitizen(boolean starInFront) {
+        citizen.printInfo(starInFront);
     }
+
 }

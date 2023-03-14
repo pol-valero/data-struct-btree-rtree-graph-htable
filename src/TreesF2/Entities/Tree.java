@@ -19,4 +19,6 @@ public interface Tree {
 
     //Other methods have to be added...
 
+    void findCitizensInRange(float max, float min);
+
 }

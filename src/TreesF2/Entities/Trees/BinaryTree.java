@@ -109,15 +109,8 @@ public class BinaryTree implements Tree {
 
     //Prints all the node's information
     private void nodePrint (Node node) {
-        Citizen citizen = node.getCitizen();
-
-        if (node.equals(root)) {
-            System.out.print("* ");
-        }
-
-        System.out.println(citizen.getName() + " (" + citizen.getId() + ", Regne de " + citizen.getKingdom() + "): " + citizen.getWeight() + "kg");
+        node.printCitizen(node.equals(root));   // Print the star in front of the citizen just if the Node is the root.
     }
-
 
     private Node add(Node currentNode, Citizen citizen, Node parentNode) {
         float valueToInsert;
@@ -281,6 +274,44 @@ public class BinaryTree implements Tree {
             node = node.right;
         }
         return node;
+    }
+
+    @Override
+    public void findCitizensInRange(float max, float min) {
+
+        MyArrayList<Citizen> witches = new MyArrayList<>();
+        findCitizensInRange(max, min, root, witches);
+
+        // Print all the witches (in case there is any)
+        if (witches.size() > 0) {
+
+            System.out.println("S'ha descobert " + witches.size() + " bruixes!");
+            for (Citizen witch : witches) {
+                witch.printInfo(true);
+            }
+        }
+        else {
+            System.out.println("No s'ha descobert cap bruixa.");
+        }
+    }
+
+    public void findCitizensInRange(float max, float min, Node node, MyArrayList<Citizen> witches) {
+
+        // Check if exploring the nodes with a lower value than the current node is interesting: the current node value is over Minimum Value.
+        if (node.right != null && node.getCitizenWeight() >= min) {
+            findCitizensInRange(max, min, node.right, witches);
+        }
+
+        // Print the node if it meets the requirements: the Citizen's weight is between the limits / bounds (it's a Witch).
+        if (min <= node.getCitizenWeight() && max >= node.getCitizenWeight()) {
+            witches.add(node.getCitizen());
+        }
+
+        // Check if exploring the nodes with a higher value than the current node is interesting: the current node value is below Maximum Value.
+        if (node.left != null && node.getCitizenWeight() <= max ) {
+            // Split in two
+            findCitizensInRange(max, min, node.left, witches);
+        }
     }
 
 }

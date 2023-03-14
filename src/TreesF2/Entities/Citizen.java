@@ -13,10 +13,6 @@ public class Citizen {
 		this.kingdom = kingdom;
 	}
 
-	public long getId() {
-		return id;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -25,11 +21,18 @@ public class Citizen {
 		return weight;
 	}
 
-	public String getKingdom() {
-		return kingdom;
-	}
-
 	public boolean sameID(long otherID) {
 		return this.id == otherID;
+	}
+
+	public void printInfo(boolean starInFront) {
+
+		// In case of showing representation, do not print the star in front of the Citizen info.
+		if (starInFront) {
+			System.out.println("* " + name + " (" + id + ", Regne de " + kingdom + "): " + weight + "kg");
+		}
+		else {
+			System.out.println(name + " (" + id + ", Regne de " + kingdom + "): " + weight + "kg");
+		}
 	}
 }
