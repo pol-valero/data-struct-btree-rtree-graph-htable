@@ -13,10 +13,6 @@ public class Citizen {
 		this.kingdom = kingdom;
 	}
 
-	public long getId() {
-		return id;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -25,11 +21,23 @@ public class Citizen {
 		return weight;
 	}
 
-	public String getKingdom() {
-		return kingdom;
-	}
-
 	public boolean sameID(long otherID) {
 		return this.id == otherID;
+	}
+
+	public void printInfo(boolean tabInFront, boolean starInFront) {
+
+		// In case of having tabInFront, a \t will be printed before the Citizen's information.
+		// In case of having starInFront, a star will be printed before the Citizen's information.
+
+		if (tabInFront) {
+			System.out.print("\t");
+		}
+
+		if (starInFront) {
+			System.out.print("* ");
+		}
+
+		System.out.println(name + " (" + id + ", Regne de " + kingdom + "): " + weight + "kg");
 	}
 }

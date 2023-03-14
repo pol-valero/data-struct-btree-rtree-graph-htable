@@ -1,7 +1,5 @@
 package TreesF2.Entities;
 
-import TreesF2.Entities.Citizen;
-
 public interface Tree {
 
 
@@ -14,5 +12,7 @@ public interface Tree {
     Citizen findCitizenById (long citizenId); //Given an id, it returns the Citizen object that has that id
 
     //Other methods have to be added...
+
+    void findCitizensInRange(float max, float min);
 
 }

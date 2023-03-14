@@ -1,5 +1,6 @@
 package TreesF2.Entities.Trees;
 
+import Auxiliar.MyArrayList;
 import TreesF2.Algorithms.TreeBFS;
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Node;
@@ -29,7 +30,7 @@ public class BinaryTree implements Tree {
             print("", root.right, true);
         }
 
-        nodePrint(root);    //We print the root node of the tree
+        root.printCitizen(false, true);   // Print the star in front of the citizen just if the Node is the root.
 
         //We print the left part of the tree
         if (root.left != null) {
@@ -72,7 +73,7 @@ public class BinaryTree implements Tree {
         }
 
         System.out.print("|--- ");
-        nodePrint(node);
+        node.printCitizen(false, node.equals(root));   // Print the star in front of the citizen just if the Node is the root.
 
         // Check if the parent of the node is on the left.
         if (node.parent.right == node && node.isLeaf()) {
@@ -106,18 +107,6 @@ public class BinaryTree implements Tree {
         }
 
     }
-
-    //Prints all the node's information
-    private void nodePrint (Node node) {
-        Citizen citizen = node.getCitizen();
-
-        if (node.equals(root)) {
-            System.out.print("* ");
-        }
-
-        System.out.println(citizen.getName() + " (" + citizen.getId() + ", Regne de " + citizen.getKingdom() + "): " + citizen.getWeight() + "kg");
-    }
-
 
     private Node add(Node currentNode, Citizen citizen, Node parentNode) {
         float valueToInsert;
@@ -218,6 +207,51 @@ public class BinaryTree implements Tree {
             node = node.right;
         }
         return node;
+    }
+
+    @Override
+    public void findCitizensInRange(float max, float min) {
+
+        MyArrayList<Citizen> witches = new MyArrayList<>();
+        findCitizensInRange(max, min, root, witches);
+
+        // Print all the witches (in case there is any)
+        if (witches.size() > 0) {
+
+            // Take into account if there is only one witch discovered (or +1 one)
+            if (witches.size() == 1) {
+                System.out.println("S'ha descobert " + witches.size() + " bruixa!");
+            }
+            else {
+                System.out.println("S'han descobert " + witches.size() + " bruixes!");
+            }
+
+            // Print all the witches information
+            for (Citizen witch : witches) {
+                witch.printInfo(true, true);
+            }
+        }
+        else {
+            System.out.println("No s'ha descobert cap bruixa.");
+        }
+    }
+
+    public void findCitizensInRange(float max, float min, Node node, MyArrayList<Citizen> witches) {
+
+        // Check if exploring the nodes with a lower value than the current node is interesting: the current node value is over Minimum Value.
+        if (node.right != null && node.getCitizenWeight() >= min) {
+            findCitizensInRange(max, min, node.right, witches);
+        }
+
+        // Print the node if it meets the requirements: the Citizen's weight is between the limits / bounds (it's a Witch).
+        if (min <= node.getCitizenWeight() && max >= node.getCitizenWeight()) {
+            witches.add(node.getCitizen());
+        }
+
+        // Check if exploring the nodes with a higher value than the current node is interesting: the current node value is below Maximum Value.
+        if (node.left != null && node.getCitizenWeight() <= max ) {
+            findCitizensInRange(max, min, node.left, witches);
+        }
     }
 
 }
