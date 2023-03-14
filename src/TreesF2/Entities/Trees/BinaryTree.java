@@ -234,7 +234,8 @@ public class BinaryTree implements Tree {
 
         // Check if Citizen's weight is higher or equal than the Minimum Weight
         if (min <= node.getCitizenWeight()) {
-            // Check if the next node has a valid weight
+
+            // Check if the next node to the right has a valid weight
             if (node.right != null && node.right.getCitizenWeight() >= min) {   // Check first if is null so that not to get a NullPointerException
                 findCitizensInRange(max, min, node.right);
             }
@@ -245,7 +246,7 @@ public class BinaryTree implements Tree {
             System.out.print(node.getCitizenWeight() + " ");
         }
 
-        // Check if the Citizen's weight of the left node is lower or equal to Maximum Weight
+        // Check if the next node to the left has a valid weight
         if (node.left != null && node.left.getCitizenWeight() <= max) {
             findCitizensInRange(max, min, node.left);
         }
