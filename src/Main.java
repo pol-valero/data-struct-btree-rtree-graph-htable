@@ -1,8 +1,8 @@
-import Menu.Bruixes.BruixesMenuOptions;
+import Menu.TreesBruixes.BruixesMenuOptions;
 import Menu.Menu;
-import Menu.Orenetes.OrenetesMenuLogic;
-import Menu.Bruixes.BruixesMenuLogic;
-import Menu.Orenetes.OrenetesMenuOptions;
+import Menu.GraphsOrenetes.OrenetesMenuLogic;
+import Menu.TreesBruixes.BruixesMenuLogic;
+import Menu.GraphsOrenetes.OrenetesMenuOptions;
 
 public class Main {
 

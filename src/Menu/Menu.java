@@ -1,7 +1,7 @@
 package Menu;
 
-import Menu.Bruixes.BruixesMenuOptions;
-import Menu.Orenetes.OrenetesMenuOptions;
+import Menu.TreesBruixes.BruixesMenuOptions;
+import Menu.GraphsOrenetes.OrenetesMenuOptions;
 
 import java.util.Scanner;
 

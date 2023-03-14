@@ -1,4 +1,4 @@
-package Menu.Orenetes;
+package Menu.GraphsOrenetes;
 
 import GraphsF1.Algorithms.GraphBFS;
 import GraphsF1.Algorithms.Dijkstra;

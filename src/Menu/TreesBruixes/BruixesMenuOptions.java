@@ -1,4 +1,4 @@
-package Menu.Bruixes;
+package Menu.TreesBruixes;
 
 public enum BruixesMenuOptions {
 	ADD_CITIZEN,

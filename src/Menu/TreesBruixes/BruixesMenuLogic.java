@@ -1,4 +1,4 @@
-package Menu.Bruixes;
+package Menu.TreesBruixes;
 
 import Menu.Menu;
 import Parsers.DatasetLoaderF2;
