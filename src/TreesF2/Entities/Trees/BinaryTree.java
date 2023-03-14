@@ -244,7 +244,7 @@ public class BinaryTree implements Tree {
 
     private Citizen findWitchWood(Object object, Node currentNode) {
         // Primer habitant que pesi menys que l'objecte -> esquerra
-        if (currentNode.left != null) {
+        if (currentNode != null) {
             if (currentNode.getCitizenWeight() < object.getWeight()) {
                 return currentNode.getCitizen();
             } else {
@@ -257,7 +257,7 @@ public class BinaryTree implements Tree {
 
     private Citizen findWitchStone(Object object, Node currentNode) {
         // Primer habitant que pesi més que l'objecte -> dreta
-        if (currentNode.right != null) {
+        if (currentNode != null) {
             if (currentNode.getCitizenWeight() > object.getWeight()) {
                 return currentNode.getCitizen();
             } else {
