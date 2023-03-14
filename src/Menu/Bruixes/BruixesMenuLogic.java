@@ -1,5 +1,6 @@
 package Menu.Bruixes;
 
+import Auxiliar.MyArrayList;
 import Menu.Menu;
 import Parsers.DatasetLoaderF2;
 import TreesF2.Entities.Citizen;
@@ -55,9 +56,9 @@ public class BruixesMenuLogic {
         Object object = new Object(name, weight, objectType);
 
         if (object.getObjectType() == ObjectType.WOOD || object.getObjectType() == ObjectType.STONE) {
-            tree.findWitchByWoodAndStone(object);
+            Citizen witch = tree.findWitchByWoodAndStone(object);
         } else if (object.getObjectType() == ObjectType.DUCK) {
-            tree.findWitchByDuck(object);
+            MyArrayList<Citizen> witches = tree.findWitchByDuck(object);
         }
 
     }
