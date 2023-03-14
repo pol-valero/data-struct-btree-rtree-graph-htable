@@ -1,5 +1,6 @@
 package TreesF2.Entities.Trees;
 
+import Auxiliar.MyArrayList;
 import TreesF2.Algorithms.TreeBFS;
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Node;
@@ -219,5 +220,18 @@ public class BinaryTree implements Tree {
         }
         return node;
     }
+
+    @Override
+    public MyArrayList<Citizen> findCitizensInRange(float max, float min) {
+
+        findCitizensInRange(max, min, root);
+        return null;
+    }
+
+    public MyArrayList<Citizen> findCitizensInRange(float max, float min, Node node) {
+        //implementacio
+        return null;
+    }
+
 
 }

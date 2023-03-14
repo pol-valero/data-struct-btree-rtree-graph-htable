@@ -49,7 +49,16 @@ public class BruixesMenuLogic {
     }
 
     public static void showBatuda() {
+
         checkIfTreeCreated();
+
+        float max, min;
+
+        min = Menu.askForFloat("Pes mínim: ", 0.00f, Float.MAX_VALUE);
+        max = Menu.askForFloat("Pes màxim: ", 0.00f, Float.MAX_VALUE);
+
+        tree.
+
     }
 
     //We only create the tree if it was not already created before
