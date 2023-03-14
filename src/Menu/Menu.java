@@ -2,6 +2,7 @@ package Menu;
 
 import Menu.Bruixes.BruixesMenuOptions;
 import Menu.Orenetes.OrenetesMenuOptions;
+import TreesF2.Entities.ObjectType;
 
 import java.util.Scanner;
 
@@ -201,5 +202,19 @@ public class Menu {
         } while (option < min || option > max);
 
         return option;
+    }
+
+    public static ObjectType askforObject(String s) {
+        while(true){
+            String objectType = askForString(s);
+            if (objectType.equalsIgnoreCase("WOOD")) {
+                return ObjectType.WOOD;
+            } else if (objectType.equalsIgnoreCase("DUCK")) {
+                return ObjectType.DUCK;
+            } else if (objectType.equalsIgnoreCase("STONE")) {
+                return ObjectType.STONE;
+            }
+            System.out.println("Error: Introdueix \"WOOD\", \"DUCK\" o \"STONE\".\n");
+        }
     }
 }

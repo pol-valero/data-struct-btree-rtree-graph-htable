@@ -3,6 +3,8 @@ package Menu.Bruixes;
 import Menu.Menu;
 import Parsers.DatasetLoaderF2;
 import TreesF2.Entities.Citizen;
+import TreesF2.Entities.ObjectType;
+import TreesF2.Entities.Object;
 import TreesF2.Entities.Tree;
 import TreesF2.Entities.Trees.BinaryTree;
 
@@ -46,6 +48,11 @@ public class BruixesMenuLogic {
 
     public static void showWitchIdentification() {
         checkIfTreeCreated();
+        String name = Menu.askForString("\nNom de l'objecte: ");
+        float weight = Menu.askForFloat("Pes de l'objecte: ", 0, Float.MAX_VALUE);
+        ObjectType objectType = Menu.askforObject("Tipus d'objecte: ");
+
+        Object object = new Object(name, weight, objectType);
     }
 
     public static void showBatuda() {
