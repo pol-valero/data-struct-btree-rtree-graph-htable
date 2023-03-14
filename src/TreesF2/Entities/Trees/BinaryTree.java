@@ -1,5 +1,6 @@
 package TreesF2.Entities.Trees;
 
+import Auxiliar.MyArrayList;
 import TreesF2.Algorithms.TreeBFS;
 import TreesF2.Entities.*;
 import TreesF2.Entities.Object;
@@ -210,27 +211,59 @@ public class BinaryTree implements Tree {
     public Citizen findCitizenById (long citizenId) {
         return TreeBFS.findCitizenById(root, citizenId);
     }
+
     @Override
-    public void findWitchByWeight(Object object) {
+    public Citizen findWitchByWoodAndStone(Object object) {
+        Node currentNode = root;
+
         if (object.getObjectType() == ObjectType.WOOD) {
-            findWitchWood(object);
-        } else if (object.getObjectType() == ObjectType.DUCK) {
-            findWitchDuck(object);
+            return findWitchWood(object, currentNode);
         } else if (object.getObjectType() == ObjectType.STONE) {
-            findWitchStone(object);
+            return findWitchStone(object, currentNode);
+        }
+        return null;
+    }
+    @Override
+    public MyArrayList<Citizen> findWitchByDuck(Object object){
+        Node currentNode = root;
+        return findWitchDuck(object, currentNode);
+    }
+
+    private MyArrayList<Citizen> findWitchDuck(Object object, Node currentNode) {
+        // Tots els habitants que pesin igual que l'objecte -> fer una cerca
+        MyArrayList<Citizen> result = new MyArrayList<>();
+        if (currentNode != null) {
+            if (currentNode.getCitizenWeight() == object.getWeight()) {
+                result.add(currentNode.getCitizen());
+            }
+            MyArrayList<Citizen> leftList = findWitchDuck(object, currentNode.left);
+            MyArrayList<Citizen> rightList = findWitchDuck(object, currentNode.right);
+            for (Citizen c : leftList) {
+                result.add(c);
+            }
+            for (Citizen c : rightList) {
+                result.add(c);
+            }
+        }
+        return result;
+    }
+
+    private Citizen findWitchWood(Object object, Node currentNode) {
+        // Primer habitant que pesi menys que l'objecte -> esquerra
+        if (currentNode.getCitizenWeight() < object.getWeight()) {
+            return currentNode.getCitizen();
+        } else {
+            return findWitchWood(object, currentNode.left);
         }
     }
 
-    private void findWitchDuck(Object object) {
-        // Tots els habitants que pesin igual que l'objecte -> fer una cerca
-    }
-
-    private void findWitchWood(Object object) {
-        // Primer habitant que pesi menys que l'objecte -> esquerra
-    }
-
-    private void findWitchStone(Object object) {
+    private Citizen findWitchStone(Object object, Node currentNode) {
         // Primer habitant que pesi més que l'objecte -> dreta
+        if (currentNode.getCitizenWeight() > object.getWeight()) {
+            return currentNode.getCitizen();
+        } else {
+            return findWitchStone(object, currentNode.right);
+        }
     }
 
     //Given a starting node, searches for the right node that has the lowest value

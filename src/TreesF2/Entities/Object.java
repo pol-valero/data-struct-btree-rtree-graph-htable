@@ -14,4 +14,8 @@ public class Object {
 	public ObjectType getObjectType(){
 		return type;
 	}
+
+	public float getWeight() {
+		return weight;
+	}
 }

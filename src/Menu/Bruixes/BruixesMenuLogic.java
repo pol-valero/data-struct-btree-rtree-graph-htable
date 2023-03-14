@@ -54,7 +54,12 @@ public class BruixesMenuLogic {
 
         Object object = new Object(name, weight, objectType);
 
-        tree.findWitchByWeight(object);
+        if (object.getObjectType() == ObjectType.WOOD || object.getObjectType() == ObjectType.STONE) {
+            tree.findWitchByWoodAndStone(object);
+        } else if (object.getObjectType() == ObjectType.DUCK) {
+            tree.findWitchByDuck(object);
+        }
+
     }
 
     public static void showBatuda() {
