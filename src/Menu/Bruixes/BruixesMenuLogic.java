@@ -55,19 +55,26 @@ public class BruixesMenuLogic {
 
         Object object = new Object(name, weight, objectType);
         Citizen witch = null;
+        MyArrayList<Citizen> witches = null;
 
         if (object.getObjectType() == ObjectType.WOOD || object.getObjectType() == ObjectType.STONE) {
             witch = tree.findWitchByWoodAndStone(object);
         } else if (object.getObjectType() == ObjectType.DUCK) {
-            MyArrayList<Citizen> witches = tree.findWitchByDuck(object);
+            witches = tree.findWitchByDuck(object);
         }
 
-        if (witch == null) {
+        if (witch == null || witches == null) {
             System.out.println("No hi ha cap habitant que compleixi aquesta condició.");
         } else {
-            System.out.println("Nom: "+witch.getName());
+            if (witch != null) {
+                witch.printInfo(true);
+            }
+            if (witch != null) {
+                for (int i = 0; i < witches.size(); i++) {
+                    witches.get(i).printInfo(true);
+                }
+            }
         }
-
     }
 
     public static void showBatuda() {
