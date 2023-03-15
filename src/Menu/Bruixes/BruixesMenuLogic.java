@@ -63,7 +63,7 @@ public class BruixesMenuLogic {
             witches = tree.findWitchByDuck(object);
         }
 
-        if (witch == null || witches == null) {
+        if (witch == null && witches == null) {
             System.out.println("No hi ha cap habitant que compleixi aquesta condició.");
         } else {
             if (witch != null) {
