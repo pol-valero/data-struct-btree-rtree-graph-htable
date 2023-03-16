@@ -32,13 +32,10 @@ public class BinaryTree extends Tree {
         valueToInsert = citizen.getWeight();
         currentNodeValue = currentNode.getCitizenWeight();
 
-        if (valueToInsert < currentNodeValue) {     //We go to the left child if the value that we want to insert is lower than the current node's value
+        if (valueToInsert < currentNodeValue) {     // We go to the left child if the value that we want to insert is lower than the current node's value
             currentNode.left = add(currentNode.left, citizen, currentNode);
-        } else if (valueToInsert > currentNodeValue) {      //We go to the right child if the value that we want to insert is higher than the current node's value
+        } else if (valueToInsert >= currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
             currentNode.right = add(currentNode.right, citizen, currentNode);
-        } else {
-            currentNode.calculateHeight();
-            return currentNode; //We return the currentNode if the value already exists (therefore not adding the new node as it has a duplicated value)
         }
 
         // Case where the node is added
@@ -52,7 +49,7 @@ public class BinaryTree extends Tree {
             return null;
         }
 
-        //We go to the left child if the value that we want to delete is higher than the current node's value
+        // We go to the left child if the value that we want to delete is higher than the current node's value
         if (citizen.getWeight() > currentNode.getCitizenWeight()) {
             currentNode.right = remove(currentNode.right, citizen);
             currentNode.calculateHeight(); // Re-calculate the height of the current node.
