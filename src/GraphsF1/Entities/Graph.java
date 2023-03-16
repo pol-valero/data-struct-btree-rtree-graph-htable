@@ -3,6 +3,7 @@ package GraphsF1.Entities;
 import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static Auxiliar.Algorithms.BinarySearch.binarySearch;
 import static Auxiliar.Algorithms.MergeSort.mergeSort;
@@ -117,7 +118,7 @@ public class Graph {
 	public PlaceOfInterest getPlaceByID(int placeID) {
 
 		// Get the place with the ID using Binary Search (since we use MergeSort for the array).
-		return binarySearch(places, placeID);
+		return binarySearch(Arrays.asList(places), new PlaceOfInterest(placeID));
 	}
 
 	public int getSize() {
