@@ -37,9 +37,6 @@ public class AVLTree extends Tree {
 		center.right = currentNode;
 		currentNode.left = right_node;
 
-		center.calculateHeight();
-		currentNode.calculateHeight();
-
 		return center;
 	}
 
@@ -50,9 +47,6 @@ public class AVLTree extends Tree {
 
 		center.left = currentNode;
 		currentNode.right = right_node;
-
-		center.calculateHeight();
-		currentNode.calculateHeight();
 
 		return center;
 	}
