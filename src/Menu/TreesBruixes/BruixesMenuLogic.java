@@ -4,6 +4,7 @@ import Menu.Menu;
 import Parsers.DatasetLoaderF2;
 import TreesF2.Entities.Citizen;
 import TreesF2.Entities.Tree;
+import TreesF2.Entities.Trees.AVLTree;
 import TreesF2.Entities.Trees.BinaryTree;
 
 public class BruixesMenuLogic {
@@ -45,7 +46,8 @@ public class BruixesMenuLogic {
     }
 
     public static void showWitchIdentification() {
-        checkIfTreeCreated();
+        checkIfTreeAvlCreated();
+        tree.printRepresentation();
     }
 
     public static void showBatuda() {
@@ -67,6 +69,12 @@ public class BruixesMenuLogic {
     private static void checkIfTreeCreated() {
         if (tree == null) {
             tree = new BinaryTree();    // Change to "AVLTree" class to use Balanced Tree structure.
+            DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
+        }
+    }
+    private static void checkIfTreeAvlCreated() {
+        if (tree == null) {
+            tree = new AVLTree();    // Change to "AVLTree" class to use Balanced Tree structure.
             DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
         }
     }
