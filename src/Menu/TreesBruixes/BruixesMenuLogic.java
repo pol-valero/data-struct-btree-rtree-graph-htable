@@ -69,11 +69,11 @@ public class BruixesMenuLogic {
             System.out.println("No hi ha cap habitant que compleixi aquesta condició.");
         } else {
             if (witch != null) {
-                witch.printInfo(true);
+                witch.printInfo(true, true);
             }
-            if (witch != null) {
+            if (witches != null) {
                 for (int i = 0; i < witches.size(); i++) {
-                    witches.get(i).printInfo(true);
+                    witches.get(i).printInfo(true, true);
                 }
             }
         }

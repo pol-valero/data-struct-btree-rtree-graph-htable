@@ -161,4 +161,65 @@ public abstract class Tree {
         }
     }
 
+    public Citizen findWitchByWoodAndStone(Object object) {
+        Node currentNode = root;
+
+        if (object.getObjectType() == ObjectType.WOOD) {
+            return findWitchWood(object, currentNode);
+        } else if (object.getObjectType() == ObjectType.STONE) {
+            return findWitchStone(object, currentNode);
+        }
+        return null;
+    }
+
+    public MyArrayList<Citizen> findWitchByDuck(Object object){
+        Node currentNode = root;
+        return findWitchDuck(object, currentNode);
+    }
+
+    private MyArrayList<Citizen> findWitchDuck(Object object, Node currentNode) {
+        // Tots els habitants que pesin igual que l'objecte -> fer una cerca
+        MyArrayList<Citizen> result = new MyArrayList<>();
+
+        if (currentNode != null) {
+            if (currentNode.getCitizenWeight() == object.getWeight()) {
+                result.add(currentNode.getCitizen());
+            }
+            MyArrayList<Citizen> leftList = findWitchDuck(object, currentNode.left);
+            MyArrayList<Citizen> rightList = findWitchDuck(object, currentNode.right);
+            for (Citizen c : leftList) {
+                result.add(c);
+            }
+            for (Citizen c : rightList) {
+                result.add(c);
+            }
+        }
+        return result;
+    }
+
+    private Citizen findWitchWood(Object object, Node currentNode) {
+        // Primer habitant que pesi menys que l'objecte -> esquerra
+        if (currentNode != null) {
+            if (currentNode.getCitizenWeight() < object.getWeight()) {
+                return currentNode.getCitizen();
+            } else {
+                return findWitchWood(object, currentNode.left);
+            }
+        } else{
+            return null;
+        }
+    }
+
+    private Citizen findWitchStone(Object object, Node currentNode) {
+        // Primer habitant que pesi més que l'objecte -> dreta
+        if (currentNode != null) {
+            if (currentNode.getCitizenWeight() > object.getWeight()) {
+                return currentNode.getCitizen();
+            } else {
+                return findWitchStone(object, currentNode.right);
+            }
+        } else {
+            return null;
+        }
+    }
 }
