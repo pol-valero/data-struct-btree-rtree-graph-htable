@@ -20,10 +20,12 @@ public class AVLTree extends Tree {
 			return 0;
 		}
 		else {
+			node.calculateHeight();
 			return node.getHeight();
 		}
 	}
 	int getBalance(Node currentNode) {
+		currentNode.calculateHeight();
 		if (currentNode == null) {
 			return 0;
 		}
@@ -37,6 +39,12 @@ public class AVLTree extends Tree {
 		center.right = currentNode;
 		currentNode.left = right_node;
 
+		center.parent = currentNode.parent;
+		currentNode.parent = center;
+
+		center.calculateHeight();
+		currentNode.calculateHeight();
+
 		return center;
 	}
 
@@ -47,6 +55,13 @@ public class AVLTree extends Tree {
 
 		center.left = currentNode;
 		currentNode.right = right_node;
+
+
+		center.parent = currentNode.parent;
+		currentNode.parent = center;
+
+		center.calculateHeight();
+		currentNode.calculateHeight();
 
 		return center;
 	}
@@ -71,33 +86,26 @@ public class AVLTree extends Tree {
 		} else if (valueToInsert >= currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
 			currentNode.right = add(currentNode.right, citizen, currentNode);
 		}
-		else {
-			return currentNode;
-		}
 
 		// Case where the node is added
 
 		int balance = getBalance(currentNode);
 
-		if (currentNode.left != null && currentNode.right != null) {
-			if (balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
-				return rightRotate(currentNode);
-			}
-
-			if (balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
-				return leftRotate(currentNode);
-			}
-
-			if (balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
-				currentNode.left = leftRotate(currentNode.left);
-				return rightRotate(currentNode);
-			}
-
-			if (balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
-				currentNode.right = rightRotate(currentNode.right);
-				return leftRotate(currentNode);
-			}
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
+			return rightRotate(currentNode);
 		}
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
+			return leftRotate(currentNode);
+		}
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
+			currentNode.left = leftRotate(currentNode.left);
+			return rightRotate(currentNode);
+		}
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
+			currentNode.right = rightRotate(currentNode.right);
+			return leftRotate(currentNode);
+		}
+
 		return currentNode;
 
 	}
