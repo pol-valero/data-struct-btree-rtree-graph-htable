@@ -1,9 +1,13 @@
-package Menu.Bruixes;
+package Menu.TreesBruixes;
 
+import Auxiliar.MyArrayList;
 import Menu.Menu;
 import Parsers.DatasetLoaderF2;
 import TreesF2.Entities.Citizen;
+import TreesF2.Entities.ObjectType;
+import TreesF2.Entities.Object;
 import TreesF2.Entities.Tree;
+import TreesF2.Entities.Trees.AVLTree;
 import TreesF2.Entities.Trees.BinaryTree;
 
 public class BruixesMenuLogic {
@@ -45,7 +49,34 @@ public class BruixesMenuLogic {
     }
 
     public static void showWitchIdentification() {
-        checkIfTreeCreated();
+        checkIfTreeAvlCreated();
+        tree.printRepresentation();
+        String name = Menu.askForString(Menu.separator + "Nom de l'objecte: ");
+        float weight = Menu.askForFloat("Pes de l'objecte: ", 0, Float.MAX_VALUE);
+        ObjectType objectType = Menu.askforObject("Tipus d'objecte: ");
+
+        Object object = new Object(name, weight, objectType);
+        Citizen witch = null;
+        MyArrayList<Citizen> witches = new MyArrayList<Citizen>();
+
+        if (object.getObjectType() == ObjectType.WOOD || object.getObjectType() == ObjectType.STONE) {
+            witch = tree.findWitchByWoodAndStone(object);
+        } else if (object.getObjectType() == ObjectType.DUCK) {
+            tree.findWitchByDuck(object, witches);
+        }
+
+        if (witch == null && witches.size() == 0) {
+            System.out.println("No hi ha cap habitant que compleixi aquesta condició.");
+        } else {
+            if (witch != null) {
+                witch.printInfo(true, true);
+            }
+            if (witches.size() != 0) {
+                for (int i = 0; i < witches.size(); i++) {
+                    witches.get(i).printInfo(true, true);
+                }
+            }
+        }
     }
 
     public static void showBatuda() {
@@ -63,10 +94,16 @@ public class BruixesMenuLogic {
 
     }
 
-    //We only create the tree if it was not already created before
+    // We only create the tree if it was not already created before
     private static void checkIfTreeCreated() {
         if (tree == null) {
-            tree = new BinaryTree();
+            tree = new BinaryTree();    // Change to "AVLTree" class to use Balanced Tree structure.
+            DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
+        }
+    }
+    private static void checkIfTreeAvlCreated() {
+        if (tree == null) {
+            tree = new AVLTree();    // Change to "AVLTree" class to use Balanced Tree structure.
             DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
         }
     }

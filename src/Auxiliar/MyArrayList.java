@@ -19,6 +19,12 @@ public class MyArrayList<T> implements Iterable<T> {
 		size = num;
 	}
 
+	// Constructor that allows to deep copy (without references) another ArrayList.
+	public MyArrayList(MyArrayList<T> originalArray) {
+		elements = (T[]) Arrays.copyOf(originalArray.toArray(), originalArray.size(), Object[].class);
+		size = originalArray.size();
+	}
+
 	public int size() {
 		return size;
 	}
@@ -145,9 +151,7 @@ public class MyArrayList<T> implements Iterable<T> {
 			int offset = fromIndex - toIndex;
 			Object[] temporalArray = new Object[offset];
 
-			for (int i = 0; i < offset; i++) {
-				temporalArray[i] = elements[fromIndex + i];
-			}
+			System.arraycopy(elements, fromIndex, temporalArray, 0, offset);
 
 			return (T[]) temporalArray;
 		}

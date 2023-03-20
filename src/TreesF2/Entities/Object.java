@@ -10,4 +10,12 @@ public class Object {
 		this.weight = weight;
 		this.type = type;
 	}
+
+	public ObjectType getObjectType(){
+		return type;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
 }
