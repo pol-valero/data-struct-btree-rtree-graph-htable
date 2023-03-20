@@ -1,4 +1,4 @@
-package Menu.Bruixes;
+package Menu.TreesBruixes;
 
 import Auxiliar.MyArrayList;
 import Menu.Menu;
@@ -7,6 +7,7 @@ import TreesF2.Entities.Citizen;
 import TreesF2.Entities.ObjectType;
 import TreesF2.Entities.Object;
 import TreesF2.Entities.Tree;
+import TreesF2.Entities.Trees.AVLTree;
 import TreesF2.Entities.Trees.BinaryTree;
 
 public class BruixesMenuLogic {
@@ -48,7 +49,8 @@ public class BruixesMenuLogic {
     }
 
     public static void showWitchIdentification() {
-        checkIfTreeCreated();
+        checkIfTreeAvlCreated();
+        tree.printRepresentation();
         String name = Menu.askForString(Menu.separator + "Nom de l'objecte: ");
         float weight = Menu.askForFloat("Pes de l'objecte: ", 0, Float.MAX_VALUE);
         ObjectType objectType = Menu.askforObject("Tipus d'objecte: ");
@@ -92,10 +94,16 @@ public class BruixesMenuLogic {
 
     }
 
-    //We only create the tree if it was not already created before
+    // We only create the tree if it was not already created before
     private static void checkIfTreeCreated() {
         if (tree == null) {
-            tree = new BinaryTree();
+            tree = new BinaryTree();    // Change to "AVLTree" class to use Balanced Tree structure.
+            DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
+        }
+    }
+    private static void checkIfTreeAvlCreated() {
+        if (tree == null) {
+            tree = new AVLTree();    // Change to "AVLTree" class to use Balanced Tree structure.
             DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
         }
     }

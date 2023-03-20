@@ -1,13 +1,10 @@
 package TreesF2.Entities.Trees;
 
-import Auxiliar.MyArrayList;
-import TreesF2.Algorithms.TreeBFS;
-import TreesF2.Entities.*;
-import TreesF2.Entities.Object;
+import TreesF2.Entities.Citizen;
+import TreesF2.Entities.Node;
+import TreesF2.Entities.Tree;
 
-public class BinaryTree implements Tree {
-
-    private Node root = null;   //Root node of the tree. From this node we can obtain all the other nodes.
+public class BinaryTree extends Tree {
 
     @Override
     public void addCitizen(Citizen citizen) {
@@ -18,98 +15,6 @@ public class BinaryTree implements Tree {
     public void removeCitizen(long citizenId) {
         Citizen citizen = findCitizenById(citizenId);
         root = remove(root, citizen);
-    }
-
-    @Override
-    public void printRepresentation() {
-        System.out.println();
-
-        //We print the right part of the tree
-        if (root.right != null) {
-            print("", root.right, true);
-        }
-
-        nodePrint(root);    //We print the root node of the tree
-
-        //We print the left part of the tree
-        if (root.left != null) {
-            print("", root.left, false);
-        }
-
-    }
-
-    private void print (String stringIndentation, Node node, boolean rightNode) {
-        String stringIndentationAux;
-
-        if (node.right != null) {
-            if (rightNode) {
-                stringIndentationAux = stringIndentation + "      ";
-            } else {
-                stringIndentationAux = stringIndentation + "|     ";
-            }
-            print(stringIndentationAux, node.right, true);
-        }
-
-        // Join the nodes to the parents, just those who have both a child and a parent on their left.
-        if (node.right == null && node.parent != null && node.parent.left == node && node.left != null) {   // (node.parent != null && node.parent.left == node) would be (node.parent.left == node)
-            System.out.println(stringIndentation + "|");
-        }
-
-        System.out.print(stringIndentation);
-
-        // Add an indentation to the last nodes of the tree (leaves)
-        if (!rightNode) {
-            if (node.isLeaf()) {
-                System.out.println("|");    //The space is already contained in the prior print of the indentation
-                System.out.print(stringIndentation);
-            }
-        }
-
-        // Check if it is the last right node of a branch
-        if (node.right == null && rightNode) {
-            System.out.println();
-            System.out.print(stringIndentation);
-        }
-
-        System.out.print("|--- ");
-        nodePrint(node);
-
-        // Check if the parent of the node is on the left.
-        if (node.parent.right == node && node.isLeaf()) {
-            System.out.println(stringIndentation + "|");
-        }
-
-        // Check if a node only has a right child.
-        if (!node.isLeaf() && node.left == null) {
-
-            // Solves a problem with a random '|' printed.
-            if (rightNode) {
-                System.out.println(stringIndentation + "|");
-            }
-            else {
-                System.out.println(stringIndentation);
-            }
-        }
-
-        if (node.left != null) {
-            if (!rightNode) {
-                stringIndentationAux = stringIndentation + "      ";
-            } else {
-                stringIndentationAux = stringIndentation + "|     ";
-            }
-            print(stringIndentationAux, node.left, false);
-        }
-
-        // Adding an extra indentation when a leaf node has a parent node to its right.
-        if (node.isLeaf() && node.parent.left == node) {
-            System.out.println(stringIndentation);
-        }
-
-    }
-
-    //Prints all the node's information
-    private void nodePrint (Node node) {
-        node.printCitizen(node.equals(root));   // Print the star in front of the citizen just if the Node is the root.
     }
 
     private Node add(Node currentNode, Citizen citizen, Node parentNode) {
@@ -127,13 +32,10 @@ public class BinaryTree implements Tree {
         valueToInsert = citizen.getWeight();
         currentNodeValue = currentNode.getCitizenWeight();
 
-        if (valueToInsert < currentNodeValue) {     //We go to the right child if the value that we want to insert is lower than the current node's value
-            currentNode.right = add(currentNode.right, citizen, currentNode);
-        } else if (valueToInsert > currentNodeValue) {      //We go to the left child if the value that we want to insert is higher than the current node's value
+        if (valueToInsert < currentNodeValue) {     // We go to the left child if the value that we want to insert is lower than the current node's value
             currentNode.left = add(currentNode.left, citizen, currentNode);
-        } else {
-            currentNode.calculateHeight();
-            return currentNode; //We return the currentNode if the value already exists (therefore not adding the new node as it has a duplicated value)
+        } else if (valueToInsert >= currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
+            currentNode.right = add(currentNode.right, citizen, currentNode);
         }
 
         // Case where the node is added
@@ -147,16 +49,16 @@ public class BinaryTree implements Tree {
             return null;
         }
 
-        //We go to the left child if the value that we want to delete is higher than the current node's value
+        // We go to the left child if the value that we want to delete is higher than the current node's value
         if (citizen.getWeight() > currentNode.getCitizenWeight()) {
-            currentNode.left = remove(currentNode.left, citizen);
+            currentNode.right = remove(currentNode.right, citizen);
             currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
 
         //We go to the right child if the value that we want to delete is lower than the current node's value
         if (citizen.getWeight() < currentNode.getCitizenWeight()) {
-            currentNode.right = remove(currentNode.right, citizen);
+            currentNode.left = remove(currentNode.left, citizen);
             currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
@@ -170,16 +72,16 @@ public class BinaryTree implements Tree {
             }
 
             //If the node only has one child, we return the child (replacing this node with the node's child in the parent)
-            if (currentNode.right == null) {
-                currentNode.left.parent = currentNode.parent;
-                currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
-                return currentNode.left;
-            }
-
             if (currentNode.left == null) {
                 currentNode.right.parent = currentNode.parent;
                 currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
                 return currentNode.right;
+            }
+
+            if (currentNode.right == null) {
+                currentNode.left.parent = currentNode.parent;
+                currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
+                return currentNode.left;
             }
             /////////////////////////////////
         }
@@ -192,126 +94,12 @@ public class BinaryTree implements Tree {
         //(which has a greater value) and then find the lowest value in the subtree. This value will
         //be the next biggest value that we were searching for
 
-        Node tempNode = findMinNode(currentNode.left); //Finds the node with the lowest value in the subtree (given an origin/root node)
+        Node tempNode = findMinNode(currentNode.right); //Finds the node with the lowest value in the subtree (given an origin/root node)
         currentNode.setCitizen(tempNode.getCitizen());  //We change the node's citizen information; effectively eliminating the older node.
-        currentNode.left = remove(currentNode.left, tempNode.getCitizen()); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
+        currentNode.right = remove(currentNode.right, tempNode.getCitizen()); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
 
         currentNode.calculateHeight(); // Re-calculate the height of the current node.
         return currentNode;
-    }
-
-    @Override
-    public Citizen findCitizenById (long citizenId) {
-        return TreeBFS.findCitizenById(root, citizenId);
-    }
-
-    @Override
-    public Citizen findWitchByWoodAndStone(Object object) {
-        Node currentNode = root;
-
-        if (object.getObjectType() == ObjectType.WOOD) {
-            return findWitchWood(object, currentNode);
-        } else if (object.getObjectType() == ObjectType.STONE) {
-            return findWitchStone(object, currentNode);
-        }
-        return null;
-    }
-    @Override
-    public MyArrayList<Citizen> findWitchByDuck(Object object){
-        Node currentNode = root;
-        return findWitchDuck(object, currentNode);
-    }
-
-    private MyArrayList<Citizen> findWitchDuck(Object object, Node currentNode) {
-        // Tots els habitants que pesin igual que l'objecte -> fer una cerca
-        MyArrayList<Citizen> result = new MyArrayList<>();
-
-        if (currentNode != null) {
-            if (currentNode.getCitizenWeight() == object.getWeight()) {
-                result.add(currentNode.getCitizen());
-            }
-            MyArrayList<Citizen> leftList = findWitchDuck(object, currentNode.left);
-            MyArrayList<Citizen> rightList = findWitchDuck(object, currentNode.right);
-            for (Citizen c : leftList) {
-                result.add(c);
-            }
-            for (Citizen c : rightList) {
-                result.add(c);
-            }
-        }
-        return result;
-    }
-
-    private Citizen findWitchWood(Object object, Node currentNode) {
-        // Primer habitant que pesi menys que l'objecte -> esquerra
-        if (currentNode != null) {
-            if (currentNode.getCitizenWeight() < object.getWeight()) {
-                return currentNode.getCitizen();
-            } else {
-                return findWitchWood(object, currentNode.left);
-            }
-        } else{
-            return null;
-        }
-    }
-
-    private Citizen findWitchStone(Object object, Node currentNode) {
-        // Primer habitant que pesi més que l'objecte -> dreta
-        if (currentNode != null) {
-            if (currentNode.getCitizenWeight() > object.getWeight()) {
-                return currentNode.getCitizen();
-            } else {
-                return findWitchStone(object, currentNode.right);
-            }
-        } else {
-            return null;
-        }
-    }
-
-    //Given a starting node, searches for the right node that has the lowest value
-    private Node findMinNode(Node node) {
-        while (node.right != null) {
-            node = node.right;
-        }
-        return node;
-    }
-
-    @Override
-    public void findCitizensInRange(float max, float min) {
-
-        MyArrayList<Citizen> witches = new MyArrayList<>();
-        findCitizensInRange(max, min, root, witches);
-
-        // Print all the witches (in case there is any)
-        if (witches.size() > 0) {
-
-            System.out.println("S'ha descobert " + witches.size() + " bruixes!");
-            for (Citizen witch : witches) {
-                witch.printInfo(true);
-            }
-        }
-        else {
-            System.out.println("No s'ha descobert cap bruixa.");
-        }
-    }
-
-    public void findCitizensInRange(float max, float min, Node node, MyArrayList<Citizen> witches) {
-
-        // Check if exploring the nodes with a lower value than the current node is interesting: the current node value is over Minimum Value.
-        if (node.right != null && node.getCitizenWeight() >= min) {
-            findCitizensInRange(max, min, node.right, witches);
-        }
-
-        // Print the node if it meets the requirements: the Citizen's weight is between the limits / bounds (it's a Witch).
-        if (min <= node.getCitizenWeight() && max >= node.getCitizenWeight()) {
-            witches.add(node.getCitizen());
-        }
-
-        // Check if exploring the nodes with a higher value than the current node is interesting: the current node value is below Maximum Value.
-        if (node.left != null && node.getCitizenWeight() <= max ) {
-            // Split in two
-            findCitizensInRange(max, min, node.left, witches);
-        }
     }
 
 }

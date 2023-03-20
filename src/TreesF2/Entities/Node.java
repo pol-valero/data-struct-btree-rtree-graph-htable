@@ -43,8 +43,14 @@ public class Node {
         return (right == null && left == null);
     }
 
+    public int getHeight() {
+        return height;
+    }
+
     // Get the height of the current node: maximum between right and left node + 1 (the node itself).
     public void calculateHeight() {
+
+
 
         // Case were there is no children (leaf node)
         if (right == null && left == null) {
@@ -68,8 +74,8 @@ public class Node {
         height = Math.max(right.height, left.height) + 1;
     }
 
-    public void printCitizen(boolean starInFront) {
-        citizen.printInfo(starInFront);
+    public void printCitizen(boolean tabInFront, boolean starInFront) {
+        citizen.printInfo(tabInFront, starInFront);
     }
 
 }
