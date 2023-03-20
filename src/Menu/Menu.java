@@ -40,21 +40,11 @@ public class Menu {
 
             // Ejecutar la opción escogida.
             switch (option) {
-                case 1 -> {
-                    return MainMenuOptions.ORENETES;
-                }
-                case 2 -> {
-                    return MainMenuOptions.BRUIXES;
-                }
-                case 3 -> {
-                    return MainMenuOptions.OPTION_3;
-                }
-                case 4 -> {
-                    return MainMenuOptions.OPTION_4;
-                }
-                case 5 -> {
-                    return MainMenuOptions.EXIT;
-                }
+                case 1 -> { return MainMenuOptions.ORENETES; }
+                case 2 -> { return MainMenuOptions.BRUIXES; }
+                case 3 -> { return MainMenuOptions.OPTION_3; }
+                case 4 -> { return MainMenuOptions.OPTION_4; }
+                case 5 -> { return MainMenuOptions.EXIT; }
             }
         } while (true);
     }
