@@ -172,29 +172,24 @@ public abstract class Tree {
         return null;
     }
 
-    public MyArrayList<Citizen> findWitchByDuck(Object object){
+    public void findWitchByDuck(Object object, MyArrayList<Citizen> result){
         Node currentNode = root;
-        return findWitchDuck(object, currentNode);
+        findWitchDuck(object, currentNode, result);
     }
 
-    private MyArrayList<Citizen> findWitchDuck(Object object, Node currentNode) {
+    private void findWitchDuck(Object object, Node currentNode, MyArrayList<Citizen> result) {
         // Tots els habitants que pesin igual que l'objecte -> fer una cerca
-        MyArrayList<Citizen> result = new MyArrayList<>();
 
         if (currentNode != null) {
             if (currentNode.getCitizenWeight() == object.getWeight()) {
                 result.add(currentNode.getCitizen());
-            }
-            MyArrayList<Citizen> leftList = findWitchDuck(object, currentNode.left);
-            MyArrayList<Citizen> rightList = findWitchDuck(object, currentNode.right);
-            for (Citizen c : leftList) {
-                result.add(c);
-            }
-            for (Citizen c : rightList) {
-                result.add(c);
+                findWitchDuck(object, currentNode.right, result);
+            } else if (currentNode.getCitizenWeight() < object.getWeight()) {
+                findWitchDuck(object, currentNode.right, result);
+            } else if (currentNode.getCitizenWeight() > object.getWeight()) {
+                findWitchDuck(object, currentNode.left, result);
             }
         }
-        return result;
     }
 
     private Citizen findWitchWood(Object object, Node currentNode) {

@@ -57,21 +57,21 @@ public class BruixesMenuLogic {
 
         Object object = new Object(name, weight, objectType);
         Citizen witch = null;
-        MyArrayList<Citizen> witches = null;
+        MyArrayList<Citizen> witches = new MyArrayList<Citizen>();
 
         if (object.getObjectType() == ObjectType.WOOD || object.getObjectType() == ObjectType.STONE) {
             witch = tree.findWitchByWoodAndStone(object);
         } else if (object.getObjectType() == ObjectType.DUCK) {
-            witches = tree.findWitchByDuck(object);
+            tree.findWitchByDuck(object, witches);
         }
 
-        if (witch == null && witches == null) {
+        if (witch == null && witches.size() == 0) {
             System.out.println("No hi ha cap habitant que compleixi aquesta condició.");
         } else {
             if (witch != null) {
                 witch.printInfo(true, true);
             }
-            if (witches != null) {
+            if (witches.size() != 0) {
                 for (int i = 0; i < witches.size(); i++) {
                     witches.get(i).printInfo(true, true);
                 }
