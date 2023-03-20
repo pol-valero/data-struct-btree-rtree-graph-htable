@@ -50,8 +50,6 @@ public class Node {
     // Get the height of the current node: maximum between right and left node + 1 (the node itself).
     public void calculateHeight() {
 
-
-
         // Case were there is no children (leaf node)
         if (right == null && left == null) {
             height = 0;
