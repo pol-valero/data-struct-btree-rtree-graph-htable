@@ -11,18 +11,11 @@ public class Object {
 		this.type = type;
 	}
 
-	public ObjectType getObjectType(){
-		return type;
-	}
-
 	public float getWeight() {
 		return weight;
 	}
 
 	public boolean sameObject(ObjectType objectType) {
-		if (type == objectType) {
-			return true;
-		}
-		return false;
+		return type == objectType;
 	}
 }
