@@ -18,4 +18,11 @@ public class Object {
 	public float getWeight() {
 		return weight;
 	}
+
+	public boolean sameObject(ObjectType objectType) {
+		if (type == objectType) {
+			return true;
+		}
+		return false;
+	}
 }

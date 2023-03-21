@@ -10,6 +10,8 @@ import TreesF2.Entities.Tree;
 import TreesF2.Entities.Trees.AVLTree;
 import TreesF2.Entities.Trees.BinaryTree;
 
+import static TreesF2.Entities.ObjectType.*;
+
 public class BruixesMenuLogic {
 
     private static Tree tree;
@@ -57,11 +59,11 @@ public class BruixesMenuLogic {
 
         Object object = new Object(name, weight, objectType);
         Citizen witch = null;
-        MyArrayList<Citizen> witches = new MyArrayList<Citizen>();
+        MyArrayList<Citizen> witches = new MyArrayList<>();
 
-        if (object.getObjectType() == ObjectType.WOOD || object.getObjectType() == ObjectType.STONE) {
+        if (object.sameObject(WOOD) || object.sameObject(STONE)) {
             witch = tree.findWitchByWoodAndStone(object);
-        } else if (object.getObjectType() == ObjectType.DUCK) {
+        } else if (object.sameObject(DUCK)) {
             tree.findWitchByDuck(object, witches);
         }
 
