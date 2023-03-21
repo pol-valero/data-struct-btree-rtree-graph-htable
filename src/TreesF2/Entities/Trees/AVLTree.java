@@ -5,6 +5,7 @@ import TreesF2.Entities.Node;
 import TreesF2.Entities.Tree;
 
 public class AVLTree extends Tree {
+
 	@Override
 	public void addCitizen(Citizen citizen) {
 		root = add(root, citizen, null);    // The parent node of the root will always be NULL.
@@ -15,6 +16,7 @@ public class AVLTree extends Tree {
 		Citizen citizen = findCitizenById(citizenId);
 		root = remove(root, citizen);
 	}
+
 	int height(Node node) {
 		if (node == null){
 			return 0;
@@ -24,11 +26,9 @@ public class AVLTree extends Tree {
 			return node.getHeight();
 		}
 	}
+
 	int getBalance(Node currentNode) {
 		currentNode.calculateHeight();
-		if (currentNode == null) {
-			return 0;
-		}
 		return height(currentNode.left) - height(currentNode.right);
 	}
 

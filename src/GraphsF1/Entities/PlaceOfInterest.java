@@ -24,10 +24,6 @@ public class PlaceOfInterest implements Comparable<PlaceOfInterest> {
 		this.name = null;
 	}
 
-	public int getId() {
-		return id;
-	}
-
 	public String getName() {
 		return name;
 	}

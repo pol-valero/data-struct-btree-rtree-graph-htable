@@ -34,9 +34,4 @@ public class KnownRoute {
 	public float getDistance() {
 		return distance;
 	}
-
-	public boolean containsPlaces(int place1, int place2) {
-
-		return (getPlaceA() == place1 && getPlaceB() == place2) || (getPlaceA() == place2 && getPlaceB() == place1);
-	}
 }
