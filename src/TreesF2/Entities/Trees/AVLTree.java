@@ -167,24 +167,19 @@ public class AVLTree extends Tree {
 
 		int balance = getBalance(currentNode);
 
-		if (currentNode.left != null && currentNode.right != null) {
-			if (balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
-				return rightRotate(currentNode);
-			}
-
-			if (balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
-				return leftRotate(currentNode);
-			}
-
-			if (balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
-				currentNode.left = leftRotate(currentNode.left);
-				return rightRotate(currentNode);
-			}
-
-			if (balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
-				currentNode.right = rightRotate(currentNode.right);
-				return leftRotate(currentNode);
-			}
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
+			return rightRotate(currentNode);
+		}
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
+			return leftRotate(currentNode);
+		}
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
+			currentNode.left = leftRotate(currentNode.left);
+			return rightRotate(currentNode);
+		}
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
+			currentNode.right = rightRotate(currentNode.right);
+			return leftRotate(currentNode);
 		}
 		return currentNode;
 	}
