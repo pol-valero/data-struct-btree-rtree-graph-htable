@@ -161,21 +161,6 @@ public abstract class Tree {
         }
     }
 
-    public Citizen findWitchByWoodAndStone(Object object) {
-        Node currentNode = root;
-
-        if (object.getObjectType() == ObjectType.WOOD) {
-            return findWitchWood(object, currentNode);
-        } else if (object.getObjectType() == ObjectType.STONE) {
-            return findWitchStone(object, currentNode);
-        }
-        return null;
-    }
-
-    public void findWitchByDuck(Object object, MyArrayList<Citizen> result){
-        Node currentNode = root;
-        findWitchDuck(object, currentNode, result);
-    }
 
     private void findWitchDuck(Object object, Node currentNode, MyArrayList<Citizen> result) {
         // Tots els habitants que pesin igual que l'objecte -> fer una cerca
@@ -216,5 +201,16 @@ public abstract class Tree {
         } else {
             return null;
         }
+    }
+
+    public Citizen findWitch(Object object, MyArrayList<Citizen> witches) {
+        if (object.sameObject(ObjectType.WOOD)) {
+            return findWitchWood(object, root);
+        } else if (object.sameObject(ObjectType.STONE)) {
+            return findWitchStone(object, root);
+        } else if (object.sameObject(ObjectType.DUCK)) {
+            findWitchDuck(object, root, witches);
+        }
+        return null;
     }
 }
