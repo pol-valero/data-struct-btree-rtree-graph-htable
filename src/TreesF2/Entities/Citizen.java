@@ -12,7 +12,6 @@ public class Citizen {
 		this.weight = weight;
 		this.kingdom = kingdom;
 	}
-
 	public String getName() {
 		return name;
 	}

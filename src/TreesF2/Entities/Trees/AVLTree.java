@@ -56,7 +56,6 @@ public class AVLTree extends Tree {
 		center.left = currentNode;
 		currentNode.right = right_node;
 
-
 		center.parent = currentNode.parent;
 		currentNode.parent = center;
 
@@ -83,7 +82,7 @@ public class AVLTree extends Tree {
 
 		if (valueToInsert < currentNodeValue) {     // We go to the left child if the value that we want to insert is lower than the current node's value
 			currentNode.left = add(currentNode.left, citizen, currentNode);
-		} else if (valueToInsert >= currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
+		} else if (valueToInsert > currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
 			currentNode.right = add(currentNode.right, citizen, currentNode);
 		}
 
@@ -91,17 +90,17 @@ public class AVLTree extends Tree {
 
 		int balance = getBalance(currentNode);
 
-		if (currentNode.left != null && balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
+		if (currentNode.left != null && balance > 1 && valueToInsert < currentNode.left.getCitizenWeight()) {
 			return rightRotate(currentNode);
 		}
-		if (currentNode.right != null && balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
+		if (currentNode.right != null && balance < -1 && valueToInsert > currentNode.right.getCitizenWeight()) {
 			return leftRotate(currentNode);
 		}
-		if (currentNode.left != null && balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
+		if (currentNode.left != null && balance > 1 && valueToInsert > currentNode.left.getCitizenWeight()) {
 			currentNode.left = leftRotate(currentNode.left);
 			return rightRotate(currentNode);
 		}
-		if (currentNode.right != null && balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
+		if (currentNode.right != null && balance < -1 && valueToInsert < currentNode.right.getCitizenWeight()) {
 			currentNode.right = rightRotate(currentNode.right);
 			return leftRotate(currentNode);
 		}
