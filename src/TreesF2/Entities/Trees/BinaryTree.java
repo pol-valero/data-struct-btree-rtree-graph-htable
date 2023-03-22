@@ -45,39 +45,48 @@ public class BinaryTree extends Tree {
 
     private Node remove (Node currentNode, Citizen citizen) {
 
+        // Case where the node to remove is not found.
         if (currentNode == null) {
             return null;
         }
 
-        // We go to the left child if the value that we want to delete is higher than the current node's value
+        // We go to the right child if the value that we want to delete is higher than the current node's value
         if (citizen.getWeight() > currentNode.getCitizenWeight()) {
             currentNode.right = remove(currentNode.right, citizen);
             currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
 
-        //We go to the right child if the value that we want to delete is lower than the current node's value
+        //We go to the left child if the value that we want to delete is lower than the current node's value
         if (citizen.getWeight() < currentNode.getCitizenWeight()) {
             currentNode.left = remove(currentNode.left, citizen);
             currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
 
-        // Node to delete found
+        // Node to delete found - We have to make sure the citizen is the one with the select ID.
         if (citizen.getWeight() == currentNode.getCitizenWeight()) {
 
-            //If the node does not have children, we return null (replacing this node with null in the parent)
+            //If the node does not have children, we return null (replacing this node with null)
             if (currentNode.right == null && currentNode.left == null) {
                 return null;
             }
 
-            //If the node only has one child, we return the child (replacing this node with the node's child in the parent)
+            // Loop through all the right nodes until we find the citizen with the same ID.
             if (currentNode.left == null) {
+
+                // If the ID is not the same, go to the next right node.
+                while (!currentNode.sameID(citizen.getID())) {
+                    currentNode = currentNode.right;
+                }
+
                 currentNode.right.parent = currentNode.parent;
                 currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
+
                 return currentNode.right;
             }
 
+            // If the node only has one child, we return the child (replacing this node with the node's child in the parent)
             if (currentNode.right == null) {
                 currentNode.left.parent = currentNode.parent;
                 currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
@@ -90,9 +99,9 @@ public class BinaryTree extends Tree {
 
         //We will need to replace the node with another node that has a suitable value.
         //Knowing the value of the node that we want to delete, we will choose the node with the
-        //next biggest value as a substitute. To choose this node, we will first go to the left node
+        //next biggest value as a substitute. To choose this node, we will first go to the right node
         //(which has a greater value) and then find the lowest value in the subtree. This value will
-        //be the next biggest value that we were searching for
+        //be the next biggest value that we were searching for.
 
         Node tempNode = findMinNode(currentNode.right); //Finds the node with the lowest value in the subtree (given an origin/root node)
         currentNode.setCitizen(tempNode.getCitizen());  //We change the node's citizen information; effectively eliminating the older node.

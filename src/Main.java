@@ -8,7 +8,7 @@ import TreesF2.Entities.Trees.TreeType;
 public class Main {
 
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed"; // Relative path inside /src folder
-    private final static String TREES_DATASET = "files/trees/treeXXL.paed";     // Relative path inside /src folder
+    private final static String TREES_DATASET = "files/trees/treeXXS.paed";     // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -27,7 +27,7 @@ public class Main {
                     } while (orenetesOption != OrenetesMenuOptions.PREVIOUS_MENU);
                 }
 
-                // Tr<ees (phase 2)
+                // Trees (phase 2)
                 case BRUIXES -> { BruixesMenuOptions bruixesOption;
                     do {
                         bruixesOption = Menu.showWitchesMenu(TREES_DATASET);

@@ -161,6 +161,7 @@ public class MyArrayList<T> implements Iterable<T> {
 
 
 	// Implement the interface Iterable and override the method iterator().
+	// This code is based on: https://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<>() {

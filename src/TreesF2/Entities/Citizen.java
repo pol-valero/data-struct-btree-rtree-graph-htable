@@ -12,6 +12,11 @@ public class Citizen {
 		this.weight = weight;
 		this.kingdom = kingdom;
 	}
+
+	public long getID() {
+		return id;
+	}
+
 	public String getName() {
 		return name;
 	}
