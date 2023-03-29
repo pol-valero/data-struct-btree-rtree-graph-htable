@@ -21,8 +21,28 @@ public abstract class Tree {
         if (root.left != null) {
             print("", root.left, true);
         }
+        // Tab space if there is no left part
+        else {
+            System.out.println();
+        }
 
-        root.printCitizen(false, true);   // Print the star in front of the citizen just if the Node is the root.
+        for (int i = 0; i < root.getCitizens().length; i++) {
+            Citizen rootCitizen = root.getCitizens()[i];
+
+            if (i == 0) {
+                rootCitizen.printInfo(false, true);   // Print the star in front of the citizen just if the Node is the root.
+            }
+            else {
+                if (root.right != null) {
+                    System.out.print("| ");
+                    rootCitizen.printInfo(false, false);   // Print the star in front of the citizen just if the Node is the root.
+                }
+                else {
+                    System.out.print("  ");
+                    rootCitizen.printInfo(false, false);   // Print the star in front of the citizen just if the Node is the root.
+                }
+            }
+        }
 
         //We print the left part of the tree
         if (root.right != null) {
@@ -65,7 +85,25 @@ public abstract class Tree {
         }
 
         System.out.print("|--- ");
-        node.printCitizen(false, node.equals(root));   // Print the star in front of the citizen just if the Node is the root.
+//        for (Citizen nodeCitizen : node.getCitizens()) {
+//            nodeCitizen.printInfo(false, node.equals(root));    // Print the star in front of the citizen just if the Node is the root.
+//        }
+
+        for (int i = 0; i < node.getCitizens().length; i++) {
+            Citizen nodeCitizen = node.getCitizens()[i];
+
+            // Print "|" only when there is a left child node.
+            if (i > 0 && node.left != null && node.right != null) {
+                System.out.print(stringIndentation + "|    ");
+            }
+            else if (i > 0 && node.parent.left == node) {
+                System.out.print(stringIndentation + "|    ");
+            } else if (i > 0 && node.parent.right == node) {
+                System.out.print(stringIndentation + "     ");
+            }
+
+            nodeCitizen.printInfo(false, node.equals(root));    // Print the star in front of the citizen just if the Node is the root.
+        }
 
         // Check if the parent of the node is on the left.
         if (node.parent.left == node && node.isLeaf()) {
@@ -152,7 +190,9 @@ public abstract class Tree {
 
         // Print the node if it meets the requirements: the Citizen's weight is between the limits / bounds (it's a Witch).
         if (min <= node.getCitizenWeight() && max >= node.getCitizenWeight()) {
-            witches.add(node.getCitizen());
+            for (Citizen citizen : node.getCitizens()) {
+                witches.add(citizen);
+            }
         }
 
         // Check if exploring the nodes with a higher value than the current node is interesting: the current node value is below Maximum Value.

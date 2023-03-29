@@ -84,6 +84,8 @@ public class AVLTree extends Tree {
 			currentNode.left = add(currentNode.left, citizen, currentNode);
 		} else if (valueToInsert > currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
 			currentNode.right = add(currentNode.right, citizen, currentNode);
+		} else if (valueToInsert == currentNodeValue) {
+			currentNode.addCitizen(citizen);
 		}
 
 		// Case where the node is added
@@ -161,8 +163,8 @@ public class AVLTree extends Tree {
 		//be the next biggest value that we were searching for
 
 		Node tempNode = findMinNode(currentNode.right); //Finds the node with the lowest value in the subtree (given an origin/root node)
-		currentNode.setCitizen(tempNode.getCitizen());  //We change the node's citizen information; effectively eliminating the older node.
-		currentNode.right = remove(currentNode.right, tempNode.getCitizen()); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
+		currentNode.setCitizens(tempNode.getCitizens());  //We change the node's citizen information; effectively eliminating the older node.
+		currentNode.right = remove(currentNode.right, tempNode.getCitizens()[0]); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
 
 		int balance = getBalance(currentNode);
 

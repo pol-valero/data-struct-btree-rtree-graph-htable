@@ -25,6 +25,12 @@ public class MyArrayList<T> implements Iterable<T> {
 		size = originalArray.size();
 	}
 
+	// Constructor that allows to deep copy (without references) another list.
+	public MyArrayList(T[] originalArray) {
+		elements = originalArray;
+		size = originalArray.length;
+	}
+
 	public int size() {
 		return size;
 	}

@@ -13,8 +13,10 @@ public class TreeBFS {
 			Node newNode = myQueue.poll();
 
 			// Check if newNode has the same ID.
-			if (newNode.sameID(citizenId)) {
-				return newNode.getCitizen();
+			for (Citizen nodeCitizen : newNode.getCitizens()) {
+				if (nodeCitizen.sameID(citizenId)) {
+					return nodeCitizen;
+				}
 			}
 
 			// Add left child to the queue.

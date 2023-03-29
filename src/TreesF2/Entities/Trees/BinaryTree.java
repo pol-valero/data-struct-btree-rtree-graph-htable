@@ -8,7 +8,7 @@ public class BinaryTree extends Tree {
 
     @Override
     public void addCitizen(Citizen citizen) {
-        root = add(root, citizen, null);    // The parent node of the root will always be NULL.
+        add(root, citizen, null);    // The parent node of the root will always be NULL.
     }
 
     @Override
@@ -17,30 +17,41 @@ public class BinaryTree extends Tree {
         root = remove(root, citizen);
     }
 
-    private Node add(Node currentNode, Citizen citizen, Node parentNode) {
+    private void add(Node currentNode, Citizen citizen, Node parentNode) {
         float valueToInsert;
         float currentNodeValue;
 
         // When the current node is null, a new node can be inserted into the position
         // (we've reached a leaf node, or it is the first node of the tree: the root)
         if (currentNode == null) {
-            Node node = new Node(citizen, parentNode);
-            node.height = 0;    // Set a height of zero (it is a leaf node).
-            return node;
+            root = new Node(citizen, parentNode);
+            return;
         }
 
         valueToInsert = citizen.getWeight();
         currentNodeValue = currentNode.getCitizenWeight();
 
         if (valueToInsert < currentNodeValue) {     // We go to the left child if the value that we want to insert is lower than the current node's value
-            currentNode.left = add(currentNode.left, citizen, currentNode);
-        } else if (valueToInsert >= currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
-            currentNode.right = add(currentNode.right, citizen, currentNode);
+            if (currentNode.left != null) {
+                add(currentNode.left, citizen, currentNode);
+            }
+            else {
+                currentNode.left = new Node(citizen, currentNode);
+            }
+        } else if (valueToInsert > currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
+            if (currentNode.right != null) {
+                add(currentNode.right, citizen, currentNode);
+            }
+            else {
+                currentNode.right = new Node(citizen, currentNode);
+            }
+        } else {
+            // If value of the node has the same weight means there already is a node with that weight, so a citizen is added to the node's citize list.
+            currentNode.addCitizen(citizen);
         }
 
         // Case where the node is added
         currentNode.calculateHeight();
-        return currentNode;
     }
 
     private Node remove (Node currentNode, Citizen citizen) {
@@ -76,7 +87,7 @@ public class BinaryTree extends Tree {
             if (currentNode.left == null) {
 
                 // If the ID is not the same, go to the next right node.
-                while (!currentNode.sameID(citizen.getID())) {
+                while (!currentNode.sameID(0, citizen.getID())) {
                     currentNode = currentNode.right;
                 }
 
@@ -104,8 +115,8 @@ public class BinaryTree extends Tree {
         //be the next biggest value that we were searching for.
 
         Node tempNode = findMinNode(currentNode.right); //Finds the node with the lowest value in the subtree (given an origin/root node)
-        currentNode.setCitizen(tempNode.getCitizen());  //We change the node's citizen information; effectively eliminating the older node.
-        currentNode.right = remove(currentNode.right, tempNode.getCitizen()); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
+        currentNode.setCitizens(tempNode.getCitizens());  //We change the node's citizen information; effectively eliminating the older node.
+        currentNode.right = remove(currentNode.right, tempNode.getCitizens()[0]); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
 
         currentNode.calculateHeight(); // Re-calculate the height of the current node.
         return currentNode;
