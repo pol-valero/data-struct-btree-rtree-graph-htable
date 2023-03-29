@@ -93,10 +93,10 @@ public abstract class Tree {
             Citizen nodeCitizen = node.getCitizens()[i];
 
             // Print "|" only when there is a left child node.
-            if (i > 0 && node.left != null && node.right != null) {
+            if (i > 0 && node.left != null && node.right != null && leftNode) {
                 System.out.print(stringIndentation + "|    ");
             }
-            else if (i > 0 && node.parent.left == node) {
+            else if (i > 0 && node.parent.left == node && leftNode) {
                 System.out.print(stringIndentation + "|    ");
             } else if (i > 0 && node.parent.right == node) {
                 System.out.print(stringIndentation + "     ");

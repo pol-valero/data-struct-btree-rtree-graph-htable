@@ -134,22 +134,28 @@ public class AVLTree extends Tree {
 		// Node to delete found
 		if (citizen.getWeight() == currentNode.getCitizenWeight()) {
 
-			//If the node does not have children, we return null (replacing this node with null in the parent)
-			if (currentNode.right == null && currentNode.left == null) {
-				return null;
-			}
+			if (currentNode.getCitizens().length == 1) {
+				//If the node does not have children, we return null (replacing this node with null in the parent)
+				if (currentNode.right == null && currentNode.left == null) {
+					return null;
+				}
 
-			//If the node only has one child, we return the child (replacing this node with the node's child in the parent)
-			if (currentNode.left == null) {
-				currentNode.right.parent = currentNode.parent;
-				currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
-				return currentNode.right;
-			}
+				//If the node only has one child, we return the child (replacing this node with the node's child in the parent)
+				if (currentNode.left == null) {
+					currentNode.right.parent = currentNode.parent;
+					currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
+					return currentNode.right;
+				}
 
-			if (currentNode.right == null) {
-				currentNode.left.parent = currentNode.parent;
-				currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
-				return currentNode.left;
+				if (currentNode.right == null) {
+					currentNode.left.parent = currentNode.parent;
+					currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
+					return currentNode.left;
+				}
+			} else {
+				// Just remove the citizen and update the list, but keep the node in the same place (return the same node).
+				currentNode.removeCitizen(citizen);
+				return currentNode;
 			}
 			/////////////////////////////////
 		}
