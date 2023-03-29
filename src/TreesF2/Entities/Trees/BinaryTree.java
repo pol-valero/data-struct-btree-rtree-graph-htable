@@ -78,30 +78,37 @@ public class BinaryTree extends Tree {
         // Node to delete found - We have to make sure the citizen is the one with the select ID.
         if (citizen.getWeight() == currentNode.getCitizenWeight()) {
 
-            //If the node does not have children, we return null (replacing this node with null)
-            if (currentNode.right == null && currentNode.left == null) {
-                return null;
-            }
-
-            // Loop through all the right nodes until we find the citizen with the same ID.
-            if (currentNode.left == null) {
-
-                // If the ID is not the same, go to the next right node.
-                while (!currentNode.sameID(0, citizen.getID())) {
-                    currentNode = currentNode.right;
+            if (currentNode.getCitizens().length == 1) {
+                //If the node does not have children, we return null (replacing this node with null)
+                if (currentNode.right == null && currentNode.left == null) {
+                    return null;
                 }
 
-                currentNode.right.parent = currentNode.parent;
-                currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
+                // Loop through all the right nodes until we find the citizen with the same ID.
+                if (currentNode.left == null) {
 
-                return currentNode.right;
+                    // If the ID is not the same, go to the next right node.
+                    while (!currentNode.sameID(0, citizen.getID())) {
+                        currentNode = currentNode.right;
+                    }
+
+                    currentNode.right.parent = currentNode.parent;
+                    currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
+
+                    return currentNode.right;
+                }
+
+                // If the node only has one child, we return the child (replacing this node with the node's child in the parent)
+                if (currentNode.right == null) {
+                    currentNode.left.parent = currentNode.parent;
+                    currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
+                    return currentNode.left;
+                }
             }
-
-            // If the node only has one child, we return the child (replacing this node with the node's child in the parent)
-            if (currentNode.right == null) {
-                currentNode.left.parent = currentNode.parent;
-                currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
-                return currentNode.left;
+            else {
+                // Just remove the citizen and update the list, but keep the node in the same place (return the same node).
+                currentNode.removeCitizen(citizen);
+                return currentNode;
             }
             /////////////////////////////////
         }

@@ -51,11 +51,16 @@ public class MyArrayList<T> implements Iterable<T> {
 	}
 
 	public T[] toArray() {
-		return elements;
+		return (T[]) elements;
 	}
 
 	@SuppressWarnings("unchecked")
-	public void add(Object o) {
+	public T[] toArray(T[] array) {
+		return (T[]) Arrays.copyOf(elements, size, array.getClass());
+	}
+
+	@SuppressWarnings("unchecked")
+	public void add(T o) {
 		size++;
 
 		Object[] temporalArray = Arrays.copyOf(elements, size);
@@ -64,7 +69,7 @@ public class MyArrayList<T> implements Iterable<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void remove(Object o) {
+	public void remove(T o) {
 		if (size > 0) {
 			size--;
 			Object[] temporalArray = new Object[size];

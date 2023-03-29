@@ -31,7 +31,7 @@ public class Node {
     }
 
     public Citizen[] getCitizens() {
-        return citizen.toArray();
+        return citizen.toArray(new Citizen[0]);
     }
 
     public void setCitizens(Citizen[] citizens) {
@@ -81,6 +81,10 @@ public class Node {
 
     public void addCitizen(Citizen citizen) {
         this.citizen.add(citizen);
+    }
+
+    public void removeCitizen(Citizen citizen) {
+        this.citizen.remove(citizen);
     }
 
 }
