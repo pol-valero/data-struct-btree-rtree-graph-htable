@@ -25,6 +25,12 @@ public class MyArrayList<T> implements Iterable<T> {
 		size = originalArray.size();
 	}
 
+	// Constructor that allows to deep copy (without references) another list.
+	public MyArrayList(T[] originalArray) {
+		elements = originalArray;
+		size = originalArray.length;
+	}
+
 	public int size() {
 		return size;
 	}
@@ -45,11 +51,16 @@ public class MyArrayList<T> implements Iterable<T> {
 	}
 
 	public T[] toArray() {
-		return elements;
+		return (T[]) elements;
 	}
 
 	@SuppressWarnings("unchecked")
-	public void add(Object o) {
+	public T[] toArray(T[] array) {
+		return (T[]) Arrays.copyOf(elements, size, array.getClass());
+	}
+
+	@SuppressWarnings("unchecked")
+	public void add(T o) {
 		size++;
 
 		Object[] temporalArray = Arrays.copyOf(elements, size);
@@ -58,7 +69,7 @@ public class MyArrayList<T> implements Iterable<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void remove(Object o) {
+	public void remove(T o) {
 		if (size > 0) {
 			size--;
 			Object[] temporalArray = new Object[size];
@@ -161,6 +172,7 @@ public class MyArrayList<T> implements Iterable<T> {
 
 
 	// Implement the interface Iterable and override the method iterator().
+	// This code is based on: https://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<>() {

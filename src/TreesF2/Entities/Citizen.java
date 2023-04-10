@@ -13,6 +13,10 @@ public class Citizen {
 		this.kingdom = kingdom;
 	}
 
+	public long getID() {
+		return id;
+	}
+
 	public String getName() {
 		return name;
 	}

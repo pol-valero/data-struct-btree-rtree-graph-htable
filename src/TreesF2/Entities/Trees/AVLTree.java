@@ -5,6 +5,7 @@ import TreesF2.Entities.Node;
 import TreesF2.Entities.Tree;
 
 public class AVLTree extends Tree {
+
 	@Override
 	public void addCitizen(Citizen citizen) {
 		root = add(root, citizen, null);    // The parent node of the root will always be NULL.
@@ -13,20 +14,21 @@ public class AVLTree extends Tree {
 	@Override
 	public void removeCitizen(long citizenId) {
 		Citizen citizen = findCitizenById(citizenId);
-		root = remove(root, citizen);
+		root = remove(root, citizen, false);
 	}
+
 	int height(Node node) {
 		if (node == null){
 			return 0;
 		}
 		else {
+			node.calculateHeight();
 			return node.getHeight();
 		}
 	}
+
 	int getBalance(Node currentNode) {
-		if (currentNode == null) {
-			return 0;
-		}
+		currentNode.calculateHeight();
 		return height(currentNode.left) - height(currentNode.right);
 	}
 
@@ -36,6 +38,12 @@ public class AVLTree extends Tree {
 
 		center.right = currentNode;
 		currentNode.left = right_node;
+
+		center.parent = currentNode.parent;
+		currentNode.parent = center;
+
+		center.calculateHeight();
+		currentNode.calculateHeight();
 
 		return center;
 	}
@@ -47,6 +55,12 @@ public class AVLTree extends Tree {
 
 		center.left = currentNode;
 		currentNode.right = right_node;
+
+		center.parent = currentNode.parent;
+		currentNode.parent = center;
+
+		center.calculateHeight();
+		currentNode.calculateHeight();
 
 		return center;
 	}
@@ -68,41 +82,36 @@ public class AVLTree extends Tree {
 
 		if (valueToInsert < currentNodeValue) {     // We go to the left child if the value that we want to insert is lower than the current node's value
 			currentNode.left = add(currentNode.left, citizen, currentNode);
-		} else if (valueToInsert >= currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
+		} else if (valueToInsert > currentNodeValue) {      // We go to the right child if the value that we want to insert is higher than or equal to the current node's value
 			currentNode.right = add(currentNode.right, citizen, currentNode);
-		}
-		else {
-			return currentNode;
+		} else if (valueToInsert == currentNodeValue) {
+			currentNode.addCitizen(citizen);
 		}
 
 		// Case where the node is added
 
 		int balance = getBalance(currentNode);
 
-		if (currentNode.left != null && currentNode.right != null) {
-			if (balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
-				return rightRotate(currentNode);
-			}
-
-			if (balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
-				return leftRotate(currentNode);
-			}
-
-			if (balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
-				currentNode.left = leftRotate(currentNode.left);
-				return rightRotate(currentNode);
-			}
-
-			if (balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
-				currentNode.right = rightRotate(currentNode.right);
-				return leftRotate(currentNode);
-			}
+		if (currentNode.left != null && balance > 1 && valueToInsert < currentNode.left.getCitizenWeight()) {
+			return rightRotate(currentNode);
 		}
+		if (currentNode.right != null && balance < -1 && valueToInsert > currentNode.right.getCitizenWeight()) {
+			return leftRotate(currentNode);
+		}
+		if (currentNode.left != null && balance > 1 && valueToInsert > currentNode.left.getCitizenWeight()) {
+			currentNode.left = leftRotate(currentNode.left);
+			return rightRotate(currentNode);
+		}
+		if (currentNode.right != null && balance < -1 && valueToInsert < currentNode.right.getCitizenWeight()) {
+			currentNode.right = rightRotate(currentNode.right);
+			return leftRotate(currentNode);
+		}
+
 		return currentNode;
 
 	}
 
-	private Node remove (Node currentNode, Citizen citizen) {
+	private Node remove (Node currentNode, Citizen citizen, boolean removeAll) {
 
 		if (currentNode == null) {
 			return null;
@@ -110,37 +119,46 @@ public class AVLTree extends Tree {
 
 		// We go to the left child if the value that we want to delete is higher than the current node's value
 		if (citizen.getWeight() > currentNode.getCitizenWeight()) {
-			currentNode.right = remove(currentNode.right, citizen);
+			currentNode.right = remove(currentNode.right, citizen, removeAll);
 			currentNode.calculateHeight(); // Re-calculate the height of the current node.
+			currentNode = balance(currentNode, citizen);
 			return currentNode;
 		}
 
 		//We go to the right child if the value that we want to delete is lower than the current node's value
 		if (citizen.getWeight() < currentNode.getCitizenWeight()) {
-			currentNode.left = remove(currentNode.left, citizen);
+			currentNode.left = remove(currentNode.left, citizen, removeAll);
 			currentNode.calculateHeight(); // Re-calculate the height of the current node.
+			currentNode = balance(currentNode, citizen);
 			return currentNode;
 		}
 
 		// Node to delete found
 		if (citizen.getWeight() == currentNode.getCitizenWeight()) {
 
-			//If the node does not have children, we return null (replacing this node with null in the parent)
-			if (currentNode.right == null && currentNode.left == null) {
-				return null;
-			}
+			if (removeAll || currentNode.getCitizens().length == 1) {
+				//If the node does not have children, we return null (replacing this node with null in the parent)
+				if (currentNode.right == null && currentNode.left == null) {
+					return null;
+				}
 
-			//If the node only has one child, we return the child (replacing this node with the node's child in the parent)
-			if (currentNode.left == null) {
-				currentNode.right.parent = currentNode.parent;
-				currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
-				return currentNode.right;
-			}
+				//If the node only has one child, we return the child (replacing this node with the node's child in the parent)
+				if (currentNode.left == null) {
+					currentNode.right.parent = currentNode.parent;
+					currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
+					return currentNode.right;
+				}
 
-			if (currentNode.right == null) {
-				currentNode.left.parent = currentNode.parent;
-				currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
-				return currentNode.left;
+				if (currentNode.right == null) {
+					currentNode.left.parent = currentNode.parent;
+					currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
+					return currentNode.left;
+				}
+
+			} else {
+				// Just remove the citizen and update the list, but keep the node in the same place (return the same node).
+				currentNode.removeCitizen(citizen);
+				return currentNode;
 			}
 			/////////////////////////////////
 		}
@@ -154,10 +172,31 @@ public class AVLTree extends Tree {
 		//be the next biggest value that we were searching for
 
 		Node tempNode = findMinNode(currentNode.right); //Finds the node with the lowest value in the subtree (given an origin/root node)
-		currentNode.setCitizen(tempNode.getCitizen());  //We change the node's citizen information; effectively eliminating the older node.
-		currentNode.right = remove(currentNode.right, tempNode.getCitizen()); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
+		currentNode.setCitizens(tempNode.getCitizens());  //We change the node's citizen information; effectively eliminating the older node.
+		currentNode.right = remove(currentNode.right, tempNode.getCitizens()[0], true); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
+		currentNode = balance(currentNode, citizen);
+		return currentNode;
+	}
 
-		currentNode.calculateHeight(); // Re-calculate the height of the current node.
+	private Node balance (Node currentNode, Citizen citizen){
+		int balance = getBalance(currentNode);
+
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
+			return rightRotate(currentNode);
+		}
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
+			return leftRotate(currentNode);
+		}
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
+			currentNode.left = leftRotate(currentNode.left);
+			return rightRotate(currentNode);
+		}
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
+			currentNode.right = rightRotate(currentNode.right);
+			return leftRotate(currentNode);
+		}
 		return currentNode;
 	}
 }
+
+

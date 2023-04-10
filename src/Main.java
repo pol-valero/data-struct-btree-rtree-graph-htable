@@ -3,6 +3,7 @@ import Menu.Menu;
 import Menu.GraphsOrenetes.OrenetesMenuLogic;
 import Menu.TreesBruixes.BruixesMenuLogic;
 import Menu.GraphsOrenetes.OrenetesMenuOptions;
+import TreesF2.Entities.Trees.TreeType;
 
 public class Main {
 
@@ -26,10 +27,11 @@ public class Main {
                     } while (orenetesOption != OrenetesMenuOptions.PREVIOUS_MENU);
                 }
 
-                // Tr<ees (phase 2)
+                // Trees (phase 2)
                 case BRUIXES -> { BruixesMenuOptions bruixesOption;
                     do {
                         bruixesOption = Menu.showWitchesMenu(TREES_DATASET);
+                        BruixesMenuLogic.checkIfTreeCreated(TreeType.AVLTREE);  // Check if Tree is already created or not
                         switch (bruixesOption) {
                             case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();
                             case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();
