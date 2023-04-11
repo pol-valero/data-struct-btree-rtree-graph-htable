@@ -33,11 +33,11 @@ public class Main {
                         bruixesOption = Menu.showWitchesMenu(TREES_DATASET);
                         BruixesMenuLogic.checkIfTreeCreated(TreeType.AVLTREE);  // Check if Tree is already created or not
                         switch (bruixesOption) {
-                            case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();
-                            case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();
-                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();
-                            case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();
-                            case BATUDA -> BruixesMenuLogic.showBatuda();
+                            case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();          // Add a node to the tree
+                            case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();    // Remove a node from the tree
+                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();    // Visual tree representation
+                            case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();  //
+                            case BATUDA -> BruixesMenuLogic.showBatuda();   // Search between a range
                         }
                     } while (bruixesOption != BruixesMenuOptions.PREVIOUS_MENU);
                 }

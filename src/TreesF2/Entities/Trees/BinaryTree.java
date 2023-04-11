@@ -87,11 +87,6 @@ public class BinaryTree extends Tree {
                 // Loop through all the right nodes until we find the citizen with the same ID.
                 if (currentNode.left == null) {
 
-                    // If the ID is not the same, go to the next right node.
-                    while (!currentNode.sameID(0, citizen.getID())) {
-                        currentNode = currentNode.right;
-                    }
-
                     currentNode.right.parent = currentNode.parent;
                     currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
 
@@ -122,12 +117,26 @@ public class BinaryTree extends Tree {
         //(which has a greater value) and then find the lowest value in the subtree. This value will
         //be the next biggest value that we were searching for.
 
-        Node tempNode = findMinNode(currentNode.right); //Finds the node with the lowest value in the subtree (given an origin/root node)
-        currentNode.setCitizens(tempNode.getCitizens());  //We change the node's citizen information; effectively eliminating the older node.
-        currentNode.right = remove(currentNode.right, tempNode.getCitizens()[0], true); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
+        Node tempNode = findMinNode(currentNode.right); // Find the node with the lowest value in the right subtree (given an origin/root node) = successor "inordre"
 
-        currentNode.calculateHeight(); // Re-calculate the height of the current node.
-        return currentNode;
+        // Assign the parent of the new node to the node to be deleted parent.
+        tempNode.parent.right = tempNode.right;  // Assign the same child of the successor node to its parent (always a left child node).
+        tempNode.parent = currentNode.parent;
+
+        // Check if it was a right or left child.
+        if (currentNode.parent.right == currentNode) {
+            tempNode.parent.right = tempNode;       // The new node will always be to the right of the parent's node (successor "inordre").
+        }
+        else {
+            tempNode.parent.left = tempNode;       // The new node will always be to the right of the parent's node (successor "inordre").
+        }
+
+        // Keep the same children that the node to be deleted has.
+        tempNode.right = currentNode.right;
+        tempNode.left = currentNode.left;
+
+        tempNode.calculateHeight(); // Re-calculate the height of the current node.
+        return tempNode;
     }
 
 }

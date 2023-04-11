@@ -146,7 +146,7 @@ public abstract class Tree {
         return TreeBFS.findCitizenById(root, citizenId);
     }
 
-    //Given a starting node, searches for the right node that has the lowest value
+    // Given a starting node, searches for the left node that has the lowest value (used as a successor "inordre").
     public Node findMinNode(Node node) {
         while (node.left != null) {
             node = node.left;
