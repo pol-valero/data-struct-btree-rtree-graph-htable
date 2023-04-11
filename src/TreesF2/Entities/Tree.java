@@ -207,8 +207,9 @@ public abstract class Tree {
 
         if (currentNode != null) {
             if (currentNode.getCitizenWeight() == object.getWeight()) {
-                result.add(currentNode.getCitizen());
-                findWitchDuck(object, currentNode.right, result);
+                for (int i = 0; i < currentNode.getCitizens().length; i++) {
+                    result.add(currentNode.getCitizens()[i]);
+                }
             } else if (currentNode.getCitizenWeight() < object.getWeight()) {
                 findWitchDuck(object, currentNode.right, result);
             } else if (currentNode.getCitizenWeight() > object.getWeight()) {
@@ -221,7 +222,7 @@ public abstract class Tree {
         // Primer habitant que pesi menys que l'objecte -> esquerra
         if (currentNode != null) {
             if (currentNode.getCitizenWeight() < object.getWeight()) {
-                return currentNode.getCitizen();
+                return currentNode.getCitizens()[0];
             } else {
                 return findWitchWood(object, currentNode.left);
             }
@@ -234,7 +235,7 @@ public abstract class Tree {
         // Primer habitant que pesi més que l'objecte -> dreta
         if (currentNode != null) {
             if (currentNode.getCitizenWeight() > object.getWeight()) {
-                return currentNode.getCitizen();
+                return currentNode.getCitizens()[0];
             } else {
                 return findWitchStone(object, currentNode.right);
             }
