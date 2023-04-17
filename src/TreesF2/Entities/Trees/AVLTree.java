@@ -105,37 +105,7 @@ public class AVLTree extends Tree {
 		}
 
 		// Case where the node is added
-
-		int balance = getBalance(currentNode);	// FB value is checked because FB = h(left) - h(right)
-
-		// The unbalanced functions will be called only on the node that has the wrong balanced factor ( FB < -2 o FB > 2)
-
-		// Positive balance = right rotate or right + left rotate.
-		// Negative balance = left rotate or left + right rotate.
-		// Since the add function is recursive, the first unbalance node is checked (the lowest one).
-
-		// If (valueToInsert < currentNode.left) and (FB > 1) -> left-left tree
-		if (currentNode.left != null && balance > 1 && valueToInsert < currentNode.left.getCitizenWeight()) {
-			return rightRotate(currentNode);
-		}
-
-		// If (valueToInsert > currentNode.right) and (FB < -1) -> right-right tree
-		if (currentNode.right != null && balance < -1 && valueToInsert > currentNode.right.getCitizenWeight()) {
-			return leftRotate(currentNode);
-		}
-
-		// If (valueToInsert > currentNode.left) and (FB > 1) -> left-right tree
-		if (currentNode.left != null && balance > 1 && valueToInsert > currentNode.left.getCitizenWeight()) {
-			currentNode.left = leftRotate(currentNode.left);
-			return rightRotate(currentNode);
-		}
-
-		// If (valueToInsert < currentNode.right) and (FB < -1) -> right-left tree
-		// RL = center to the right, and left child new center. Then center's parent rotates left.
-		if (currentNode.right != null && balance < -1 && valueToInsert < currentNode.right.getCitizenWeight()) {
-			currentNode.right = rightRotate(currentNode.right);
-			return leftRotate(currentNode);
-		}
+		currentNode = balance(currentNode, citizen);
 
 		return currentNode;
 
@@ -223,23 +193,39 @@ public class AVLTree extends Tree {
 		return tempNode;
 	}
 
-	private Node balance (Node currentNode, Citizen citizen){
-		int balance = getBalance(currentNode);
+	private Node balance (Node currentNode, Citizen citizen) {
 
+		int balance = getBalance(currentNode);	// FB value is checked because FB = h(left) - h(right)
+
+		// The unbalanced functions will be called only on the node that has the wrong balanced factor ( FB < -2 o FB > 2)
+
+		// Positive balance = right rotate or right + left rotate.
+		// Negative balance = left rotate or left + right rotate.
+		// Since the add function is recursive, the first unbalance node is checked (the lowest one).
+
+		// If (valueToInsert < currentNode.left) and (FB > 1) -> left-left tree
 		if (currentNode.left != null && balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
 			return rightRotate(currentNode);
 		}
+
+		// If (valueToInsert > currentNode.right) and (FB < -1) -> right-right tree
 		if (currentNode.right != null && balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
 			return leftRotate(currentNode);
 		}
+
+		// If (valueToInsert > currentNode.left) and (FB > 1) -> left-right tree
 		if (currentNode.left != null && balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
 			currentNode.left = leftRotate(currentNode.left);
 			return rightRotate(currentNode);
 		}
+
+		// If (valueToInsert < currentNode.right) and (FB < -1) -> right-left tree
+		// RL = center to the right, and left child new center. Then center's parent rotates left.
 		if (currentNode.right != null && balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
 			currentNode.right = rightRotate(currentNode.right);
 			return leftRotate(currentNode);
 		}
+
 		return currentNode;
 	}
 }
