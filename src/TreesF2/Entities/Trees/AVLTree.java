@@ -18,9 +18,13 @@ public class AVLTree extends Tree {
 	}
 
 	int height(Node node) {
+
+		// Case in which the node does not exist, it is a NULL pointer (height = -1);
 		if (node == null){
-			return 0;
+			return -1;
 		}
+
+		// Case in which the node exists, therefore, returns its height.
 		else {
 			node.calculateHeight();
 			return node.getHeight();
@@ -30,6 +34,43 @@ public class AVLTree extends Tree {
 	int getBalance(Node currentNode) {
 		currentNode.calculateHeight();
 		return height(currentNode.left) - height(currentNode.right);
+	}
+
+	// Function that calculates if the node is balanced (Checks the BF). Rotates the node if it's unbalanced.
+	private Node balance (Node currentNode, Citizen citizen) {
+
+		int balance = getBalance(currentNode);	// FB value is checked because BF = h(left) - h(right)
+
+		// The unbalanced functions will be called only on the node that has the wrong balanced factor (BF < -2 o BF > 2)
+
+		// Positive balance = right rotate or right + left rotate.
+		// Negative balance = left rotate or left + right rotate.
+		// Since the add function is recursive, the first unbalance node is checked (the lowest one).
+
+		// If (valueToInsert < currentNode.left) and (BF > 1) -> left-left tree
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
+			return rightRotate(currentNode);
+		}
+
+		// If (valueToInsert > currentNode.right) and (BF < -1) -> right-right tree
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
+			return leftRotate(currentNode);
+		}
+
+		// If (valueToInsert > currentNode.left) and (BF > 1) -> left-right tree
+		if (currentNode.left != null && balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
+			currentNode.left = leftRotate(currentNode.left);
+			return rightRotate(currentNode);
+		}
+
+		// If (valueToInsert < currentNode.right) and (BF < -1) -> right-left tree
+		// RL = center to the right, and left child new center. Then center's parent rotates left.
+		if (currentNode.right != null && balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
+			currentNode.right = rightRotate(currentNode.right);
+			return leftRotate(currentNode);
+		}
+
+		return currentNode;
 	}
 
 	private Node rightRotate(Node currentNode) {	// Current node = y
@@ -191,42 +232,6 @@ public class AVLTree extends Tree {
 
 		tempNode = balance(currentNode, citizen);
 		return tempNode;
-	}
-
-	private Node balance (Node currentNode, Citizen citizen) {
-
-		int balance = getBalance(currentNode);	// FB value is checked because FB = h(left) - h(right)
-
-		// The unbalanced functions will be called only on the node that has the wrong balanced factor ( FB < -2 o FB > 2)
-
-		// Positive balance = right rotate or right + left rotate.
-		// Negative balance = left rotate or left + right rotate.
-		// Since the add function is recursive, the first unbalance node is checked (the lowest one).
-
-		// If (valueToInsert < currentNode.left) and (FB > 1) -> left-left tree
-		if (currentNode.left != null && balance > 1 && citizen.getWeight() < currentNode.left.getCitizenWeight()) {
-			return rightRotate(currentNode);
-		}
-
-		// If (valueToInsert > currentNode.right) and (FB < -1) -> right-right tree
-		if (currentNode.right != null && balance < -1 && citizen.getWeight() > currentNode.right.getCitizenWeight()) {
-			return leftRotate(currentNode);
-		}
-
-		// If (valueToInsert > currentNode.left) and (FB > 1) -> left-right tree
-		if (currentNode.left != null && balance > 1 && citizen.getWeight() > currentNode.left.getCitizenWeight()) {
-			currentNode.left = leftRotate(currentNode.left);
-			return rightRotate(currentNode);
-		}
-
-		// If (valueToInsert < currentNode.right) and (FB < -1) -> right-left tree
-		// RL = center to the right, and left child new center. Then center's parent rotates left.
-		if (currentNode.right != null && balance < -1 && citizen.getWeight() < currentNode.right.getCitizenWeight()) {
-			currentNode.right = rightRotate(currentNode.right);
-			return leftRotate(currentNode);
-		}
-
-		return currentNode;
 	}
 }
 
