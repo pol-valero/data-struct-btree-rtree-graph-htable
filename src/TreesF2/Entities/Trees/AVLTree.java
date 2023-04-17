@@ -14,7 +14,7 @@ public class AVLTree extends Tree {
 	@Override
 	public void removeCitizen(long citizenId) {
 		Citizen citizen = findCitizenById(citizenId);
-		root = remove(root, citizen, false);
+		root = remove(root, citizen);
 	}
 
 	int height(Node node) {
@@ -32,16 +32,24 @@ public class AVLTree extends Tree {
 		return height(currentNode.left) - height(currentNode.right);
 	}
 
-	private Node rightRotate(Node currentNode) {
-		Node center = currentNode.left;
-		Node right_node = center.right;
+	private Node rightRotate(Node currentNode) {	// Current node = y
 
-		center.right = currentNode;
-		currentNode.left = right_node;
+		// Initialize the main nodes to make the rotation.
+		Node center = currentNode.left;	// Assign the center node (left of the current node).
+		Node rightNode = center.right;	// Assign the right node to the right child of the center node.
 
-		center.parent = currentNode.parent;
-		currentNode.parent = center;
+		// Assign the rotated nodes.
+		center.right = currentNode;		// Current becomes the right child of the center (because current is higher).
+		currentNode.left = rightNode;	// The right child of the center becomes the left child of the current (because this child is lower than current).
 
+		// Assign all the necessary parents.
+		if (rightNode != null) {	// In case the center does not have a right child.
+			rightNode.parent = currentNode;		// The parent of the center's right child is the current node.
+		}
+		center.parent = currentNode.parent;	// The parent of the new center becomes the parent of the current node.
+		currentNode.parent = center;		// The current node's parent becomes the new center.
+
+		// Re-calculate the height of each node (only the ones that rotate).
 		center.calculateHeight();
 		currentNode.calculateHeight();
 
@@ -50,15 +58,23 @@ public class AVLTree extends Tree {
 
 	// Método para realizar una rotación hacia la izquierda
 	private Node leftRotate(Node currentNode) {
+
+		// Initialize the main nodes to make the rotation.
 		Node center = currentNode.right;
-		Node right_node = center.left;
+		Node leftNode = center.left;
 
+		// Assign the rotated nodes.
 		center.left = currentNode;
-		currentNode.right = right_node;
+		currentNode.right = leftNode;
 
+		// Assign all the necessary parents.
+		if (leftNode != null) {	// In case the center does not have a right child.
+			leftNode.parent = currentNode;
+		}
 		center.parent = currentNode.parent;
 		currentNode.parent = center;
 
+		// Re-calculate the height of each node (only the ones that rotate).
 		center.calculateHeight();
 		currentNode.calculateHeight();
 
@@ -90,18 +106,32 @@ public class AVLTree extends Tree {
 
 		// Case where the node is added
 
-		int balance = getBalance(currentNode);
+		int balance = getBalance(currentNode);	// FB value is checked because FB = h(left) - h(right)
 
+		// The unbalanced functions will be called only on the node that has the wrong balanced factor ( FB < -2 o FB > 2)
+
+		// Positive balance = right rotate or right + left rotate.
+		// Negative balance = left rotate or left + right rotate.
+		// Since the add function is recursive, the first unbalance node is checked (the lowest one).
+
+		// If (valueToInsert < currentNode.left) and (FB > 1) -> left-left tree
 		if (currentNode.left != null && balance > 1 && valueToInsert < currentNode.left.getCitizenWeight()) {
 			return rightRotate(currentNode);
 		}
+
+		// If (valueToInsert > currentNode.right) and (FB < -1) -> right-right tree
 		if (currentNode.right != null && balance < -1 && valueToInsert > currentNode.right.getCitizenWeight()) {
 			return leftRotate(currentNode);
 		}
+
+		// If (valueToInsert > currentNode.left) and (FB > 1) -> left-right tree
 		if (currentNode.left != null && balance > 1 && valueToInsert > currentNode.left.getCitizenWeight()) {
 			currentNode.left = leftRotate(currentNode.left);
 			return rightRotate(currentNode);
 		}
+
+		// If (valueToInsert < currentNode.right) and (FB < -1) -> right-left tree
+		// RL = center to the right, and left child new center. Then center's parent rotates left.
 		if (currentNode.right != null && balance < -1 && valueToInsert < currentNode.right.getCitizenWeight()) {
 			currentNode.right = rightRotate(currentNode.right);
 			return leftRotate(currentNode);
@@ -111,7 +141,7 @@ public class AVLTree extends Tree {
 
 	}
 
-	private Node remove (Node currentNode, Citizen citizen, boolean removeAll) {
+	private Node remove (Node currentNode, Citizen citizen) {
 
 		if (currentNode == null) {
 			return null;
@@ -119,7 +149,7 @@ public class AVLTree extends Tree {
 
 		// We go to the left child if the value that we want to delete is higher than the current node's value
 		if (citizen.getWeight() > currentNode.getCitizenWeight()) {
-			currentNode.right = remove(currentNode.right, citizen, removeAll);
+			currentNode.right = remove(currentNode.right, citizen);
 			currentNode.calculateHeight(); // Re-calculate the height of the current node.
 			currentNode = balance(currentNode, citizen);
 			return currentNode;
@@ -127,7 +157,7 @@ public class AVLTree extends Tree {
 
 		//We go to the right child if the value that we want to delete is lower than the current node's value
 		if (citizen.getWeight() < currentNode.getCitizenWeight()) {
-			currentNode.left = remove(currentNode.left, citizen, removeAll);
+			currentNode.left = remove(currentNode.left, citizen);
 			currentNode.calculateHeight(); // Re-calculate the height of the current node.
 			currentNode = balance(currentNode, citizen);
 			return currentNode;
@@ -136,7 +166,7 @@ public class AVLTree extends Tree {
 		// Node to delete found
 		if (citizen.getWeight() == currentNode.getCitizenWeight()) {
 
-			if (removeAll || currentNode.getCitizens().length == 1) {
+			if (currentNode.getCitizens().length == 1) {
 				//If the node does not have children, we return null (replacing this node with null in the parent)
 				if (currentNode.right == null && currentNode.left == null) {
 					return null;
@@ -171,11 +201,26 @@ public class AVLTree extends Tree {
 		//(which has a greater value) and then find the lowest value in the subtree. This value will
 		//be the next biggest value that we were searching for
 
-		Node tempNode = findMinNode(currentNode.right); //Finds the node with the lowest value in the subtree (given an origin/root node)
-		currentNode.setCitizens(tempNode.getCitizens());  //We change the node's citizen information; effectively eliminating the older node.
-		currentNode.right = remove(currentNode.right, tempNode.getCitizens()[0], true); //We delete the node that had been chosen as a substitute. If we did not delete it, it would be duplicated in the tree.
-		currentNode = balance(currentNode, citizen);
-		return currentNode;
+		Node tempNode = findMinNode(currentNode.right); // Find the node with the lowest value in the right subtree (given an origin/root node) = successor "inordre"
+
+		// Assign the parent of the new node to the node to be deleted parent.
+		tempNode.parent.left = tempNode.right;  // Assign the same child of the successor node to its parent (always a left child node).
+		tempNode.parent = currentNode.parent;
+
+		// Check if the removed node was a right or a left child.
+		if (currentNode.parent.right == currentNode) {
+			tempNode.parent.right = tempNode;       // The new node will always be to the right of the parent's node (successor "inordre").
+		}
+		else {
+			tempNode.parent.left = tempNode;       // The new node will always be to the right of the parent's node (successor "inordre").
+		}
+
+		// Keep the same children that the node to be deleted has.
+		tempNode.right = currentNode.right;
+		tempNode.left = currentNode.left;
+
+		tempNode = balance(currentNode, citizen);
+		return tempNode;
 	}
 
 	private Node balance (Node currentNode, Citizen citizen){

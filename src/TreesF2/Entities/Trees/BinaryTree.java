@@ -120,10 +120,10 @@ public class BinaryTree extends Tree {
         Node tempNode = findMinNode(currentNode.right); // Find the node with the lowest value in the right subtree (given an origin/root node) = successor "inordre"
 
         // Assign the parent of the new node to the node to be deleted parent.
-        tempNode.parent.right = tempNode.right;  // Assign the same child of the successor node to its parent (always a left child node).
+        tempNode.parent.left = tempNode.right;  // Assign the same child of the successor node to its parent (always a left child node).
         tempNode.parent = currentNode.parent;
 
-        // Check if it was a right or left child.
+        // Check if the removed node was a right or a left child.
         if (currentNode.parent.right == currentNode) {
             tempNode.parent.right = tempNode;       // The new node will always be to the right of the parent's node (successor "inordre").
         }
