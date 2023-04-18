@@ -84,7 +84,7 @@ public class BinaryTree extends Tree {
                     return null;
                 }
 
-                // Loop through all the right nodes until we find the citizen with the same ID.
+                // Case in which the node deleted has a right child.
                 if (currentNode.left == null) {
 
                     // Check if the currentNode is a left or right child
@@ -98,7 +98,6 @@ public class BinaryTree extends Tree {
                     currentNode.right.parent = currentNode.parent;
 
                     currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
-
                     return currentNode.right;
                 }
 

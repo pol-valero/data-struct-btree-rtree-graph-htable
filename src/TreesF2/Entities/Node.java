@@ -55,7 +55,7 @@ public class Node {
 
         // Case were there is no children (leaf node)
         if (right == null && left == null) {
-            height = 1;
+            height = 0;
             return;
         }
 

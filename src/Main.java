@@ -31,7 +31,7 @@ public class Main {
                 case BRUIXES -> { BruixesMenuOptions bruixesOption;
                     do {
                         bruixesOption = Menu.showWitchesMenu(TREES_DATASET);
-                        BruixesMenuLogic.checkIfTreeCreated(TreeType.BINARYTREE);  // Check if Tree is already created or not
+                        BruixesMenuLogic.checkIfTreeCreated(TreeType.AVLTREE);  // Check if Tree is already created or not
                         switch (bruixesOption) {
                             case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();          // Add a node to the tree
                             case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();    // Remove a node from the tree
