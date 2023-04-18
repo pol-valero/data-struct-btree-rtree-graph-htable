@@ -14,7 +14,7 @@ public class BinaryTree extends Tree {
     @Override
     public void removeCitizen(long citizenId) {
         Citizen citizen = findCitizenById(citizenId);
-        root = remove(root, citizen, false);
+        root = remove(root, citizen);
     }
 
     private void add(Node currentNode, Citizen citizen, Node parentNode) {
@@ -54,7 +54,7 @@ public class BinaryTree extends Tree {
         currentNode.calculateHeight();
     }
 
-    private Node remove (Node currentNode, Citizen citizen, boolean removeAll) {
+    private Node remove (Node currentNode, Citizen citizen) {
 
         // Case where the node to remove is not found.
         if (currentNode == null) {
@@ -63,14 +63,14 @@ public class BinaryTree extends Tree {
 
         // We go to the right child if the value that we want to delete is higher than the current node's value
         if (citizen.getWeight() > currentNode.getCitizenWeight()) {
-            currentNode.right = remove(currentNode.right, citizen, removeAll);
+            currentNode.right = remove(currentNode.right, citizen);
             currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
 
         //We go to the left child if the value that we want to delete is lower than the current node's value
         if (citizen.getWeight() < currentNode.getCitizenWeight()) {
-            currentNode.left = remove(currentNode.left, citizen, removeAll);
+            currentNode.left = remove(currentNode.left, citizen);
             currentNode.calculateHeight(); // Re-calculate the height of the current node.
             return currentNode;
         }
@@ -78,7 +78,7 @@ public class BinaryTree extends Tree {
         // Node to delete found - We have to make sure the citizen is the one with the select ID.
         if (citizen.getWeight() == currentNode.getCitizenWeight()) {
 
-            if (removeAll || currentNode.getCitizens().length == 1) {
+            if (currentNode.getCitizens().length == 1) {
                 //If the node does not have children, we return null (replacing this node with null)
                 if (currentNode.right == null && currentNode.left == null) {
                     return null;
@@ -87,7 +87,16 @@ public class BinaryTree extends Tree {
                 // Loop through all the right nodes until we find the citizen with the same ID.
                 if (currentNode.left == null) {
 
+                    // Check if the currentNode is a left or right child
+                    if (currentNode.parent.right == currentNode) {
+                        currentNode.parent.right = currentNode.right;
+                    }
+                    else {
+                        currentNode.parent.left = currentNode.right;
+                    }
+
                     currentNode.right.parent = currentNode.parent;
+
                     currentNode.right.calculateHeight(); // Re-calculate the height of the current node.
 
                     return currentNode.right;
@@ -95,6 +104,14 @@ public class BinaryTree extends Tree {
 
                 // If the node only has one child, we return the child (replacing this node with the node's child in the parent)
                 if (currentNode.right == null) {
+
+                    // Check if the currentNode is a left or right child
+                    if (currentNode.parent.left == currentNode) {
+                        currentNode.parent.left = currentNode.left;
+                    }
+                    else {
+                        currentNode.parent.right = currentNode.left;
+                    }
 
                     currentNode.left.parent = currentNode.parent;
                     currentNode.left.calculateHeight(); // Re-calculate the height of the current node.
@@ -119,24 +136,38 @@ public class BinaryTree extends Tree {
 
         Node tempNode = findMinNode(currentNode.right); // Find the node with the lowest value in the right subtree (given an origin/root node) = successor "inordre"
 
-        // Assign the parent of the new node to the node to be deleted parent.
-        tempNode.parent.left = tempNode.right;  // Assign the same child of the successor node to its parent (always a left child node).
-        tempNode.parent = currentNode.parent;
+        // Specific case for root
+        if (currentNode != root) {
+            // Check if the removed node was a right or a left child.
+            if (currentNode.parent.right == currentNode) {
+                // Assign the parent of the new node to the node to be deleted parent.
+                currentNode.parent.right = tempNode;
+            } else {
+                currentNode.parent.left = tempNode;
+            }
+            tempNode.parent = currentNode.parent;
 
-        // Check if the removed node was a right or a left child.
-        if (currentNode.parent.right == currentNode) {
-            tempNode.parent.right = tempNode;       // The new node will always be to the right of the parent's node (successor "inordre").
+            // Keep the same children that the node to be deleted has.
+            tempNode.left = currentNode.left;
+
+            tempNode.calculateHeight(); // Re-calculate the height of the current node.
+            return tempNode;
         }
+
+        // Case when the root node is removed.
         else {
-            tempNode.parent.left = tempNode;       // The new node will always be to the right of the parent's node (successor "inordre").
+            // There is no parent.
+            tempNode.parent.left = tempNode.right;  // Assign the same child of the successor node to its parent (always a left child node).
+            tempNode.parent = null;                 // Root node has no parent.
+
+            // Change the current root node (assign its children to the new root node).
+            tempNode.right = root.right;
+            tempNode.left = root.left;
+            root = tempNode;
+
+            root.calculateHeight(); // Re-calculate the height of the current node.
+            return tempNode;
         }
-
-        // Keep the same children that the node to be deleted has.
-        tempNode.right = currentNode.right;
-        tempNode.left = currentNode.left;
-
-        tempNode.calculateHeight(); // Re-calculate the height of the current node.
-        return tempNode;
     }
 
 }

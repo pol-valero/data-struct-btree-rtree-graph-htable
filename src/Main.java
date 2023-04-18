@@ -8,7 +8,7 @@ import TreesF2.Entities.Trees.TreeType;
 public class Main {
 
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed"; // Relative path inside /src folder
-    private final static String TREES_DATASET = "files/trees/treeXXS.paed";     // Relative path inside /src folder
+    private final static String TREES_DATASET = "files/trees/treeXS.paed";     // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -31,7 +31,7 @@ public class Main {
                 case BRUIXES -> { BruixesMenuOptions bruixesOption;
                     do {
                         bruixesOption = Menu.showWitchesMenu(TREES_DATASET);
-                        BruixesMenuLogic.checkIfTreeCreated(TreeType.AVLTREE);  // Check if Tree is already created or not
+                        BruixesMenuLogic.checkIfTreeCreated(TreeType.BINARYTREE);  // Check if Tree is already created or not
                         switch (bruixesOption) {
                             case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();          // Add a node to the tree
                             case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();    // Remove a node from the tree
