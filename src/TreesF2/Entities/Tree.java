@@ -17,36 +17,42 @@ public abstract class Tree {
     // Prints all the nodes in the tree with the corresponding branches
     public void printRepresentation() {
 
-        //We print the right part of the tree
-        if (root.left != null) {
-            print("", root.left, true);
+        // Case in which there is no root node.
+        if (root == null) {
+            System.out.println(System.lineSeparator() + "No hi ha cap node a l'arbre.");
         }
-        // Tab space if there is no left part
         else {
-            System.out.println();
-        }
-
-        for (int i = 0; i < root.getCitizens().length; i++) {
-            Citizen rootCitizen = root.getCitizens()[i];
-
-            if (i == 0) {
-                rootCitizen.printInfo(false, true);   // Print the star in front of the citizen just if the Node is the root.
+            //We print the right part of the tree
+            if (root.left != null) {
+                print("", root.left, true);
             }
+            // Tab space if there is no left part
             else {
-                if (root.right != null) {
-                    System.out.print("| ");
-                    rootCitizen.printInfo(false, false);   // Print the star in front of the citizen just if the Node is the root.
+                System.out.println();
+            }
+
+            for (int i = 0; i < root.getCitizens().length; i++) {
+                Citizen rootCitizen = root.getCitizens()[i];
+
+                if (i == 0) {
+                    rootCitizen.printInfo(false, true);   // Print the star in front of the citizen just if the Node is the root.
                 }
                 else {
-                    System.out.print("  ");
-                    rootCitizen.printInfo(false, false);   // Print the star in front of the citizen just if the Node is the root.
+                    if (root.right != null) {
+                        System.out.print("| ");
+                        rootCitizen.printInfo(false, false);   // Print the star in front of the citizen just if the Node is the root.
+                    }
+                    else {
+                        System.out.print("  ");
+                        rootCitizen.printInfo(false, false);   // Print the star in front of the citizen just if the Node is the root.
+                    }
                 }
             }
-        }
 
-        //We print the left part of the tree
-        if (root.right != null) {
-            print("", root.right, false);
+            //We print the left part of the tree
+            if (root.right != null) {
+                print("", root.right, false);
+            }
         }
 
     }
