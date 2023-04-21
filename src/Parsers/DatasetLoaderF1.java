@@ -25,12 +25,12 @@ public class DatasetLoaderF1 {
         return new KnownRoute(Integer.parseInt(field[0]), Integer.parseInt(field[1]), Float.parseFloat(field[2]), Float.parseFloat(field[3]), Float.parseFloat(field[4]));
     }
 
-    public static PlaceOfInterest[] loadPlaces(String datasetName) {
+    public static PlaceOfInterest[] loadPlaces(String pathName) {
 
         int placesLinesNum;
         int j = 0;
 
-        Path path = Path.of("files/" + datasetName);
+        Path path = Path.of(pathName);
         PlaceOfInterest[] places = null;
 
         try {
@@ -50,14 +50,14 @@ public class DatasetLoaderF1 {
         }
     }
 
-    public static KnownRoute[] loadRoutes(String datasetName) {
+    public static KnownRoute[] loadRoutes(String pathName) {
 
         int placesLinesNum;
         int routesLinesNum;
         int j = 0;
 
 
-        Path path = Path.of("files/" + datasetName);
+        Path path = Path.of(pathName);
         KnownRoute[] routes = null;
 
         try {

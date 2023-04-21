@@ -3,20 +3,32 @@ package Auxiliar;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class myArrayList<T> implements Iterable<T> {
+public class MyArrayList<T> implements Iterable<T> {
 	private T[] elements;
 	private int size;
 
 	// Constructor without initial size (= 0).
 	@SuppressWarnings("unchecked")
-	public myArrayList() {
+	public MyArrayList() {
 		elements = (T[]) new Object[0];
 	}
 
 	@SuppressWarnings("unchecked")
-	public myArrayList(int num) {
+	public MyArrayList(int num) {
 		elements = (T[]) new Object[num];
 		size = num;
+	}
+
+	// Constructor that allows to deep copy (without references) another ArrayList.
+	public MyArrayList(MyArrayList<T> originalArray) {
+		elements = (T[]) Arrays.copyOf(originalArray.toArray(), originalArray.size(), Object[].class);
+		size = originalArray.size();
+	}
+
+	// Constructor that allows to deep copy (without references) another list.
+	public MyArrayList(T[] originalArray) {
+		elements = originalArray;
+		size = originalArray.length;
 	}
 
 	public int size() {
@@ -39,11 +51,16 @@ public class myArrayList<T> implements Iterable<T> {
 	}
 
 	public T[] toArray() {
-		return elements;
+		return (T[]) elements;
 	}
 
 	@SuppressWarnings("unchecked")
-	public void add(Object o) {
+	public T[] toArray(T[] array) {
+		return (T[]) Arrays.copyOf(elements, size, array.getClass());
+	}
+
+	@SuppressWarnings("unchecked")
+	public void add(T o) {
 		size++;
 
 		Object[] temporalArray = Arrays.copyOf(elements, size);
@@ -52,7 +69,7 @@ public class myArrayList<T> implements Iterable<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void remove(Object o) {
+	public void remove(T o) {
 		if (size > 0) {
 			size--;
 			Object[] temporalArray = new Object[size];
@@ -145,9 +162,7 @@ public class myArrayList<T> implements Iterable<T> {
 			int offset = fromIndex - toIndex;
 			Object[] temporalArray = new Object[offset];
 
-			for (int i = 0; i < offset; i++) {
-				temporalArray[i] = elements[fromIndex + i];
-			}
+			System.arraycopy(elements, fromIndex, temporalArray, 0, offset);
 
 			return (T[]) temporalArray;
 		}
@@ -157,6 +172,7 @@ public class myArrayList<T> implements Iterable<T> {
 
 
 	// Implement the interface Iterable and override the method iterator().
+	// This code is based on: https://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<>() {

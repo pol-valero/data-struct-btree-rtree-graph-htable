@@ -1,16 +1,27 @@
-package Menu;
+package Menu.GraphsOrenetes;
 
-import GraphsF1.Algorithms.BFS;
+import GraphsF1.Algorithms.GraphBFS;
 import GraphsF1.Algorithms.Dijkstra;
 import GraphsF1.Algorithms.MSTprim;
 import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.PlaceOfInterest;
 import GraphsF1.Entities.Swallow;
+import Menu.Menu;
 
 public class OrenetesMenuLogic {
+	private static long initialTime;
+	private static long executionTime;
 
+	public static void finished() {
+		executionTime = System.nanoTime() - initialTime;
+	}
 	public static void showKingdomExploration() {
-		Graph graph = new Graph(Menu.GRAPH_DATASET);
+
+//		initialTime = System.nanoTime();
+		Graph graph = new Graph(Menu.GRAPHS_DATASET);
+//		finished();
+//		System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
+
 		int nodeID = Menu.askForInteger("Quin lloc vol explorar? ", 0, Integer.MAX_VALUE);
 		PlaceOfInterest currentNode = graph.getPlaceByID(nodeID);
 
@@ -18,7 +29,10 @@ public class OrenetesMenuLogic {
 			System.out.println(Menu.separator + currentNode.showInformation() + Menu.separator);
 			System.out.println("Els llocs del Regne de " + currentNode.getKingdom() + " als que es pot arribar són:" + Menu.separator);
 
-			BFS.kingdomExploration(graph, currentNode);
+//			initialTime = System.nanoTime();
+			GraphBFS.kingdomExploration(graph, currentNode);
+//			finished();
+//			System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
 		}
 		else {
 			System.out.println(Menu.separator + "El lloc seleccionat no existeix.");
@@ -26,13 +40,17 @@ public class OrenetesMenuLogic {
 	}
 
 	public static void showFrequentRoutesDetection() {
-		Graph graph = new Graph(Menu.GRAPH_DATASET);
+		Graph graph = new Graph(Menu.GRAPHS_DATASET);
 		System.out.println(Menu.separator + "Conjunt de trajectes que connecten tots els llocs i minimitzen la distància total: " + Menu.separator);
+
+//		initialTime = System.nanoTime();
 		MSTprim.frequentRoutesDetection(graph);
+//		finished();
+//		System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
 	}
 
 	public static void showPremiumMessaging() {
-		Graph graph = new Graph(Menu.GRAPH_DATASET);
+		Graph graph = new Graph(Menu.GRAPHS_DATASET);
 		int nodeID1 = Menu.askForInteger("Quin és el lloc d'origen? ", 0, Integer.MAX_VALUE);
 
 		PlaceOfInterest firstNode = graph.getPlaceByID(nodeID1);
@@ -46,8 +64,12 @@ public class OrenetesMenuLogic {
 
 		if (firstNode != null && secondNode != null) {
 
+
+//			initialTime = System.nanoTime();
 			PlaceOfInterest[] europeanWay = Dijkstra.premiumMessaging(graph, firstNode, secondNode, europeanSwallow);
 			PlaceOfInterest[] africanWay = Dijkstra.premiumMessaging(graph, firstNode, secondNode, africanSwallow);
+//			finished();
+//			System.out.println("\nAlgorithm execution time: " + (double) executionTime/1000000 + " ms");     //Print the execution time of the algorithm
 
 			if (europeanSwallow.getTotalTime() < africanSwallow.getTotalTime()) {
 				showOutput(europeanSwallow, europeanWay);

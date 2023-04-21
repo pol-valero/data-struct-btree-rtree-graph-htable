@@ -4,8 +4,8 @@ import Parsers.DatasetLoaderF1;
 
 import java.util.ArrayList;
 
-import static Auxiliar.Algorithms.MergeSort.mergeSort;
 import static Auxiliar.Algorithms.BinarySearch.binarySearch;
+import static Auxiliar.Algorithms.MergeSort.mergeSort;
 
 public class Graph {
 	private final KnownRoute[][] matrix;
@@ -29,22 +29,15 @@ public class Graph {
 	}
 
 	private void createGraph() {
-		for (int i = 0; i < placesNum; i++) {
-			for (int j = 0; j < placesNum; j++) {
-				matrix[i][j] = findRoute(i, j);
-			}
+
+		PlaceOfInterest place1, place2;
+		for (int i = 0; i < routesNum; i++) {
+			place1 = getPlaceByID(routes[i].getPlaceA());
+			place2 = getPlaceByID(routes[i].getPlaceB());
+			matrix[place1.getRowIndex()][place2.getRowIndex()] = routes[i];
+			matrix[place2.getRowIndex()][place1.getRowIndex()] = routes[i];
+
 		}
-	}
-
-	private KnownRoute findRoute(int i, int j) {
-
-		for (int k = 0; k < routesNum; k++) {
-			if (routes[k].containsPlaces(places[i].getId(), places[j].getId())) {
-				return routes[k];
-			}
-		}
-
-		return null;
 	}
 
 	public void printRelations(){
@@ -124,7 +117,7 @@ public class Graph {
 	public PlaceOfInterest getPlaceByID(int placeID) {
 
 		// Get the place with the ID using Binary Search (since we use MergeSort for the array).
-		return binarySearch(places, placeID);
+		return binarySearch(places, new PlaceOfInterest(placeID));
 	}
 
 	public int getSize() {

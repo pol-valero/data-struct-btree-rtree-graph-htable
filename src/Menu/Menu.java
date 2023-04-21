@@ -1,24 +1,35 @@
 package Menu;
 
-import GraphsF1.Entities.Graph;
+import Menu.TreesBruixes.BruixesMenuOptions;
+import Menu.GraphsOrenetes.OrenetesMenuOptions;
+import TreesF2.Entities.ObjectType;
 
 import java.util.Scanner;
 
 public class Menu {
 
     public final static String separator = System.lineSeparator();
-    public static String GRAPH_DATASET;
+    public static String GRAPHS_DATASET;
+    public static String TREES_DATASET;
 
-    public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator+separator+
+    public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator + separator+
             "1. Sobre orenetes i cocos (Grafs)" +separator +
-            "2. PER ESPECIFICAR" + separator+
+            "2. Caça de bruixes (Arbres binaris de cerca)" + separator+
             "3. PER ESPECIFICAR" + separator+
             "4. PER ESPECIFICAR" + separator + separator +
             "5. Exit" + separator;
-    public static final String ORENETES_MENU = separator + "A. Exploració del regne" + separator +
+    public static final String ORENETES_MENU = "A. Exploració del regne" + separator +
             "B. Detecció de trajectes habituals" + separator +
             "C. Missatgeria premium" + separator + separator +
             "D. Tornar enrere" + separator;
+
+    public static final String BRUIXES_MENU = "A. Afegir habitant" + separator +
+            "B. Eliminar habitant" + separator +
+            "C. Representació visual" + separator +
+            "D. Identificació de bruixes" + separator +
+            "E. Batuda" + separator + separator +
+            "F. Tornar enrere" + separator;
+
     public static final String EXIT = "\u001B[31m "+separator+"Aturant The Hashy Grail..."+separator+" \u001B[0m";
 
 
@@ -30,37 +41,44 @@ public class Menu {
 
             // Ejecutar la opción escogida.
             switch (option) {
-                case 1 -> {
-                    return MainMenuOptions.ORENETES;
-                }
-                case 2 -> {
-                    return MainMenuOptions.OPTION_2;
-                }
-                case 3 -> {
-                    return MainMenuOptions.OPTION_3;
-                }
-                case 4 -> {
-                    return MainMenuOptions.OPTION_4;
-                }
-                case 5 -> {
-                    return MainMenuOptions.EXIT;
-                }
+                case 1 -> { return MainMenuOptions.ORENETES; }
+                case 2 -> { return MainMenuOptions.BRUIXES; }
+                case 3 -> { return MainMenuOptions.OPTION_3; }
+                case 4 -> { return MainMenuOptions.OPTION_4; }
+                case 5 -> { return MainMenuOptions.EXIT; }
             }
         } while (true);
     }
 
     // Sub-menu for the ORENETES option (selected previously in the main menu).
     public static OrenetesMenuOptions showOrenetesMenu(String graph_dataset) {
-        GRAPH_DATASET = graph_dataset;
+        GRAPHS_DATASET = graph_dataset;
 
         System.out.println(separator + ORENETES_MENU);
-        String option = askForCharacter("Quina funcionalitat vol executar? ");
+        String option = askForCharacter("Quina funcionalitat vol executar? ", 'A', 'D');
 
         switch (option) {
             case "A" -> { return OrenetesMenuOptions.KINGDOM_EXPLORATION; }
             case "B" -> { return OrenetesMenuOptions.COMMON_ROUTES; }
             case "C" -> { return OrenetesMenuOptions.PREMIUM_MESSAGING; }
             default -> { return OrenetesMenuOptions.PREVIOUS_MENU; }
+        }
+    }
+
+    // Sub-menu for the WITCHES option (selected previously in the main menu).
+    public static BruixesMenuOptions showWitchesMenu(String trees_dataset) {
+        TREES_DATASET = trees_dataset;
+
+        System.out.println(separator + BRUIXES_MENU);
+        String option = askForCharacter("Quina funcionalitat vol executar? ", 'A', 'F');
+
+        switch (option) {
+            case "A" -> { return BruixesMenuOptions.ADD_CITIZEN; }
+            case "B" -> { return BruixesMenuOptions.REMOVE_CITIZEN; }
+            case "C" -> { return BruixesMenuOptions.VISUAL_REPRESENTATION; }
+            case "D" -> { return BruixesMenuOptions.WITCHES_IDENTIFICATION; }
+            case "E" -> { return BruixesMenuOptions.BATUDA; }
+            default -> { return BruixesMenuOptions.PREVIOUS_MENU; }
         }
     }
 
@@ -88,26 +106,19 @@ public class Menu {
         return option;
     }
 
-    public static String askForCharacter(String askMessage) {
-        String option = ""; // Assegura que la condición del bucle se siga cumpliendo.
-        String errorMessage = "Error: Introdueix un caràcter entre \"A\", \"B\", \"C\" o \"D\"." + separator;
+    public static String askForCharacter(String askMessage, char firstChar, char lastChar) {
+        String option; // Assegura que la condición del bucle se siga cumpliendo.
+        String errorMessage = "Error: Introdueix un caràcter entre " + firstChar + " i " + lastChar + "." + separator;
 
         do {
-            try {
-                Scanner sc = new Scanner(System.in);
-                System.out.print(askMessage);
-                option = sc.nextLine();
-                option = option.toUpperCase();
+            Scanner sc = new Scanner(System.in);
+            System.out.print(askMessage);
+            option = sc.nextLine().toUpperCase();
 
-                if (!(option.equals("A") || option.equals("B") || option.equals("C") || option.equals("D"))) {
-                    System.out.println(errorMessage);
-                }
-
-            } catch (NumberFormatException e) {
+            if (option.length() != 1 || option.charAt(0) < firstChar || option.charAt(0) > lastChar) {
                 System.out.println(errorMessage);
             }
-
-        } while (!(option.equals("A") || option.equals("B") || option.equals("C") || option.equals("D")));
+        } while (option.length() != 1 || option.charAt(0) < firstChar || option.charAt(0) > lastChar);
 
         return option;
     }
@@ -134,5 +145,66 @@ public class Menu {
         } while (!(option.equals("SI") || option.equals("NO")));
 
         return option.equals("SI");
+    }
+
+    public static String askForString (String askMessage) {
+        String option = "";
+        String errorMessage = "Error: Introdueix una cadena de caràcters." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = sc.nextLine();
+
+                if (option.equals("")) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (option.equals(""));
+
+        return option;
+    }
+
+
+    public static float askForFloat (String askMessage, float min, float max) {
+        float option = min - 1;   // Asegura que la condición del bucle se siga cumpliendo.
+        String errorMessage = "Error: Introdueix un número real entre " + min + " i " + max + "." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = Float.parseFloat(sc.nextLine());
+
+                if (option < min || option > max) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (option < min || option > max);
+
+        return option;
+    }
+
+    public static ObjectType askforObject(String s) {
+        while(true){
+            String objectType = askForString(s);
+            if (objectType.equalsIgnoreCase("WOOD")) {
+                return ObjectType.WOOD;
+            } else if (objectType.equalsIgnoreCase("DUCK")) {
+                return ObjectType.DUCK;
+            } else if (objectType.equalsIgnoreCase("STONE")) {
+                return ObjectType.STONE;
+            }
+            System.out.println("Error: Introdueix \"WOOD\", \"DUCK\" o \"STONE\".\n");
+        }
     }
 }

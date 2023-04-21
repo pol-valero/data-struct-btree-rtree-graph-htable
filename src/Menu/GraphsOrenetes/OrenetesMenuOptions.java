@@ -1,4 +1,4 @@
-package Menu;
+package Menu.GraphsOrenetes;
 
 public enum OrenetesMenuOptions {
 	KINGDOM_EXPLORATION,

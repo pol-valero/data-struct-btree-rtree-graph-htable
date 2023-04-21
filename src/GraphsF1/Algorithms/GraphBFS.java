@@ -1,13 +1,13 @@
 package GraphsF1.Algorithms;
 
+import Auxiliar.MyQueue;
 import GraphsF1.Entities.Graph;
 import GraphsF1.Entities.PlaceOfInterest;
-import Auxiliar.myQueue;
 
-public class BFS {
+public class GraphBFS {
 
 	public static void kingdomExploration(Graph graph, PlaceOfInterest initialNode) {
-		myQueue<PlaceOfInterest> queue = new myQueue<>();
+		MyQueue<PlaceOfInterest> queue = new MyQueue<>();
 
 		// First initialNode will always be in the same kingdom.
 		queue.add(initialNode);
@@ -20,7 +20,7 @@ public class BFS {
 			// Show the place information if it belongs to the same kingdom.
 			if (currentNode.sameKingdom(initialNode) && !currentNode.samePlace(initialNode)) {
 				System.out.println(currentNode.showInformation());
-				DFS.kingdomExploration(graph, currentNode);
+				GraphDFS.kingdomExploration(graph, currentNode);
 			}
 
 			PlaceOfInterest[] adjacentNodes = graph.getAdjacents(currentNode);

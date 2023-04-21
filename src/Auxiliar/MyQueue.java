@@ -1,17 +1,17 @@
 package Auxiliar;
 
-public class myQueue<T> {
+public class MyQueue<T> {
     private T[] elements;
     private int size;
 
     // Constructor without initial size (= 0).
     @SuppressWarnings("unchecked")
-    public myQueue() {
+    public MyQueue() {
         elements = (T[]) new Object[0];
     }
 
     @SuppressWarnings("unchecked")
-    public myQueue(int num) {
+    public MyQueue(int num) {
         elements = (T[]) new Object[num];
         size = num;
     }
