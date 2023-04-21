@@ -1,8 +1,8 @@
-package TreesF2.Entities.Trees;
+package BinaryTreesF2.Entities.Trees;
 
-import TreesF2.Entities.Citizen;
-import TreesF2.Entities.Node;
-import TreesF2.Entities.Tree;
+import BinaryTreesF2.Entities.Citizen;
+import BinaryTreesF2.Entities.Node;
+import BinaryTreesF2.Entities.Tree;
 
 public class AVLTree extends Tree {
 

@@ -1,4 +1,4 @@
-package TreesF2.Entities;
+package BinaryTreesF2.Entities;
 
 public class Citizen {
 	private final long id;	// Non-consecutive but unique ID.

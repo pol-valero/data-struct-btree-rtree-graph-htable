@@ -1,7 +1,7 @@
-package TreesF2.Entities;
+package BinaryTreesF2.Entities;
 
 import Auxiliar.MyArrayList;
-import TreesF2.Algorithms.TreeBFS;
+import BinaryTreesF2.Algorithms.TreeBFS;
 
 // Class used as a shared tree which is implemented as BinaryTree and AVLTree
 public abstract class Tree {

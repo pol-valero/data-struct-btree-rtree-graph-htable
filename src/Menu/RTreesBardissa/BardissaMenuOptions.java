@@ -1,0 +1,10 @@
+package Menu.RTreesBardissa;
+
+public enum BardissaMenuOptions {
+	ADD_HEDGE,
+	REMOVE_HEDGE,
+	VISUAL_REPRESENTATION,
+	AREA_SEARCH,
+	AESTHETIC_OPTIMIZATION,
+	PREVIOUS_MENU
+}

@@ -1,8 +1,8 @@
-package TreesF2.Algorithms;
+package BinaryTreesF2.Algorithms;
 
 import Auxiliar.MyQueue;
-import TreesF2.Entities.Citizen;
-import TreesF2.Entities.Node;
+import BinaryTreesF2.Entities.Citizen;
+import BinaryTreesF2.Entities.Node;
 
 public class TreeBFS {
 	public static Citizen findCitizenById (Node rootNode, long citizenId) {

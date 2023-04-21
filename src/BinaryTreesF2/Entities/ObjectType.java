@@ -1,4 +1,4 @@
-package TreesF2.Entities;
+package BinaryTreesF2.Entities;
 
 public enum ObjectType {
 	DUCK,

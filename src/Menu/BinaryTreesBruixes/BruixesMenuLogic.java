@@ -1,15 +1,15 @@
-package Menu.TreesBruixes;
+package Menu.BinaryTreesBruixes;
 
 import Auxiliar.MyArrayList;
 import Menu.Menu;
 import Parsers.DatasetLoaderF2;
-import TreesF2.Entities.Citizen;
-import TreesF2.Entities.ObjectType;
-import TreesF2.Entities.Object;
-import TreesF2.Entities.Tree;
-import TreesF2.Entities.Trees.AVLTree;
-import TreesF2.Entities.Trees.BinaryTree;
-import TreesF2.Entities.Trees.TreeType;
+import BinaryTreesF2.Entities.Citizen;
+import BinaryTreesF2.Entities.ObjectType;
+import BinaryTreesF2.Entities.Object;
+import BinaryTreesF2.Entities.Tree;
+import BinaryTreesF2.Entities.Trees.AVLTree;
+import BinaryTreesF2.Entities.Trees.BinaryTree;
+import BinaryTreesF2.Entities.Trees.TreeType;
 
 public class BruixesMenuLogic {
 
@@ -96,7 +96,7 @@ public class BruixesMenuLogic {
                 // "AVLTree" class, which uses Balanced Tree structure.
                 tree = new AVLTree();
             }
-            DatasetLoaderF2.loadCitizens(Menu.TREES_DATASET, tree);
+            DatasetLoaderF2.loadCitizens(Menu.BINARY_TREES_DATASET, tree);
         }
     }
 }
