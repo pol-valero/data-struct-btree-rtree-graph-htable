@@ -7,8 +7,8 @@ import BinaryTreesF2.Entities.Trees.TreeType;
 
 import javax.swing.*;
 
-// Class used as a shared tree which is implemented as BinaryTree and AVLTree
-public abstract class Tree {
+// Class used as a shared tree which is implemented as BSTTree and AVLTree
+public abstract class BinaryTree {
 
     public Node root = null;   // Root of the tree (has no father Node)
 
@@ -268,10 +268,10 @@ public abstract class Tree {
     public void visualRepresentation(TreeType treeType) {
         JFrame frame;
         if (treeType == TreeType.BINARYTREE) {
-            frame = new JFrame("Binary Search Tree Visual Representation");
+            frame = new JFrame("Binary Search BSTTree Visual Representation");
         }
         else {
-            frame = new JFrame("Balanced Binary Search Tree Visual Representation");
+            frame = new JFrame("Balanced Binary Search BSTTree Visual Representation");
         }
 
         JScrollPane jScrollPane = new JScrollPane(new TreePainter(root, 1920, 1080, treeType));

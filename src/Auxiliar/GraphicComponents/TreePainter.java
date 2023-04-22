@@ -17,8 +17,8 @@ public class TreePainter extends JPanel {
 	private final int HORIZONTAL_NODES_DISTANCE;
 	private final int VERTICAL_NODES_DISTANCE = 100;
 	private final static Font TITLE_FONT = new Font("Arial", Font.BOLD, 24);
-	private final static String BST_TITLE = "Binary Search Tree Visual Representation";
-	private final static String AVL_TITLE = "Balanced Binary Search Tree Visual Representation";
+	private final static String BST_TITLE = "Binary Search BSTTree Visual Representation";
+	private final static String AVL_TITLE = "Balanced Binary Search BSTTree Visual Representation";
 	private final TreeType treeType;
 
 	public TreePainter(Node root, int windowWidth, int windowHeight, TreeType treeType) {
@@ -37,7 +37,7 @@ public class TreePainter extends JPanel {
 		g.setFont(TITLE_FONT);
 		int[] titleCords;
 
-		// Write the apropiate title depending on the type of Binary Tree.
+		// Write the apropiate title depending on the type of Binary BSTTree.
 		if (treeType == TreeType.BINARYTREE) {
 			titleCords = TextCentering.centerText(g, BST_TITLE, INITIAL_NODE_POSITION, TOP_MARGIN, getHeight());
 			g.drawString(BST_TITLE, titleCords[0], TOP_MARGIN - 50);

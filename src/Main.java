@@ -9,7 +9,7 @@ import Menu.RTreesBardissa.BardissaMenuOptions;
 public class Main {
 
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed";     // Relative path inside /src folder
-    private final static String BINARY_TREES_DATASET = "files/trees/treeXXS.paed";   // Relative path inside /src folder
+    private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";   // Relative path inside /src folder
     private final static TreeType treeType = TreeType.AVLTREE;  // Select the type of tree used with Binary Trees.
     private final static String R_TREES_DATASET = "files/trees/treeXXS.paed";        // Relative path inside /src folder
 
@@ -34,7 +34,7 @@ public class Main {
                 case BRUIXES -> { BruixesMenuOptions bruixesOption;
                     do {
                         bruixesOption = Menu.showWitchesMenu(BINARY_TREES_DATASET);
-                        BruixesMenuLogic.checkIfTreeCreated(treeType);  // Check if Tree is already created or not
+                        BruixesMenuLogic.checkIfTreeCreated(treeType);  // Check if BSTTree is already created or not
                         switch (bruixesOption) {
                             case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();                              // Add a node to the tree
                             case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();                        // Remove a node from the tree
@@ -50,12 +50,12 @@ public class Main {
                     do {
                         bardissaMenuOptions = Menu.showHedgeMenu(R_TREES_DATASET);
 
-                        // Check if Tree is already created or not
+                        // Check if BSTTree is already created or not
 
                         switch (bardissaMenuOptions) {
                             case ADD_HEDGE -> {}                // Add a hedge to the tree
                             case REMOVE_HEDGE -> {}             // Remove a hedge from the tree
-                            case VISUAL_REPRESENTATION -> {}    // Visual R-Tree representation
+                            case VISUAL_REPRESENTATION -> {}    // Visual R-BSTTree representation
                             case AREA_SEARCH -> {}              // Search points in an area
                             case AESTHETIC_OPTIMIZATION -> {}   //
                         }

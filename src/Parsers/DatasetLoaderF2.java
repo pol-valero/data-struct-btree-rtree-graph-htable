@@ -1,7 +1,7 @@
 package Parsers;
 
+import BinaryTreesF2.Entities.BinaryTree;
 import BinaryTreesF2.Entities.Citizen;
-import BinaryTreesF2.Entities.Tree;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +18,7 @@ public class DatasetLoaderF2 {
         return new Citizen(Long.parseLong(field[0]), field[1], Float.parseFloat(field[2]), field[3]);
     }
 
-    public static void loadCitizens(String pathName, Tree tree) {
+    public static void loadCitizens(String pathName, BinaryTree binaryTree) {
 
         Citizen citizen;
         int citizenLinesNum;
@@ -35,7 +35,7 @@ public class DatasetLoaderF2 {
                 citizen = (csvLineToCitizen(csvLines.get(i)));
                 //System.out.println("Id: " + citizen.getId() + "  Name: " + citizen.getName() + "  Weight: " + citizen.getWeight() + "  Kingdom: " + citizen.getKingdom());
 
-                tree.addCitizen(citizen);   //As we are reading the dataset, we create the tree structure
+                binaryTree.addCitizen(citizen);   //As we are reading the dataset, we create the binaryTree structure
             }
 
         } catch (IOException e) {
