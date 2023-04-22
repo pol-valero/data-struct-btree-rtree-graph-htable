@@ -8,9 +8,10 @@ import Menu.RTreesBardissa.BardissaMenuOptions;
 
 public class Main {
 
-    private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed"; // Relative path inside /src folder
-    private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";      // Relative path inside /src folder
-    private final static String R_TREES_DATASET = "files/trees/treeXS.paed";     // Relative path inside /src folder
+    private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed";     // Relative path inside /src folder
+    private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";   // Relative path inside /src folder
+    private final static TreeType treeType = TreeType.BINARYTREE;
+    private final static String R_TREES_DATASET = "files/trees/treeXXS.paed";        // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -29,21 +30,22 @@ public class Main {
                     } while (orenetesOption != OrenetesMenuOptions.PREVIOUS_MENU);
                 }
 
-                // Trees (phase 2)
+                // Binary Trees (phase 2)
                 case BRUIXES -> { BruixesMenuOptions bruixesOption;
                     do {
                         bruixesOption = Menu.showWitchesMenu(BINARY_TREES_DATASET);
-                        BruixesMenuLogic.checkIfTreeCreated(TreeType.AVLTREE);  // Check if Tree is already created or not
+                        BruixesMenuLogic.checkIfTreeCreated(treeType);  // Check if Tree is already created or not
                         switch (bruixesOption) {
-                            case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();                      // Add a node to the tree
-                            case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();                // Remove a node from the tree
-                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();    // Visual tree representation
-                            case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();  // Search nodes with same, higher or lower value
-                            case BATUDA -> BruixesMenuLogic.showBatuda();                               // Search nodes between a range of values
+                            case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();                              // Add a node to the tree
+                            case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();                        // Remove a node from the tree
+                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation(treeType);    // Visual tree representation
+                            case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();          // Search nodes with same, higher or lower value
+                            case BATUDA -> BruixesMenuLogic.showBatuda();                                       // Search nodes between a range of values
                         }
                     } while (bruixesOption != BruixesMenuOptions.PREVIOUS_MENU);
                 }
 
+                // R-Trees (phase 3)
                 case BARDISSA -> { BardissaMenuOptions bardissaMenuOptions;
                     do {
                         bardissaMenuOptions = Menu.showHedgeMenu(R_TREES_DATASET);
@@ -51,11 +53,11 @@ public class Main {
                         // Check if Tree is already created or not
 
                         switch (bardissaMenuOptions) {
-                            case ADD_HEDGE -> BruixesMenuLogic.showAddCitizen();                        // Add a hedge to the tree
-                            case REMOVE_HEDGE -> BruixesMenuLogic.showRemoveCitizen();                  // Remove a hedge from the tree
-                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();    // Visual R-Tree representation
-                            case AREA_SEARCH -> BruixesMenuLogic.showWitchIdentification();             // Search points in an area
-                            case AESTHETIC_OPTIMIZATION -> BruixesMenuLogic.showBatuda();               //
+                            case ADD_HEDGE -> {}                // Add a hedge to the tree
+                            case REMOVE_HEDGE -> {}             // Remove a hedge from the tree
+                            case VISUAL_REPRESENTATION -> {}    // Visual R-Tree representation
+                            case AREA_SEARCH -> {}              // Search points in an area
+                            case AESTHETIC_OPTIMIZATION -> {}   //
                         }
                     } while (bardissaMenuOptions != BardissaMenuOptions.PREVIOUS_MENU);
                 }

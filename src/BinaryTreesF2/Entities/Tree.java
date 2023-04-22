@@ -1,7 +1,11 @@
 package BinaryTreesF2.Entities;
 
+import Auxiliar.GraphicComponents.TreePainter;
 import Auxiliar.MyArrayList;
 import BinaryTreesF2.Algorithms.TreeBFS;
+import BinaryTreesF2.Entities.Trees.TreeType;
+
+import javax.swing.*;
 
 // Class used as a shared tree which is implemented as BinaryTree and AVLTree
 public abstract class Tree {
@@ -259,5 +263,29 @@ public abstract class Tree {
             findWitchDuck(object, root, witches);
         }
         return null;
+    }
+
+    public void visualRepresentation(TreeType treeType) {
+//        TreePainter treePainter = new TreePainter(root);
+//
+//        JFrame frame = new JFrame("Tree Painter");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(800, 600);
+//
+//        frame.add(treePainter);
+//
+//        frame.setVisible(true);
+
+        JFrame frame = new JFrame("Binary Search Tree Visualization");
+        JScrollPane jScrollPane = new JScrollPane(new TreePainter(root, 1920, 1280));
+
+        // set the policy for the scroll bars to always display
+        jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        frame.add(jScrollPane);
+        frame.pack();
+//        frame.setResizable(false);
+        frame.setVisible(true);
     }
 }

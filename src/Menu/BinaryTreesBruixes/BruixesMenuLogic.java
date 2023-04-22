@@ -40,7 +40,8 @@ public class BruixesMenuLogic {
 
     }
 
-    public static void showTreeRepresentation() {
+    public static void showTreeRepresentation(TreeType treeType) {
+        tree.visualRepresentation(treeType);
         tree.printRepresentation();
     }
 
