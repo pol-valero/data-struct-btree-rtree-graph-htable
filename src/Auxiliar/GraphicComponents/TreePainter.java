@@ -1,27 +1,31 @@
 package Auxiliar.GraphicComponents;
 
+import BinaryTreesF2.Entities.Citizen;
 import BinaryTreesF2.Entities.Node;
+import BinaryTreesF2.Entities.Trees.TreeType;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.*;
 
 public class TreePainter extends JPanel {
 	private final Node root;
 	private static final int RADIUS = 25;
-	private final static int TOP_MARGIN = 100;	// Above this top margin will appear the Title text.
+	private final static int TOP_MARGIN = 100;	// Above this top margin will appear the Title text, and below the first node will be printed.
 	private final int INITIAL_NODE_POSITION;
 	private final int HORIZONTAL_NODES_DISTANCE;
 	private final int VERTICAL_NODES_DISTANCE = 100;
 	private final static Font TITLE_FONT = new Font("Arial", Font.BOLD, 24);
-	private final static Font NODE_TEXT_FONT = new Font("Arial", Font.PLAIN, 12);
-	private final static Font NODE_VALUE_FONT = new Font("Arial", Font.PLAIN, 10);
 	private final static String BST_TITLE = "Binary Search Tree Visual Representation";
 	private final static String AVL_TITLE = "Balanced Binary Search Tree Visual Representation";
+	private final TreeType treeType;
 
-	public TreePainter(Node root, int windowWidth, int windowHeight) {
+	public TreePainter(Node root, int windowWidth, int windowHeight, TreeType treeType) {
 		this.root = root;
 		this.INITIAL_NODE_POSITION = windowWidth / 2;
 		this.HORIZONTAL_NODES_DISTANCE = windowWidth / 4;
+		this.treeType = treeType;
 
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
 	}
@@ -31,8 +35,17 @@ public class TreePainter extends JPanel {
 
 		// Draw the title of the visual representation.
 		g.setFont(TITLE_FONT);
-		int[] titleCords = TextCentering.centerText(g, BST_TITLE, INITIAL_NODE_POSITION, TOP_MARGIN - 70);
-		g.drawString("Binary Search Tree Visual Representation", titleCords[0], titleCords[1]);
+		int[] titleCords;
+
+		// Write the apropiate title depending on the type of Binary Tree.
+		if (treeType == TreeType.BINARYTREE) {
+			titleCords = TextCentering.centerText(g, BST_TITLE, INITIAL_NODE_POSITION, TOP_MARGIN, getHeight());
+			g.drawString(BST_TITLE, titleCords[0], TOP_MARGIN - 50);
+		}
+		else {
+			titleCords = TextCentering.centerText(g, AVL_TITLE, INITIAL_NODE_POSITION, TOP_MARGIN, getHeight());
+			g.drawString(AVL_TITLE, titleCords[0], TOP_MARGIN - 50);
+		}
 
 		// Check if there is at least one node in the tree to start showing it visually.
 		if (root != null) {
@@ -45,7 +58,14 @@ public class TreePainter extends JPanel {
 	private void drawTreeNode(Graphics g, int xPos, int yPos, int horizontalDistance, Node node) {
 
 		// Draw the circle that represents the current node, include all its citizens and the weight of the node.
-		CircleText circle = new CircleText(node.getCitizens()[0].getName(), node.getCitizenWeight(), xPos, yPos, RADIUS, NODE_TEXT_FONT, NODE_VALUE_FONT);
+		Citizen[] citizens = node.getCitizens();
+		String[] names = new String[citizens.length];
+
+		for (int i = 0; i < citizens.length; i++) {
+			names[i] = citizens[i].getName();
+		}
+
+		CircleText circle = new CircleText(names, node.getCitizenWeight(), xPos, yPos, RADIUS, node == root);
 		circle.paintComponent(g);
 
 		// Draw the left child of the current node (in case there is).

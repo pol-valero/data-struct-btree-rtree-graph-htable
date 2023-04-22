@@ -266,20 +266,17 @@ public abstract class Tree {
     }
 
     public void visualRepresentation(TreeType treeType) {
-//        TreePainter treePainter = new TreePainter(root);
-//
-//        JFrame frame = new JFrame("Tree Painter");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(800, 600);
-//
-//        frame.add(treePainter);
-//
-//        frame.setVisible(true);
+        JFrame frame;
+        if (treeType == TreeType.BINARYTREE) {
+            frame = new JFrame("Binary Search Tree Visual Representation");
+        }
+        else {
+            frame = new JFrame("Balanced Binary Search Tree Visual Representation");
+        }
 
-        JFrame frame = new JFrame("Binary Search Tree Visualization");
-        JScrollPane jScrollPane = new JScrollPane(new TreePainter(root, 1920, 1280));
+        JScrollPane jScrollPane = new JScrollPane(new TreePainter(root, 1920, 1080, treeType));
 
-        // set the policy for the scroll bars to always display
+        // Set scroll bars to always display.
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 

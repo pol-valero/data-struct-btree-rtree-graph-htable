@@ -9,8 +9,8 @@ import Menu.RTreesBardissa.BardissaMenuOptions;
 public class Main {
 
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed";     // Relative path inside /src folder
-    private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";   // Relative path inside /src folder
-    private final static TreeType treeType = TreeType.BINARYTREE;
+    private final static String BINARY_TREES_DATASET = "files/trees/treeXXS.paed";   // Relative path inside /src folder
+    private final static TreeType treeType = TreeType.AVLTREE;  // Select the type of tree used with Binary Trees.
     private final static String R_TREES_DATASET = "files/trees/treeXXS.paed";        // Relative path inside /src folder
 
     public static void main(String[] args) {
