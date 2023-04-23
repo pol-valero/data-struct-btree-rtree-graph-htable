@@ -224,6 +224,29 @@ public class Menu {
         return option;
     }
 
+    public static double askForDouble (String askMessage, double min, double max) {
+        double option = min - 1;   // Asegura que la condición del bucle se siga cumpliendo.
+        String errorMessage = "Error: Introdueix un número real entre " + min + " i " + max + "." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = Double.parseDouble(sc.nextLine());
+
+                if (option < min || option > max) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (option < min || option > max);
+
+        return option;
+    }
+
     public static ObjectType askforObject(String s) {
         while(true){
             String objectType = askForString(s);

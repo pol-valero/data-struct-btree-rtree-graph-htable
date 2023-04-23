@@ -4,6 +4,7 @@ import Menu.GraphsOrenetes.OrenetesMenuLogic;
 import Menu.BinaryTreesBruixes.BruixesMenuLogic;
 import Menu.GraphsOrenetes.OrenetesMenuOptions;
 import BinaryTreesF2.Entities.Trees.TreeType;
+import Menu.RTreesBardissa.BardissaMenuLogic;
 import Menu.RTreesBardissa.BardissaMenuOptions;
 
 public class Main {
@@ -11,7 +12,7 @@ public class Main {
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed";     // Relative path inside /src folder
     private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";   // Relative path inside /src folder
     private final static TreeType treeType = TreeType.AVLTREE;  // Select the type of tree used with Binary Trees.
-    private final static String R_TREES_DATASET = "files/trees/treeXXS.paed";        // Relative path inside /src folder
+    private final static String R_TREES_DATASET = "files/rtrees/rtreeXXS.paed";        // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -49,11 +50,10 @@ public class Main {
                 case BARDISSA -> { BardissaMenuOptions bardissaMenuOptions;
                     do {
                         bardissaMenuOptions = Menu.showHedgeMenu(R_TREES_DATASET);
-
-                        // Check if BSTTree is already created or not
+                        BardissaMenuLogic.checkIfTreeCreated();  // Check if RTree is already created or not
 
                         switch (bardissaMenuOptions) {
-                            case ADD_HEDGE -> {}                // Add a hedge to the tree
+                            case ADD_HEDGE -> BardissaMenuLogic.showAddHedge();    // Add a hedge to the tree
                             case REMOVE_HEDGE -> {}             // Remove a hedge from the tree
                             case VISUAL_REPRESENTATION -> {}    // Visual R-BSTTree representation
                             case AREA_SEARCH -> {}              // Search points in an area
