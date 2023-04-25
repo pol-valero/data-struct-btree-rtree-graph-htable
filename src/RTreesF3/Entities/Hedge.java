@@ -1,6 +1,6 @@
 package RTreesF3.Entities;
 
-public class Hedge {
+public class Hedge extends NodeObject {
 
     private String type;
     private float size;
@@ -12,7 +12,7 @@ public class Hedge {
         this.size = size;
         this.color = color;
 
-        point = new Point (longitude, latitude);
+        point = new Point(longitude, latitude);
     }
 
     public String getType() {

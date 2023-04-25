@@ -1,6 +1,6 @@
 package RTreesF3.Entities;
 
-public class Rectangle {
+public class Rectangle extends NodeObject {
 
     public Point maxPoint;  //Top right corner
     public Point minPoint;  //Bottom left corner
