@@ -2,31 +2,19 @@ package RTreesF3.Entities;
 
 import Auxiliar.MyArrayList;
 
-public class Rectangle implements IObject {
+public class Rectangle {
 
     public Point maxPoint;  //Top right corner
     public Point minPoint;  //Bottom left corner
     public Point centerPoint;  //Center point, used to measure distance between rectangles
-    public MyArrayList<IObject> nodeObjects;
-    private int height;
+
+    private Node containingNode;  //Node that contains this rectangle, among other rectangles
+    private Node childNode; //Child node of this rectangle, which can contain other rectangles or hedges
 
     public Rectangle(Point maxPoint, Point minPoint) {
         this.maxPoint = maxPoint;
         this.minPoint = minPoint;
         this.centerPoint = new Point((maxPoint.x + minPoint.x) / 2, (maxPoint.y + minPoint.y) / 2);
-        this.nodeObjects = new MyArrayList<>();
-    }
-
-    public void addObject(IObject object) {
-        nodeObjects.add(object);
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public boolean isLeaf() {
-        return height == 0;
     }
 
     // Method that checks if the rectangle contains a certain point.
@@ -34,8 +22,10 @@ public class Rectangle implements IObject {
         return maxPoint.x >= point.x && minPoint.x <= point.x && maxPoint.y >= point.y && minPoint.y <= point.y;
     }
 
-    @Override
-    public boolean isRectangle() {
-        return true;
+    public double calculatePerimeterIncrease(Point point) {
+        //TODO: Calculate the perimeter increase for the rectangle to contain the point
+        return 0;
+
     }
+
 }

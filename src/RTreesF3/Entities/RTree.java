@@ -1,9 +1,10 @@
 package RTreesF3.Entities;
 
 public class RTree {
-    private static final int MAX_TREE_SIZE = 3;
-    private static final int MIN_TREE_SIZE = MAX_TREE_SIZE / 3;
-    private Rectangle root;
+    private static final int MAX_NODE_SIZE = 3;
+    private static final int MIN_NODE_SIZE = MAX_NODE_SIZE / 3;
+
+    private Node root;
 
     public void addHedge(Hedge hedge) {
         add(hedge, root);
@@ -13,8 +14,14 @@ public class RTree {
 
     }
 
-    private void add(Hedge hedge, Rectangle currentRectangle) {
+    private void add(Hedge hedge, Node currentNode) {
 
+        if (!currentNode.isLeaf()) {
+            //TODO: See if there is a better way to avoid doing a cast. Idea: put all methods in interface and return null in the classes that don't need them
+            ((RectangleNode) currentNode).getMinimumRectangle(hedge.getPoint());
+        }
+
+        /*
         // If the tree is empty, add the Hedge for the first time.
         if (root == null) {
             root = new Rectangle(hedge.getPoint(), hedge.getPoint());
@@ -46,6 +53,7 @@ public class RTree {
                 currentRectangle.addObject(hedge);
             }
 
-        }
+
+        }*/
     }
 }
