@@ -11,11 +11,14 @@ import java.util.List;
 public class DatasetLoaderF3 {
 
     private static final String parseSeparator = ";";
+    private static final int EARTH_RADIUS_KM = 6371;
 
     private static Hedge csvLineToHedge(String csvLine) {
         String[] field = csvLine.split(parseSeparator);
 
-        return new Hedge(field[0], Float.parseFloat(field[1]), Double.parseDouble(field[2]), Double.parseDouble(field[3]), field[4]);
+        double x = EARTH_RADIUS_KM * Double.parseDouble(field[2]);
+        double y = EARTH_RADIUS_KM * Double.parseDouble(field[3]);
+        return new Hedge(field[0], Float.parseFloat(field[1]), x, y, field[4]);
     }
 
     public static void loadHedges(String pathName, RTree rTree) {

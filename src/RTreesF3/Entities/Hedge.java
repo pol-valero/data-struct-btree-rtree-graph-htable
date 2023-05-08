@@ -1,6 +1,6 @@
 package RTreesF3.Entities;
 
-public class Hedge extends NodeObject {
+public class Hedge implements IObject {
 
     private String type;
     private float size;
@@ -31,4 +31,8 @@ public class Hedge extends NodeObject {
         return color;
     }
 
+    @Override
+    public boolean isRectangle() {
+        return false;
+    }
 }
