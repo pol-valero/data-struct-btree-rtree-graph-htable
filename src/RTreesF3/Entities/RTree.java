@@ -43,42 +43,34 @@ public class RTree {
         currentNode.addElement(hedge);
         currentNode.expandParentRectangles(hedge);
 
+        //If the HedgeNode is full, we have to split the parent rectangle
         if (currentNode.getSize() > MAX_NODE_SIZE) {
-            //TODO: Split the parent. Split the parent's parent and so on if necessary (in case the parent is also full)
+            splitParent(currentNode);
+
+            //We split the parent's parent and so on if necessary (in case the parent node is also full)
+            Node parentNode = currentNode.parent.containerNode;
+            while (parentNode.getSize() > MAX_NODE_SIZE) {
+                splitParent(parentNode);
+                parentNode = parentNode.parent.containerNode;
+            }
         }
-        /*
-        // If the tree is empty, add the Hedge for the first time.
-        if (root == null) {
-            root = new Rectangle(hedge.getPoint(), hedge.getPoint());
-            root.addObject(hedge);
-            root.setHeight(0);
+
+    }
+
+    private void splitParent(Node node) {
+
+        Node parentNode;
+
+        //If the parent is not null, the node that we have to split is a normal RectangleNode.
+        //If the parent is null, the node that we have to split is a root node.
+        if (node.parent != null) {
+            parentNode = node.parent.containerNode;
+            //parentNode.removeElement(node.parent);
+        } else {
+            //If we have to split the root node, a new parent node must be created (which will become the root)
+            root = new RectangleNode();
+            parentNode = root;
         }
-        else {
-            // S'ha d'anar mirant nodes fins a arribar a les fulles.
-            // NOU APPROACH: El root és sempre un rectangle ja instanciat, i cada rectangle té més rectangles o punts.
-            boolean found = false;
 
-            // Get to the leaf rectangle (only points).
-            while (!currentRectangle.isLeaf()) {
-                // Loop through all the objects in the rectangle.
-            }
-
-            if (!currentRectangle.isLeaf()) {
-                for (IObject object : currentRectangle.nodeObjects) {
-                    if (object.isRectangle()) {
-                        currentRectangle = (Rectangle) object;
-                    }
-                }
-            }
-
-            // Check if the points size reached the maximum.
-            if (currentRectangle.nodeObjects.size() == MAX_TREE_SIZE) {
-                // Re-organize the rectangles.
-            } else {
-                currentRectangle.addObject(hedge);
-            }
-
-
-        }*/
     }
 }
