@@ -7,7 +7,20 @@ public class RTree {
     private Node root;
 
     public RTree () {
-        //TODO: Create a first rectangle node which will be the root and will contain a rectangle that contains all the possible space
+
+        root = new RectangleNode();
+
+        //We create a first rectangle that contains all the possible space. All the first MAX_NODE_SIZE hedges will be contained in this rectangle.
+        //This will be very useful for when we have to divide the first HedgeNode's rectangle parent into two new rectangles.
+        Point maxPoint = new Point(Double.MAX_VALUE, Double.MAX_VALUE);
+        Point minPoint = new Point(Double.MIN_VALUE, Double.MIN_VALUE);
+
+        HedgeNode firstHedgeNode = new HedgeNode();
+
+        Rectangle rectangle = new Rectangle(root, firstHedgeNode, maxPoint, minPoint);
+
+        root.addElement(rectangle);
+
     }
 
     public void addHedge(Hedge hedge) {

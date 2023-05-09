@@ -4,7 +4,7 @@ import Auxiliar.MyArrayList;
 import RTreesF3.Exceptions.NotHedgeNodeException;
 
 
-public class RectangleNode implements Node {
+public class RectangleNode extends Node {
 
     private MyArrayList<Rectangle> rectangles;
 
@@ -24,7 +24,7 @@ public class RectangleNode implements Node {
         throw new NotHedgeNodeException();
     }
 
-
+    @Override
     public Rectangle getMinimumRectangle(Point point) {
 
         //We return the rectangle that contains the point, if it exists

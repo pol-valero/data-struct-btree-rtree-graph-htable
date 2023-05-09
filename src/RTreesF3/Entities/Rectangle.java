@@ -9,7 +9,9 @@ public class Rectangle {
     public Node containerNode;  //Node that contains this rectangle, among other rectangles
     public Node childNode; //Child node of this rectangle, which can contain other rectangles or hedges
 
-    public Rectangle(Point maxPoint, Point minPoint) {
+    public Rectangle(Node containerNode, Node childNode, Point maxPoint, Point minPoint) {
+        this.containerNode = containerNode;
+        this.childNode = childNode;
         this.maxPoint = maxPoint;
         this.minPoint = minPoint;
         this.centerPoint = new Point((maxPoint.x + minPoint.x) / 2, (maxPoint.y + minPoint.y) / 2);

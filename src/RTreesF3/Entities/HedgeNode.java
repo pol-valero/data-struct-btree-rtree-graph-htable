@@ -3,7 +3,7 @@ package RTreesF3.Entities;
 import Auxiliar.MyArrayList;
 import RTreesF3.Exceptions.NotRectangleNodeException;
 
-public class HedgeNode implements Node{
+public class HedgeNode extends Node{
 
     private MyArrayList<Hedge> hedges;
 
@@ -20,7 +20,6 @@ public class HedgeNode implements Node{
 
     @Override
     public void addElement(Hedge hedge) {
-
         hedges.add(hedge);
     }
 
