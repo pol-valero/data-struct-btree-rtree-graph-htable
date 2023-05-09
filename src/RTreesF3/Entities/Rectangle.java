@@ -1,15 +1,13 @@
 package RTreesF3.Entities;
 
-import Auxiliar.MyArrayList;
-
 public class Rectangle {
 
     public Point maxPoint;  //Top right corner
     public Point minPoint;  //Bottom left corner
     public Point centerPoint;  //Center point, used to measure distance between rectangles
 
-    private Node containingNode;  //Node that contains this rectangle, among other rectangles
-    private Node childNode; //Child node of this rectangle, which can contain other rectangles or hedges
+    public Node containerNode;  //Node that contains this rectangle, among other rectangles
+    public Node childNode; //Child node of this rectangle, which can contain other rectangles or hedges
 
     public Rectangle(Point maxPoint, Point minPoint) {
         this.maxPoint = maxPoint;
@@ -25,6 +23,10 @@ public class Rectangle {
     public double calculatePerimeterIncrease(Point point) {
         //TODO: Calculate the perimeter increase for the rectangle to contain the point
         return 0;
+
+    }
+
+    public void expand() {
 
     }
 

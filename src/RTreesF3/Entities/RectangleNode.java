@@ -1,16 +1,29 @@
 package RTreesF3.Entities;
 
 import Auxiliar.MyArrayList;
+import RTreesF3.Exceptions.NotHedgeNodeException;
 
 
 public class RectangleNode implements Node {
 
     private MyArrayList<Rectangle> rectangles;
 
+
     @Override
     public boolean isLeaf() {
         return false;
     }
+
+    @Override
+    public void addElement(Rectangle rectangle) {
+        rectangles.add(rectangle);
+    }
+
+    @Override
+    public void addElement(Hedge hedge) {
+        throw new NotHedgeNodeException();
+    }
+
 
     public Rectangle getMinimumRectangle(Point point) {
 
@@ -37,5 +50,28 @@ public class RectangleNode implements Node {
         }
         return minimumRectangle;
 
+    }
+
+    @Override
+    public int getSize() {
+        return rectangles.size();
+    }
+
+    @Override
+    public void expandParentRectangles(Hedge hedge) {
+        throw new NotHedgeNodeException();
+    }
+
+    @Override
+    public void expandParentRectangles(Rectangle rectangle) {
+
+        Rectangle parentRectangle = parent;
+
+        do {
+
+            parentRectangle.expand();
+            parentRectangle = parentRectangle.containerNode.parent;
+
+        } while (parentRectangle != null);
     }
 }

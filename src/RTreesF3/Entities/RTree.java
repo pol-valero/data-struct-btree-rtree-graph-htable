@@ -6,6 +6,10 @@ public class RTree {
 
     private Node root;
 
+    public RTree () {
+        //TODO: Create a first rectangle node which will be the root and will contain a rectangle that contains all the possible space
+    }
+
     public void addHedge(Hedge hedge) {
         add(hedge, root);
     }
@@ -16,11 +20,19 @@ public class RTree {
 
     private void add(Hedge hedge, Node currentNode) {
 
+        //We go through the R-Tree until we find a leaf node, which contains Hedges
         if (!currentNode.isLeaf()) {
-            //TODO: See if there is a better way to avoid doing a cast. Idea: put all methods in interface and return null in the classes that don't need them
-            ((RectangleNode) currentNode).getMinimumRectangle(hedge.getPoint());
+            Rectangle minRectangle = currentNode.getMinimumRectangle(hedge.getPoint());
+            add(hedge, minRectangle.childNode);
         }
 
+        //At this point we know that the currentNode is a HedgeNode containing Hedges
+        currentNode.addElement(hedge);
+        currentNode.expandParentRectangles(hedge);
+
+        if (currentNode.getSize() > MAX_NODE_SIZE) {
+            //TODO: Split the parent. Split the parent's parent and so on if necessary (in case the parent is also full)
+        }
         /*
         // If the tree is empty, add the Hedge for the first time.
         if (root == null) {
