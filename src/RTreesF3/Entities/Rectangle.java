@@ -8,7 +8,6 @@ public class Rectangle implements IObject {
     public Point minPoint;  //Bottom left corner
     public Point centerPoint;  //Center point, used to measure distance between rectangles
     public MyArrayList<IObject> nodeObjects;
-    private int height;
 
     public Rectangle(Point maxPoint, Point minPoint) {
         this.maxPoint = maxPoint;
@@ -21,12 +20,8 @@ public class Rectangle implements IObject {
         nodeObjects.add(object);
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public boolean isLeaf() {
-        return height == 0;
+        return !nodeObjects.get(0).isRectangle();
     }
 
     // Method that checks if the rectangle contains a certain point.
@@ -37,5 +32,13 @@ public class Rectangle implements IObject {
     @Override
     public boolean isRectangle() {
         return true;
+    }
+
+    public void setMaxPoint(Point maxPoint) {
+        this.maxPoint = maxPoint;
+    }
+
+    public void setMinPoint(Point minPoint) {
+        this.minPoint = minPoint;
     }
 }
