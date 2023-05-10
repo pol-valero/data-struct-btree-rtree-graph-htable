@@ -5,7 +5,7 @@ import RTreesF3.Exceptions.NotRectangleNodeException;
 
 public class HedgeNode extends Node{
 
-    private MyArrayList<Hedge> hedges;
+    public MyArrayList<Hedge> hedges;
 
     @Override
     public boolean isLeaf() {
@@ -21,6 +21,16 @@ public class HedgeNode extends Node{
     @Override
     public void addElement(Hedge hedge) {
         hedges.add(hedge);
+    }
+
+    @Override
+    void removeElement(Rectangle rectangle) {
+        throw new NotRectangleNodeException();
+    }
+
+    @Override
+    void removeElement(Hedge hedge) {
+        hedges.remove(hedge);
     }
 
     @Override
@@ -49,4 +59,17 @@ public class HedgeNode extends Node{
     public void expandParentRectangles(Rectangle rectangle) {
         throw new NotRectangleNodeException();
     }
+
+    @Override
+    MyArrayList<Hedge> findFurthestHedges() {
+        //TODO:
+        return null;
+    }
+
+    @Override
+    MyArrayList<Rectangle> findFurthestRectangles() {
+        throw new NotRectangleNodeException();
+    }
+
+
 }

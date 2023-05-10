@@ -2,11 +2,12 @@ package RTreesF3.Entities;
 
 import Auxiliar.MyArrayList;
 import RTreesF3.Exceptions.NotHedgeNodeException;
+import RTreesF3.Exceptions.NotRectangleNodeException;
 
 
 public class RectangleNode extends Node {
 
-    private MyArrayList<Rectangle> rectangles;
+    public MyArrayList<Rectangle> rectangles;
 
 
     @Override
@@ -21,6 +22,16 @@ public class RectangleNode extends Node {
 
     @Override
     public void addElement(Hedge hedge) {
+        throw new NotHedgeNodeException();
+    }
+
+    @Override
+    void removeElement(Rectangle rectangle) {
+        rectangles.remove(rectangle);
+    }
+
+    @Override
+    void removeElement(Hedge hedge) {
         throw new NotHedgeNodeException();
     }
 
@@ -74,4 +85,16 @@ public class RectangleNode extends Node {
 
         } while (parentRectangle != null);
     }
+
+    @Override
+    MyArrayList<Hedge> findFurthestHedges() {
+        throw new NotRectangleNodeException();
+    }
+
+    @Override
+    MyArrayList<Rectangle> findFurthestRectangles() {
+        //TODO:
+        return null;
+    }
+
 }
