@@ -28,8 +28,14 @@ public class Rectangle {
 
     }
 
-    public void expand() {
-
+    public void expand(Rectangle rectangle) {
+        //TODO:
     }
+
+    public void expand(Hedge hedge) {
+        //TODO:
+    }
+
+
 
 }

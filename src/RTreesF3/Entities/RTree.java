@@ -62,19 +62,21 @@ public class RTree {
 
     }
 
-    private void splitRectangle(Rectangle parent, Node childNode) {
+    private void splitRectangle(Rectangle rectangleParent, Node childNode) {
 
-        Node parentNode;
+        Node parentNode = null;
 
         //If the parent is not null, the node that we have to split is a normal RectangleNode.
-        if (parent != null) {
-            parentNode = parent.containerNode;
-            parentNode.removeElement(parent);
+        if (rectangleParent != null) {
+            parentNode = rectangleParent.containerNode;
+
+            //We remove the rectangle parent from the node, as it will be divided into two new rectangles.
+            parentNode.removeElement(rectangleParent);
             //TODO: Once we remove one element, we have to compact all the parent rectangles
         }
 
         //If the parent is null, the node that we have to split is a root node.
-        if (parent == null) {
+        if (rectangleParent == null) {
             //If we have to split the root node, a new parent node (which will become the new root node) must be created.
             root = new RectangleNode();
 
@@ -89,14 +91,84 @@ public class RTree {
         //If the childNode contains Hedges
         if (childNode.isLeaf()) {
 
+            //We will choose the furthest hedges to initialize the two rectangles
             MyArrayList<Hedge> furthestHedges = childNode.findFurthestHedges();
+
+            Point pointHedge1 = furthestHedges.get(0).getPoint();
+            Point pointHedge2 = furthestHedges.get(1).getPoint();
+
+            Node hedgeNode1 = new HedgeNode();
+            Node hedgeNode2 = new HedgeNode();
+            
+            //We initialize two new rectangles that will contain the hedges of the rectangle that we have to split. At first, this rectangles will have no area.
+            Rectangle rectangle1 = new Rectangle(parentNode, hedgeNode1, pointHedge1, pointHedge1);
+            Rectangle rectangle2 = new Rectangle(parentNode, hedgeNode2, pointHedge2, pointHedge2);
+
+            //We add the two new rectangles in the parent node. As the splitRectangle method is called for every parent, in this method we will not check
+            // if the creation of the two new rectangles results in the node having more rectangles than it can hold (as this is checked in the add method)
+            parentNode.addElement(rectangle1);
+            parentNode.addElement(rectangle2);
+
+            MyArrayList<Hedge> hedgesInNode = childNode.getHedges();
+            MyArrayList<Rectangle> rectangles = new MyArrayList<>();
+
+            rectangles.add(rectangle1);
+            rectangles.add(rectangle2);
+
+            Rectangle minimumRectangle;     //Rectangle that will have to expand less
+
+            //We put each element (that previously was in the rectangle that we just divided) in the rectangle that has to expand less (one of the two new rectangles created)
+            for (Hedge hedgeInNode: hedgesInNode) {
+
+                minimumRectangle = Node.getMinimumRectangle(hedgeInNode.getPoint(), rectangles);
+                minimumRectangle.childNode.addElement(hedgeInNode);
+                minimumRectangle.childNode.expandParentRectangles(hedgeInNode);
+
+            }
 
         }
 
         //If the childNode contains Rectangles
         if (!childNode.isLeaf()) {
 
+            //We will choose the furthest rectangles to initialize the two rectangles
             MyArrayList<Rectangle> furthestRectangles = childNode.findFurthestRectangles();
+
+            Point r1MinPoint = furthestRectangles.get(0).minPoint;
+            Point r1MaxPoint = furthestRectangles.get(0).maxPoint;
+
+            Point r2MinPoint = furthestRectangles.get(1).minPoint;
+            Point r2MaxPoint = furthestRectangles.get(1).maxPoint;
+
+            Node rectangleNode1 = new RectangleNode();
+            Node rectangleNode2 = new RectangleNode();
+
+            //We initialize two new rectangles that will contain the childRectangles of the rectangle that we have to split.
+            // At first, this rectangles will have an area equal to each of the furthest rectangles.
+            Rectangle rectangle1 = new Rectangle(parentNode, rectangleNode1, r1MaxPoint ,r1MinPoint);
+            Rectangle rectangle2 = new Rectangle(parentNode, rectangleNode2, r2MaxPoint, r2MinPoint);
+
+            //We add the two new rectangles in the parent node. As the splitRectangle method is called for every parent, in this method we will not check
+            // if the creation of the two new rectangles results in the node having more rectangles than it can hold (as this is checked in the add method)
+            parentNode.addElement(rectangle1);
+            parentNode.addElement(rectangle2);
+
+            MyArrayList<Rectangle> rectanglesInNode = childNode.getRectangles();
+            MyArrayList<Rectangle> rectangles = new MyArrayList<>();
+
+            rectangles.add(rectangle1);
+            rectangles.add(rectangle2);
+
+            Rectangle minimumRectangle;     //Rectangle that will have to expand less
+
+            //We put each element (that previously was in the rectangle that we just divided) in the rectangle that has to expand less (one of the two new rectangles created)
+            for (Rectangle rectangleInNode: rectanglesInNode) {
+
+                minimumRectangle = Node.getMinimumRectangle(rectangleInNode.centerPoint, rectangles);
+                minimumRectangle.childNode.addElement(rectangleInNode);
+                minimumRectangle.childNode.expandParentRectangles(rectangleInNode);
+
+            }
 
         }
 

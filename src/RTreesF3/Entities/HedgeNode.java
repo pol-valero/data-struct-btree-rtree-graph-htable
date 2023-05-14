@@ -49,7 +49,7 @@ public class HedgeNode extends Node{
 
         do {
 
-            parentRectangle.expand();
+            parentRectangle.expand(hedge);
             parentRectangle = parentRectangle.containerNode.parent;
 
         } while (parentRectangle != null);
@@ -68,6 +68,16 @@ public class HedgeNode extends Node{
 
     @Override
     MyArrayList<Rectangle> findFurthestRectangles() {
+        throw new NotRectangleNodeException();
+    }
+
+    @Override
+    MyArrayList<Hedge> getHedges() {
+        return hedges;
+    }
+
+    @Override
+    MyArrayList<Rectangle> getRectangles() {
         throw new NotRectangleNodeException();
     }
 
