@@ -180,4 +180,74 @@ public class RTree {
         }
 
     }
+
+    private void areaSearch(Point p1, Point p2, Node currentNode, MyArrayList<Hedge> hedgesFound) {
+
+
+        if (!currentNode.isLeaf()) {
+            //At this point the currentNode is a rectangleNode.
+
+            MyArrayList<Rectangle> rectanglesInNode = currentNode.getRectangles();
+
+            //We go through all the rectangles in the node to see which ones overlap with the search area
+            for (Rectangle rectangle : rectanglesInNode) {
+
+                //When a rectangle overlaps with the search area, we "explore" this rectangle (by calling the
+                //areaSearch method again). This process is done again and again until the currentNode is a leaf node.
+                if (rectangleOverlaps(p1, p2, rectangle)) {
+                    areaSearch(p1, p2, rectangle.childNode, hedgesFound);
+                }
+
+            }
+
+        } else {
+
+            MyArrayList<Hedge> hedgesInNode = currentNode.getHedges();
+
+            //At this point the currentNode is a hedgeNode.
+            //We go through all the hedges to see which ones we have to add
+            for (Hedge hedge : hedgesInNode) {
+
+                if (hedgeOverlaps(p1, p2, hedge)) {
+                    hedgesFound.add(hedge);
+                }
+
+            }
+
+        }
+    }
+
+    //This method checks if a rectangle overlaps with the search area (defined by p1, p2)
+    private boolean rectangleOverlaps (Point p1, Point p2, Rectangle rectangle) {
+
+        if (rectangle.minPoint.x >= p1.x && rectangle.maxPoint.x <= p2.x && rectangle.minPoint.y >= p1.y && rectangle.maxPoint.y <= p2.y) {
+            return true;
+        } else {
+            return false;
+        }
+        //TODO: Debug
+    }
+
+    //This method checks if a hedge overlaps with the search area (defined by p1, p2)
+    private boolean hedgeOverlaps (Point p1, Point p2, Hedge hedge) {
+
+        if (hedge.getPoint().x >= p1.x && hedge.getPoint().x <= p2.x && hedge.getPoint().y >= p1.y && hedge.getPoint().y <= p2.y) {
+            return true;
+        } else {
+            return false;
+        }
+        //TODO: Debug
+    }
+
+    public MyArrayList<Hedge> areaSearch(Point p1, Point p2) {
+
+        MyArrayList<Hedge> hedgesFound = new MyArrayList<>();
+
+        areaSearch(p1, p2, root, hedgesFound);
+
+        return hedgesFound;
+    }
+
+
+
 }

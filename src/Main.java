@@ -13,7 +13,7 @@ public class Main {
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed";     // Relative path inside /src folder
     private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";   // Relative path inside /src folder
     private final static TreeType treeType = TreeType.AVLTREE;  // Select the type of tree used with Binary Trees.
-    private final static String R_TREES_DATASET = "files/rtrees/rtreeS.paed";        // Relative path inside /src folder
+    private final static String R_TREES_DATASET = "files/rtrees/rtreeXS.paed";        // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -57,7 +57,7 @@ public class Main {
                             case ADD_HEDGE -> BardissaMenuLogic.showAddHedge();    // Add a hedge to the tree
                             case REMOVE_HEDGE -> {}             // Remove a hedge from the tree
                             case VISUAL_REPRESENTATION -> {}    // Visual R-BSTTree representation
-                            case AREA_SEARCH -> {}              // Search points in an area
+                            case AREA_SEARCH -> {BardissaMenuLogic.showAreaSearch();}              // Search points in an area
                             case AESTHETIC_OPTIMIZATION -> {}   //
                         }
                     } while (bardissaMenuOptions != BardissaMenuOptions.PREVIOUS_MENU);
