@@ -4,7 +4,6 @@ import Auxiliar.MyArrayList;
 
 public abstract class Node {
 
-    //TODO: Check if interface attributes are static and therefore this solution does not work (as each node should have a different parent)
     public Rectangle parent = null;
 
     abstract boolean isLeaf();
@@ -24,6 +23,10 @@ public abstract class Node {
     abstract void expandParentRectangles(Hedge hedge);
 
     abstract void expandParentRectangles(Rectangle rectangle);
+
+    abstract void compactParentRectangles(Hedge hedge);
+
+    abstract void compactParentRectangles(Rectangle rectangle);
 
     abstract MyArrayList<Hedge> findFurthestHedges();
 
@@ -57,6 +60,10 @@ public abstract class Node {
 
         }
         return minimumRectangle;
+    }
+
+    protected double findPointsDistance(Point p1, Point p2) {
+        return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
     }
 
 

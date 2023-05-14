@@ -39,6 +39,7 @@ public class RTree {
         if (!currentNode.isLeaf()) {
             Rectangle minRectangle = currentNode.getMinimumRectangle(hedge.getPoint());
             add(hedge, minRectangle.childNode);
+            return;
         }
 
         //At this point we know that the currentNode is a HedgeNode containing Hedges
@@ -55,8 +56,15 @@ public class RTree {
             //We split the parent's parent and so on if necessary (in case the parent node is also full)
             Node parentNode = currentNode.parent.containerNode;
             while (parentNode.getSize() > MAX_NODE_SIZE) {
-                splitRectangle(currentNode.parent, currentNode);
-                parentNode = parentNode.parent.containerNode;
+                splitRectangle(parentNode.parent, parentNode);
+
+                //If the node's parent is null, it means that we have reached the root node
+                //In this case we stop going through the tree and we exit the while loop
+                if (parentNode.parent != null) {
+                    parentNode = parentNode.parent.containerNode;
+                } else {
+                    return;
+                }
             }
         }
 
@@ -72,7 +80,6 @@ public class RTree {
 
             //We remove the rectangle parent from the node, as it will be divided into two new rectangles.
             parentNode.removeElement(rectangleParent);
-            //TODO: Once we remove one element, we have to compact all the parent rectangles
         }
 
         //If the parent is null, the node that we have to split is a root node.

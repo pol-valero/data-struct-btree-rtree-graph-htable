@@ -5,7 +5,7 @@ import RTreesF3.Exceptions.NotRectangleNodeException;
 
 public class HedgeNode extends Node{
 
-    public MyArrayList<Hedge> hedges;
+    public MyArrayList<Hedge> hedges = new MyArrayList<>();
 
     @Override
     public boolean isLeaf() {
@@ -61,9 +61,40 @@ public class HedgeNode extends Node{
     }
 
     @Override
-    MyArrayList<Hedge> findFurthestHedges() {
+    public void compactParentRectangles(Hedge hedge) {
         //TODO:
-        return null;
+    }
+
+    @Override
+    public void compactParentRectangles(Rectangle rectangle) {
+        throw new NotRectangleNodeException();
+    }
+
+    @Override
+    MyArrayList<Hedge> findFurthestHedges() {
+
+        MyArrayList<Hedge> furthestHedges = new MyArrayList<>(2);
+
+        double distance;
+        double bestDistance = 0;
+
+        for (int i = 0; i < hedges.size(); i++) {
+
+            for (int j = 0; j < hedges.size(); j++) {
+
+                distance = findPointsDistance(hedges.get(i).getPoint(), hedges.get(j).getPoint());
+
+                if (distance > bestDistance) {
+                    bestDistance = distance;
+                    furthestHedges.set(0, hedges.get(i));
+                    furthestHedges.set(1, hedges.get(j));
+                }
+
+            }
+        }
+
+        return furthestHedges;
+
     }
 
     @Override

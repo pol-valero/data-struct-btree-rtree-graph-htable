@@ -6,7 +6,7 @@ import RTreesF3.Exceptions.NotHedgeNodeException;
 
 public class RectangleNode extends Node {
 
-    public MyArrayList<Rectangle> rectangles;
+    public MyArrayList<Rectangle> rectangles = new MyArrayList<>();
 
 
     @Override
@@ -86,14 +86,46 @@ public class RectangleNode extends Node {
     }
 
     @Override
+    public void compactParentRectangles(Hedge hedge) {
+        throw new NotHedgeNodeException();
+    }
+
+    @Override
+    public void compactParentRectangles(Rectangle rectangle) {
+        //TODO:
+        //When we remove and element, we have to compact
+    }
+
+    @Override
     MyArrayList<Hedge> findFurthestHedges() {
         throw new NotHedgeNodeException();
     }
 
     @Override
     MyArrayList<Rectangle> findFurthestRectangles() {
-        //TODO:
-        return null;
+
+        MyArrayList<Rectangle> furthestRectangles = new MyArrayList<>(2);
+
+        double distance;
+        double bestDistance = 0;
+
+        for (int i = 0; i < rectangles.size(); i++) {
+
+            for (int j = 0; j < rectangles.size(); j++) {
+
+                distance = findPointsDistance(rectangles.get(i).centerPoint, rectangles.get(j).centerPoint);
+
+                if (distance > bestDistance) {
+                    bestDistance = distance;
+                    furthestRectangles.set(0, rectangles.get(i));
+                    furthestRectangles.set(1, rectangles.get(j));
+                }
+
+            }
+        }
+
+        return furthestRectangles;
+
     }
 
     @Override

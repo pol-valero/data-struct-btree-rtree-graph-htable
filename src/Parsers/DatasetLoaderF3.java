@@ -37,7 +37,7 @@ public class DatasetLoaderF3 {
             for (int i = 1; i <= hedgeLinesNum; i++) {
                 hedge = (csvLineToHedge(csvLines.get(i)));
 
-                //rTree.addHedge();   //As we are reading the dataset, we create the RTree structure
+                rTree.addHedge(hedge);   //As we are reading the dataset, we create the RTree structure
             }
 
         } catch (IOException e) {
