@@ -181,7 +181,7 @@ public class RTree {
 
     }
 
-    private void areaSearch(Point p1, Point p2, Node currentNode, MyArrayList<Hedge> hedgesFound) {
+    private void areaSearch(Point minPoint, Point maxPoint, Node currentNode, MyArrayList<Hedge> hedgesFound) {
 
 
         if (!currentNode.isLeaf()) {
@@ -192,11 +192,10 @@ public class RTree {
             //We go through all the rectangles in the node to see which ones overlap with the search area
             for (Rectangle rectangle : rectanglesInNode) {
 
-                System.out.println(rectangle);
                 //When a rectangle overlaps with the search area, we "explore" this rectangle (by calling the
                 //areaSearch method again). This process is done again and again until the currentNode is a leaf node.
-                if (rectangleOverlaps(p1, p2, rectangle)) {
-                    areaSearch(p1, p2, rectangle.childNode, hedgesFound);
+                if (rectangleOverlaps(minPoint, maxPoint, rectangle)) {
+                    areaSearch(minPoint, maxPoint, rectangle.childNode, hedgesFound);
                 }
 
             }
@@ -209,7 +208,7 @@ public class RTree {
             //We go through all the hedges to see which ones we have to add
             for (Hedge hedge : hedgesInNode) {
 
-                if (hedgeOverlaps(p1, p2, hedge)) {
+                if (hedgeOverlaps(minPoint, maxPoint, hedge)) {
                     hedgesFound.add(hedge);
                 }
 
@@ -218,48 +217,52 @@ public class RTree {
         }
     }
 
-    //This method checks if a rectangle overlaps with the search area (defined by p1, p2)
-    private boolean rectangleOverlaps (Point p1, Point p2, Rectangle rectangle) {
+    //This method checks if a rectangle overlaps with the search area (defined by minPoint, maxPoint)
+    private boolean rectangleOverlaps (Point minPoint, Point maxPoint, Rectangle rectangle) {
+        
+        Point topLeftPointSearchArea = Point.findTopLeftPoint(minPoint, maxPoint);
+        Point bottomRightPointSearchArea = Point.findBottomRightPoint(minPoint, maxPoint);
 
-         /*if (Rectangle.containsPoint(p1, p2, rectangle.minPoint) || Rectangle.containsPoint(p1, p2, rectangle.maxPoint)) {
-            return true;
-        } else {
-            return false;
-        }*/
+        Point topLeftPointRectangle = Point.findTopLeftPoint(rectangle.minPoint, rectangle.maxPoint);
+        Point bottomRightPointRectangle = Point.findBottomRightPoint(rectangle.minPoint, rectangle.maxPoint);
 
-        /*if (Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p1) || Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p2) || Rectangle.containsPoint(rectangle.maxPoint, rectangle.minPoint,p1) || Rectangle.containsPoint(rectangle.maxPoint, rectangle.minPoint,p2)) {
-            return true;
-        } else {
-            return false;
-        }*/
+        //If the search area contains any of the corners of the rectangle or if the rectangle contains any of the corners of the search area, then the rectangle overlaps with the search area and we return true
+        if (Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint, minPoint)
+                || Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint, maxPoint)
+                || Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint, topLeftPointSearchArea)
+                || Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint, bottomRightPointSearchArea)
 
-         if (Rectangle.containsPoint(p1, p2, rectangle.minPoint) || Rectangle.containsPoint(p1, p2, rectangle.maxPoint)|| Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p1) || Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p2)) {
+                || Rectangle.containsPoint(minPoint, maxPoint, rectangle.maxPoint)
+                    || Rectangle.containsPoint(minPoint, maxPoint, rectangle.minPoint)
+                    || Rectangle.containsPoint(minPoint, maxPoint, topLeftPointRectangle)
+                    || Rectangle.containsPoint(minPoint, maxPoint, bottomRightPointRectangle)) {
+
             return true;
+
         } else {
+
             return false;
+
         }
-
         //TODO: Debug
     }
 
-    //This method checks if a hedge overlaps with the search area (defined by p1, p2)
-    private boolean hedgeOverlaps (Point p1, Point p2, Hedge hedge) {
+    //This method checks if a hedge overlaps with the search area (defined by minPoint, maxPoint)
+    private boolean hedgeOverlaps (Point minPoint, Point maxPoint, Hedge hedge) {
 
-
-        if (Rectangle.containsPoint(p1, p2, hedge.getPoint())) {
+        if (Rectangle.containsPoint(minPoint, maxPoint, hedge.getPoint())) {
             return true;
         } else {
             return false;
         }
 
-        //TODO: Check if p1 is minpoint and p2 is maxpoint (or pass always a rectangle instead to facilitate understanding)
     }
 
-    public MyArrayList<Hedge> areaSearch(Point p1, Point p2) {
+    public MyArrayList<Hedge> areaSearch(Point minPoint, Point maxPoint) {
 
         MyArrayList<Hedge> hedgesFound = new MyArrayList<>();
 
-        areaSearch(p1, p2, root, hedgesFound);
+        areaSearch(minPoint, maxPoint, root, hedgesFound);
 
         return hedgesFound;
     }
