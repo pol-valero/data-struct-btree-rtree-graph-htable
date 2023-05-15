@@ -192,6 +192,7 @@ public class RTree {
             //We go through all the rectangles in the node to see which ones overlap with the search area
             for (Rectangle rectangle : rectanglesInNode) {
 
+                System.out.println(rectangle);
                 //When a rectangle overlaps with the search area, we "explore" this rectangle (by calling the
                 //areaSearch method again). This process is done again and again until the currentNode is a leaf node.
                 if (rectangleOverlaps(p1, p2, rectangle)) {
@@ -220,7 +221,19 @@ public class RTree {
     //This method checks if a rectangle overlaps with the search area (defined by p1, p2)
     private boolean rectangleOverlaps (Point p1, Point p2, Rectangle rectangle) {
 
-         if (Rectangle.containsPoint(p1, p2, rectangle.minPoint) || Rectangle.containsPoint(p1, p2, rectangle.maxPoint)) {
+         /*if (Rectangle.containsPoint(p1, p2, rectangle.minPoint) || Rectangle.containsPoint(p1, p2, rectangle.maxPoint)) {
+            return true;
+        } else {
+            return false;
+        }*/
+
+        /*if (Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p1) || Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p2) || Rectangle.containsPoint(rectangle.maxPoint, rectangle.minPoint,p1) || Rectangle.containsPoint(rectangle.maxPoint, rectangle.minPoint,p2)) {
+            return true;
+        } else {
+            return false;
+        }*/
+
+         if (Rectangle.containsPoint(p1, p2, rectangle.minPoint) || Rectangle.containsPoint(p1, p2, rectangle.maxPoint)|| Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p1) || Rectangle.containsPoint(rectangle.minPoint, rectangle.maxPoint,p2)) {
             return true;
         } else {
             return false;
@@ -232,11 +245,13 @@ public class RTree {
     //This method checks if a hedge overlaps with the search area (defined by p1, p2)
     private boolean hedgeOverlaps (Point p1, Point p2, Hedge hedge) {
 
+
         if (Rectangle.containsPoint(p1, p2, hedge.getPoint())) {
             return true;
         } else {
             return false;
         }
+
         //TODO: Check if p1 is minpoint and p2 is maxpoint (or pass always a rectangle instead to facilitate understanding)
     }
 

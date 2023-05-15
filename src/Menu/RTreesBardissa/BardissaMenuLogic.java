@@ -46,6 +46,14 @@ public class BardissaMenuLogic {
         Point p1 = new Point(Double.parseDouble(firstPoint.split(",")[1]), Double.parseDouble(firstPoint.split(",")[0]));
         Point p2 = new Point(Double.parseDouble(secondPoint.split(",")[1]), Double.parseDouble(secondPoint.split(",")[0]));
 
+        /*if (p1.isMinPoint(p2)) {
+            Point minPoint = p1;
+            Point maxPoint = p2;
+        } else {
+            Point minPoint = p2;
+            Point maxPoint = p1;
+        }*/
+
         MyArrayList<Hedge> hedgesFound = rTree.areaSearch(p1, p2);
 
         System.out.println("\nS'han trobat " + hedgesFound.size() + " bardisses en aquesta àrea\n");
@@ -66,6 +74,8 @@ public class BardissaMenuLogic {
             rTree = new RTree();
 
             DatasetLoaderF3.loadHedges(Menu.R_TREES_DATASET, rTree);
+
+            System.out.println(rTree);
         }
     }
 
