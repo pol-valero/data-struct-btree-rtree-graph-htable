@@ -220,23 +220,24 @@ public class RTree {
     //This method checks if a rectangle overlaps with the search area (defined by p1, p2)
     private boolean rectangleOverlaps (Point p1, Point p2, Rectangle rectangle) {
 
-        if (rectangle.minPoint.x >= p1.x && rectangle.maxPoint.x <= p2.x && rectangle.minPoint.y >= p1.y && rectangle.maxPoint.y <= p2.y) {
+         if (Rectangle.containsPoint(p1, p2, rectangle.minPoint) || Rectangle.containsPoint(p1, p2, rectangle.maxPoint)) {
             return true;
         } else {
             return false;
         }
+
         //TODO: Debug
     }
 
     //This method checks if a hedge overlaps with the search area (defined by p1, p2)
     private boolean hedgeOverlaps (Point p1, Point p2, Hedge hedge) {
 
-        if (hedge.getPoint().x >= p1.x && hedge.getPoint().x <= p2.x && hedge.getPoint().y >= p1.y && hedge.getPoint().y <= p2.y) {
+        if (Rectangle.containsPoint(p1, p2, hedge.getPoint())) {
             return true;
         } else {
             return false;
         }
-        //TODO: Debug
+        //TODO: Check if p1 is minpoint and p2 is maxpoint (or pass always a rectangle instead to facilitate understanding)
     }
 
     public MyArrayList<Hedge> areaSearch(Point p1, Point p2) {

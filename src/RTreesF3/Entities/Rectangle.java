@@ -27,6 +27,10 @@ public class Rectangle {
         return maxPoint.x >= point.x && minPoint.x <= point.x && maxPoint.y >= point.y && minPoint.y <= point.y;
     }
 
+    public static boolean containsPoint(Point rectangleMinPoint, Point rectangleMaxPoint, Point point) {
+        return rectangleMaxPoint.x >= point.x && rectangleMinPoint.x <= point.x && rectangleMaxPoint.y >= point.y && rectangleMinPoint.y <= point.y;
+    }
+
     public double calculatePerimeterIncrease(Point point) {
 
         double perimeterIncrease = 0;
