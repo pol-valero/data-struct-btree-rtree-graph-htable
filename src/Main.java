@@ -58,6 +58,7 @@ public class Main {
                             case GRACE_EDICT -> HeretgesMenuLogic.edictOfGrace();
                             case ACCUSED_FINAL_TRIAL -> HeretgesMenuLogic.accusedFinalTrial();
                             case RABBITS_FINAL_TRIAL -> HeretgesMenuLogic.rabbitsFinalTrial();
+                            case PROFESSIONS_HISTOGRAM -> HeretgesMenuLogic.professionsHistogram();
                         }
 
                     } while (heretgesMenuOptions != HeretgesMenuOptions.PREVIOUS_MENU);
