@@ -9,6 +9,8 @@ import HashMapsF4.Algorithms.Table;
 import HashMapsF4.Entities.Accused;
 import Parsers.DatasetLoaderF4;
 
+import java.awt.*;
+
 public class HeretgesMenuLogic {
 
 	private static Table<String, Accused> table;
@@ -16,6 +18,7 @@ public class HeretgesMenuLogic {
 	private static long initialTime;
 	private static long executionTime;
 	private static final int NUM_PROFESSIONS = 8;
+	private static final HistogramPanel histogramPanel = new HistogramPanel();
 
 	public static void finished() {
 		executionTime = System.nanoTime() - initialTime;
@@ -159,6 +162,16 @@ public class HeretgesMenuLogic {
 	private static void showVisualRepresentation() {
 		// Make a table with the professions.
 		//
+		System.out.println("Generant histograma...");
+
+		HistogramPanel histogramPanel1 = new HistogramPanel();
+
+		histogramPanel.addHistogramColumn("Total", 123, Color.YELLOW, histogramPanel1);
+		histogramPanel.addHistogramColumn("Heretic", 20, Color.YELLOW, histogramPanel1);
+		histogramPanel.addHistogramColumn("", 0, Color.BLACK, histogramPanel1);
+		histogramPanel.addHistogramColumn("Total", 300, Color.CYAN, histogramPanel1);
+		histogramPanel.addHistogramColumn("Heretic", 50, Color.CYAN, histogramPanel1);
+		histogramPanel.ShowGUI(histogramPanel1);
 	}
 
 	private static void fillProfessions(int[][] professions, int profession, boolean heretic) {
