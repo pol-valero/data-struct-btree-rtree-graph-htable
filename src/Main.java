@@ -1,3 +1,5 @@
+import Menu.TaulesHeretges.HeretgesMenuLogic;
+import Menu.TaulesHeretges.HeretgesMenuOptions;
 import Menu.TreesBruixes.BruixesMenuOptions;
 import Menu.Menu;
 import Menu.GraphsOrenetes.OrenetesMenuLogic;
@@ -8,7 +10,8 @@ import TreesF2.Entities.Trees.TreeType;
 public class Main {
 
     private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed"; // Relative path inside /src folder
-    private final static String TREES_DATASET = "files/trees/treeXS.paed";     // Relative path inside /src folder
+    private final static String TREES_DATASET = "files/trees/treeXS.paed";      // Relative path inside /src folder
+    private final static String TABLES_DATASET = "files/tables/tablesXXS.paed";  // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -43,7 +46,23 @@ public class Main {
                 }
 
                 case OPTION_3 -> System.out.println(3);
-                case OPTION_4 -> System.out.println(4);
+
+                case TAULES -> { HeretgesMenuOptions heretgesMenuOptions;
+                    do {
+                        heretgesMenuOptions = Menu.showHereticsMenu(TABLES_DATASET);
+                        HeretgesMenuLogic.checkIfTableCreated();
+
+                        switch (heretgesMenuOptions) {
+                            case ADD_ACCUSED -> HeretgesMenuLogic.addAccused();
+                            case REMOVE_ACCUSED -> HeretgesMenuLogic.removeAccused();
+                            case GRACE_EDICT -> HeretgesMenuLogic.edictOfGrace();
+                            case ACCUSED_FINAL_TRIAL -> HeretgesMenuLogic.accusedFinalTrial();
+                            case RABBITS_FINAL_TRIAL -> HeretgesMenuLogic.rabbitsFinalTrial();
+                        }
+
+                    } while (heretgesMenuOptions != HeretgesMenuOptions.PREVIOUS_MENU);
+                }
+
                 case EXIT -> {
                     System.out.println(Menu.EXIT);
                     System.exit(0);
