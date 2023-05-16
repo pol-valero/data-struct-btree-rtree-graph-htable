@@ -122,6 +122,10 @@ public class HeretgesMenuLogic {
 				}
 			}
 		}
+
+		if(firstTime) {
+			System.out.println("No s'ha trobat cap acusat dins del rang de valors: ["+minRabbits+","+maxRabbits+"]");
+		}
 	}
 
 	public static void professionsHistogram() {
