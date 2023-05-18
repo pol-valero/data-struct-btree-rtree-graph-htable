@@ -15,7 +15,7 @@ public class RTree {
         //We create a first rectangle that contains all the possible space. All the first MAX_NODE_SIZE hedges will be contained in this rectangle.
         //This will be very useful for when we have to divide the first HedgeNode's rectangle parent into two new rectangles.
         Point maxPoint = new Point(Double.MAX_VALUE, Double.MAX_VALUE);
-        Point minPoint = new Point(Double.MIN_VALUE, Double.MIN_VALUE);
+        Point minPoint = new Point(-Double.MAX_VALUE, -Double.MAX_VALUE);
 
         HedgeNode firstHedgeNode = new HedgeNode();
 
@@ -36,10 +36,12 @@ public class RTree {
     private void add(Hedge hedge, Node currentNode) {
 
         //We go through the R-Tree until we find a leaf node, which contains Hedges
-        if (!currentNode.isLeaf()) {
+        while (!currentNode.isLeaf()) {
+
             Rectangle minRectangle = currentNode.getMinimumRectangle(hedge.getPoint());
-            add(hedge, minRectangle.childNode);
-            return;
+
+            currentNode = minRectangle.childNode;
+
         }
 
         //At this point we know that the currentNode is a HedgeNode containing Hedges
@@ -49,28 +51,26 @@ public class RTree {
         //to expand less, all the parents of this rectangle also have to expand to contain the newly expanded rectangle)
         currentNode.expandParentRectangles(hedge);
 
-        //If the HedgeNode is full, we have to split the parent rectangle
+
+        boolean full;
+
         if (currentNode.getSize() > MAX_NODE_SIZE) {
-            splitRectangle(currentNode.parent, currentNode);
 
-            //We split the parent's parent and so on if necessary (in case the parent node is also full)
-            Node parentNode = currentNode.parent.containerNode;
-            while (parentNode.getSize() > MAX_NODE_SIZE) {
-                splitRectangle(parentNode.parent, parentNode);
+            do {
 
-                //If the node's parent is null, it means that we have reached the root node
-                //In this case we stop going through the tree and we exit the while loop
-                if (parentNode.parent != null) {
-                    parentNode = parentNode.parent.containerNode;
-                } else {
-                    return;
+                full = splitRectangle(currentNode.parent, currentNode);
+
+                if (full) {
+                    currentNode = currentNode.parent.containerNode;
                 }
-            }
+
+            } while (full);
+
         }
 
     }
 
-    private void splitRectangle(Rectangle rectangleParent, Node childNode) {
+    private boolean splitRectangle(Rectangle rectangleParent, Node childNode) {
 
         Node parentNode = null;
 
@@ -172,12 +172,28 @@ public class RTree {
             for (Rectangle rectangleInNode: rectanglesInNode) {
 
                 minimumRectangle = Node.getMinimumRectangle(rectangleInNode.centerPoint, rectangles);
+
+                Node node = rectangleInNode.childNode;
+                Rectangle rectangle;
+
+                //By doing this we "compact" the tree (we avoid having multiple rectangles
+                //that only have one child that is a rectangleNode with a single rectangle)
+                if (node.getSize() == 1 && !node.isLeaf()) {
+                    rectangle = node.getRectangles().get(0);
+                    rectangle.containerNode = minimumRectangle.childNode;
+                    rectangleInNode = rectangle;
+                } else {
+                    rectangleInNode.containerNode = minimumRectangle.childNode;
+                }
+
                 minimumRectangle.childNode.addElement(rectangleInNode);
                 minimumRectangle.childNode.expandParentRectangles(rectangleInNode);
 
             }
 
         }
+
+        return parentNode.getSize() > MAX_NODE_SIZE;
 
     }
 
@@ -244,7 +260,7 @@ public class RTree {
             return false;
 
         }
-        //TODO: Debug
+
     }
 
     //This method checks if a hedge overlaps with the search area (defined by minPoint, maxPoint)

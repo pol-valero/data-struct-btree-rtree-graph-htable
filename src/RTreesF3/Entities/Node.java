@@ -38,6 +38,18 @@ public abstract class Node {
 
     public static Rectangle getMinimumRectangle(Point point, MyArrayList<Rectangle> rectangles) {
 
+
+        //The point entered is the centerPoint of the rectangle
+
+        //If the size of the rectangle is exactly the same as the point's, it means
+        //that the point is one of the two furthest points and has to be introduced in
+        //this rectangle (as the rectangle's dimensions were initialized with the point's coordinates)
+        for (Rectangle rectangle: rectangles) {
+            if (rectangle.centerPoint.x == point.x && rectangle.centerPoint.y == point.y) {
+                return rectangle;
+            }
+        }
+
         //We return the rectangle that contains the point, if it exists
         for (Rectangle rectangle: rectangles) {
             if (rectangle.containsPoint(point)) {

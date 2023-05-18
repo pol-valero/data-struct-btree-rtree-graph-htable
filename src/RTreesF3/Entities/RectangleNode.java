@@ -77,12 +77,13 @@ public class RectangleNode extends Node {
 
         Rectangle parentRectangle = parent;
 
-        do {
+        while (parentRectangle != null) {
 
             parentRectangle.expand(rectangle);
             parentRectangle = parentRectangle.containerNode.parent;
 
-        } while (parentRectangle != null);
+        }
+
     }
 
     @Override

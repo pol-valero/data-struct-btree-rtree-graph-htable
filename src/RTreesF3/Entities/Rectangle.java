@@ -58,8 +58,8 @@ public class Rectangle {
     //This function adjusts the size of the rectangle so that it can contain all the specified "pointsInside"
     private void adjustRectangle(MyArrayList<Point> pointsInside) {
 
-        double maxX = Double.MIN_VALUE;
-        double maxY = Double.MIN_VALUE;
+        double maxX = -Double.MAX_VALUE;
+        double maxY = -Double.MAX_VALUE;
         double minX = Double.MAX_VALUE;
         double minY = Double.MAX_VALUE;
 
