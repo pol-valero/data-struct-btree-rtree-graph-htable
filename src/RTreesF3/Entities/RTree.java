@@ -54,12 +54,14 @@ public class RTree {
 
         boolean full;
 
+        //If the HedgeNode is full, we have to split the parent rectangle
         if (currentNode.getSize() > MAX_NODE_SIZE) {
 
             do {
 
                 full = splitRectangle(currentNode.parent, currentNode);
 
+                //We split the parent's parent and so on if necessary (in case the parent rectangle node is also full)
                 if (full) {
                     currentNode = currentNode.parent.containerNode;
                 }
