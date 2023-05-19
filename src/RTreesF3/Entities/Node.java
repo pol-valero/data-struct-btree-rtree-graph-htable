@@ -30,12 +30,12 @@ public abstract class Node {
 
         Rectangle parentRectangle = parent;
 
-        do {
+        while (parentRectangle != null) {
 
             parentRectangle.compact();
             parentRectangle = parentRectangle.containerNode.parent;
 
-        } while (parentRectangle != null);
+        }
 
     }
 
