@@ -55,7 +55,7 @@ public class Main {
 
                         switch (bardissaMenuOptions) {
                             case ADD_HEDGE -> BardissaMenuLogic.showAddHedge();    // Add a hedge to the tree
-                            case REMOVE_HEDGE -> {}             // Remove a hedge from the tree
+                            case REMOVE_HEDGE -> BardissaMenuLogic.showDeleteHedge();             // Remove a hedge from the tree
                             case VISUAL_REPRESENTATION -> {}    // Visual R-BSTTree representation
                             case AREA_SEARCH -> {BardissaMenuLogic.showAreaSearch();}              // Search points in an area
                             case AESTHETIC_OPTIMIZATION -> {}   //

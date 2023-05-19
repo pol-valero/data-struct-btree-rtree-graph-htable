@@ -3,6 +3,7 @@ package RTreesF3.Entities;
 import Auxiliar.MyArrayList;
 
 public class RTree {
+
     private static final int MAX_NODE_SIZE = 3;
     private static final int MIN_NODE_SIZE = MAX_NODE_SIZE / 3;
 
@@ -29,8 +30,12 @@ public class RTree {
         add(hedge, root);
     }
 
-    public void removeHedge(Hedge hedge) {
+    public boolean removeHedge(Point point) {
 
+        
+
+
+        return false;
     }
 
     private void add(Hedge hedge, Node currentNode) {

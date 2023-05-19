@@ -29,8 +29,8 @@ public class BardissaMenuLogic {
         } while (error);
 
         float size = Menu.askForFloat("Mida de la bardissa: ", 0, Float.MAX_VALUE);
-        double latitude = Menu.askForDouble("Latitud de la bardissa: ", 0, Double.MAX_VALUE);
-        double longitude = Menu.askForDouble("Longitud de la bardissa: ", 0, Double.MAX_VALUE);
+        double latitude = Menu.askForDouble("Latitud de la bardissa: ", -Double.MAX_VALUE, Double.MAX_VALUE);
+        double longitude = Menu.askForDouble("Longitud de la bardissa: ", -Double.MAX_VALUE, Double.MAX_VALUE);
         String color = Menu.askForString("Color de la bardissa: ");
 
         rTree.addHedge(new Hedge(type, size, latitude, longitude, color));
@@ -39,8 +39,25 @@ public class BardissaMenuLogic {
 
     }
 
+    public static void showDeleteHedge() {
+
+        double latitude = Menu.askForDouble("\nLatitud de la bardissa: ", -Double.MAX_VALUE, Double.MAX_VALUE);
+        double longitude = Menu.askForDouble("Longitud de la bardissa: ", -Double.MAX_VALUE, Double.MAX_VALUE);
+
+        boolean deleted;
+
+        deleted = rTree.removeHedge(new Point (longitude, latitude));
+
+        if (deleted) {
+            System.out.println("\nLa bardissa s'ha eliminat, per ser integrada a una tanca.");
+        } else {
+            System.out.println("\nEn aquest punt no hi ha cap bardissa.");
+        }
+
+    }
+
     public static void showAreaSearch() {
-        String firstPoint = Menu.askForString("Entra el primer punt de l’àrea (lat,long): ");
+        String firstPoint = Menu.askForString("\nEntra el primer punt de l’àrea (lat,long): ");
         String secondPoint = Menu.askForString("Entra el segon punt de l’àrea (lat,long): ");
 
         Point p1 = new Point(Double.parseDouble(firstPoint.split(",")[1]), Double.parseDouble(firstPoint.split(",")[0]));
@@ -55,9 +72,18 @@ public class BardissaMenuLogic {
         System.out.println("\nS'han trobat " + hedgesFound.size() + " bardisses en aquesta àrea\n");
 
         for (Hedge hedge: hedgesFound) {
-            System.out.println("\t* " + hedge.getPoint().y + ", " + hedge.getPoint().x + ": " + hedge.getType());
-            //TODO: Print the other fields
+
+            System.out.print("\t* " + hedge.getPoint().y + ", " + hedge.getPoint().x + ": " + hedge.getType());
+
+            if (hedge.getType().equals("CIRCLE")) {
+                System.out.println(" (r=" + hedge.getSize() + "m) " + hedge.getColor());
+            } else {
+                System.out.println(" (s=" + hedge.getSize() + "m) " + hedge.getColor());
+            }
+
         }
+
+        System.out.println();
 
     }
 
@@ -71,7 +97,7 @@ public class BardissaMenuLogic {
 
             DatasetLoaderF3.loadHedges(Menu.R_TREES_DATASET, rTree);
 
-            System.out.println(rTree);
+            //System.out.println(rTree);
         }
     }
 
