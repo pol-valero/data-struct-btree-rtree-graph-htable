@@ -11,6 +11,10 @@ public class RTree {
 
     public RTree () {
 
+    }
+
+    private void initTree() {
+
         root = new RectangleNode();
 
         //We create a first rectangle that contains all the possible space. All the first MAX_NODE_SIZE hedges will be contained in this rectangle.
@@ -27,15 +31,89 @@ public class RTree {
     }
 
     public void addHedge(Hedge hedge) {
+
+        if (root == null) {
+            initTree();
+        }
+
         add(hedge, root);
     }
 
     public boolean removeHedge(Point point) {
 
-        
+        Node currentNode = root;
+
+        while (!currentNode.isLeaf()) {
+
+            Rectangle minRectangle = currentNode.getRectangle(point);
+
+            if (minRectangle != null) {
+                currentNode = minRectangle.childNode;
+            } else {
+                //If no rectangle contains the point, it means that there
+                //is no hedge in the specified point
+                return false;
+            }
+
+        }
+
+        MyArrayList<Hedge> nodeHedges = currentNode.getHedges();
+
+        for (Hedge hedge: nodeHedges) {
+
+            if (hedge.getPoint().x == point.x && hedge.getPoint().y == point.y) {
+                currentNode.removeElement(hedge);
+                currentNode.compactParentRectangles();
+
+            }
+
+        }
+
+        if (currentNode.getSize() < MIN_NODE_SIZE) {
+
+            do {
+                Node parentNode = currentNode.parent.containerNode;
+                parentNode.removeElement(currentNode.parent);
+                parentNode.compactParentRectangles();
+
+                reinsertChildHedges(currentNode);
+
+                currentNode = parentNode;
+
+            } while (currentNode.getSize() < MIN_NODE_SIZE && currentNode.parent != null);
+
+        }
+
+        return true;
+    }
 
 
-        return false;
+    private void reinsertChildHedges(Node node) {
+
+        if (node.isLeaf()) {
+            MyArrayList<Hedge> hedges = node.getHedges();
+
+            for (Hedge hedge: hedges) {
+                addHedge(hedge);
+            }
+
+        }
+
+        if (!node.isLeaf()) {
+
+            MyArrayList<Hedge> hedges = new MyArrayList<>();
+
+            Point minPoint = new Point(-Double.MAX_VALUE, -Double.MAX_VALUE);
+            Point maxPoint = new Point(Double.MAX_VALUE, Double.MAX_VALUE);
+
+            areaSearch(minPoint, maxPoint, node, hedges);
+
+            for (Hedge hedge: hedges) {
+                addHedge(hedge);
+            }
+
+        }
+
     }
 
     private void add(Hedge hedge, Node currentNode) {

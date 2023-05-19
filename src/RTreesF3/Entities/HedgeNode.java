@@ -39,6 +39,11 @@ public class HedgeNode extends Node{
     }
 
     @Override
+    Rectangle getRectangle(Point point) {
+        throw new NotRectangleNodeException();
+    }
+
+    @Override
     public int getSize() {
         return hedges.size();
     }
@@ -57,16 +62,6 @@ public class HedgeNode extends Node{
 
     @Override
     public void expandParentRectangles(Rectangle rectangle) {
-        throw new NotRectangleNodeException();
-    }
-
-    @Override
-    public void compactParentRectangles(Hedge hedge) {
-        //TODO:
-    }
-
-    @Override
-    public void compactParentRectangles(Rectangle rectangle) {
         throw new NotRectangleNodeException();
     }
 

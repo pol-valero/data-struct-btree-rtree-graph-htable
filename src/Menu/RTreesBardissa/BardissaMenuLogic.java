@@ -97,8 +97,8 @@ public class BardissaMenuLogic {
 
             DatasetLoaderF3.loadHedges(Menu.R_TREES_DATASET, rTree);
 
-            //System.out.println(rTree);
         }
+        //System.out.println(rTree);
     }
 
 }

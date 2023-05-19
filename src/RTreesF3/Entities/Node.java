@@ -20,13 +20,24 @@ public abstract class Node {
 
     abstract Rectangle getMinimumRectangle(Point point);
 
+    abstract Rectangle getRectangle(Point point);
+
     abstract void expandParentRectangles(Hedge hedge);
 
     abstract void expandParentRectangles(Rectangle rectangle);
 
-    abstract void compactParentRectangles(Hedge hedge);
+    public void compactParentRectangles() {
 
-    abstract void compactParentRectangles(Rectangle rectangle);
+        Rectangle parentRectangle = parent;
+
+        do {
+
+            parentRectangle.compact();
+            parentRectangle = parentRectangle.containerNode.parent;
+
+        } while (parentRectangle != null);
+
+    }
 
     abstract MyArrayList<Hedge> findFurthestHedges();
 

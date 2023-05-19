@@ -63,6 +63,21 @@ public class RectangleNode extends Node {
     }
 
     @Override
+    public Rectangle getRectangle(Point point) {
+
+        //Returns the rectangle that contains the point.
+        for (Rectangle rectangle: rectangles) {
+            if (rectangle.containsPoint(point)) {
+                return rectangle;
+            }
+        }
+
+        //We return null if it does not exist
+        return null;
+
+    }
+
+    @Override
     public int getSize() {
         return rectangles.size();
     }
@@ -84,17 +99,6 @@ public class RectangleNode extends Node {
 
         }
 
-    }
-
-    @Override
-    public void compactParentRectangles(Hedge hedge) {
-        throw new NotHedgeNodeException();
-    }
-
-    @Override
-    public void compactParentRectangles(Rectangle rectangle) {
-        //TODO:
-        //When we remove and element, we have to compact
     }
 
     @Override

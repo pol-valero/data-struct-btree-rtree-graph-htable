@@ -114,6 +114,36 @@ public class Rectangle {
 
     }
 
+    public void compact() {
+
+        MyArrayList<Point> pointsInsideRectangle = new MyArrayList<>();
+
+        if (childNode.isLeaf()) {
+            MyArrayList<Hedge> hedges = childNode.getHedges();
+
+            for (Hedge hedge: hedges) {
+                pointsInsideRectangle.add(hedge.getPoint());
+            }
+
+        }
+
+        if (!childNode.isLeaf()) {
+
+            MyArrayList<Rectangle> rectangles = childNode.getRectangles();
+
+            for (Rectangle rectangle: rectangles) {
+                pointsInsideRectangle.add(rectangle.maxPoint);
+                pointsInsideRectangle.add(rectangle.minPoint);
+            }
+
+        }
+
+        adjustRectangle(pointsInsideRectangle);
+
+
+    }
+
+
 
 
 }
