@@ -6,6 +6,7 @@ public class Hedge {
     private float size;
     private Point point;
     private String color;
+    public Node containerNode; //This attribute is not always used. Make sure it is not null before using.
 
     public Hedge(String type, float size, double latitude, double longitude, String color) {
         this.type = type;
