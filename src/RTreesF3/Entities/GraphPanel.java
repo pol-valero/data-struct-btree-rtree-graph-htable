@@ -14,7 +14,7 @@ public class GraphPanel extends JPanel {
     private Color gridColor = new Color(200, 200, 200, 200);
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
     private int pointWidth = 4;
-    private int numDivisions = 20;
+    private int numDivisions = 30;
     private double minX;
     private double maxX;
     private double minY;
@@ -152,7 +152,7 @@ public class GraphPanel extends JPanel {
     public static void createAndShowGui(double minX, double maxX, double minY, double maxY, Rectangle[] rectangles, Point[] points) {
         SwingUtilities.invokeLater(() -> {
             GraphPanel graphPanel = new GraphPanel(minX, maxX, minY, maxY, rectangles, points);
-            JFrame frame = new JFrame("Graph Panel");
+            JFrame frame = new JFrame("R Tree - Visual Representation");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.getContentPane().add(graphPanel);
             frame.pack();
