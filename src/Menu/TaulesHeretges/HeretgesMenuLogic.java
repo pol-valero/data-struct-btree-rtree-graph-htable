@@ -63,14 +63,18 @@ public class HeretgesMenuLogic {
 	public static void edictOfGrace() {
 		System.out.println();
 		String accusedName = Menu.askForString("Nom de l'acusat: ");
-		String heretic = Menu.askForString("Marcar com a heretge (Y/N)? ");
+		String heretic = "";
+
+		do {
+			heretic = Menu.askForString("Marcar com a heretge (Y/N)? ");
+		} while (!heretic.equalsIgnoreCase("Y") && !heretic.equalsIgnoreCase("N"));
 
 		Accused accused;
 		try {
 			accused = table.get(accusedName);
 
 			System.out.println();
-			if (heretic.equals("Y")) {
+			if (heretic.equalsIgnoreCase("Y")) {
 				if (accused.sameProfession(Profession.KING) || accused.sameProfession(Profession.QUEEN) || accused.sameProfession(Profession.CLERGYMAN)) {
 					System.out.println("La Inquisició Espanyola no permet que " + accusedName + " sigui un heretge.");
 				}
@@ -191,7 +195,6 @@ public class HeretgesMenuLogic {
 	private static void addProfessionToHistogramPanel(int total, int heretic, Color color, HistogramPanel hp) {
 		histogramPanel.addHistogramColumn("Total", total, color, hp);
 		histogramPanel.addHistogramColumn("Heretic", heretic, color, hp);
-		histogramPanel.addHistogramColumn("", 0, Color.BLACK, hp);
 	}
 
 	private static void fillProfessions(int[][] professions, int profession, boolean heretic) {

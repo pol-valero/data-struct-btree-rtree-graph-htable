@@ -58,11 +58,8 @@ public class HistogramPanel extends JPanel {
             JLabel label;
             String sLabel = bar.getValue() + "";
 
-            if (bar.getValue() == 0) {
-                label = new JLabel("");
-            } else {
-                label = new JLabel(sLabel);
-            }
+            label = new JLabel(sLabel);
+
 
             label.setHorizontalTextPosition(JLabel.CENTER);
             label.setHorizontalAlignment(JLabel.CENTER);
@@ -155,7 +152,7 @@ public class HistogramPanel extends JPanel {
         JPanel generalPanel = new JPanel(new BorderLayout());
 
         JInternalFrame internalFrame1 = new JInternalFrame("Histogram Legend", true, true, true, true);
-        internalFrame1.setSize(300, 200);
+        internalFrame1.setSize(500, 250);
         internalFrame1.setVisible(true);
 
         // Configura el layout del contenido del JInternalFrame
@@ -172,7 +169,7 @@ public class HistogramPanel extends JPanel {
         contentPanel.add(createLabel("SHRUBBER", Color.PINK));
         contentPanel.add(createLabel("CLERGYMAN", Color.ORANGE));
         contentPanel.add(createLabel("ENCHANTER", Color.LIGHT_GRAY));
-        contentPanel.add(createLabel("* Total and Heretic of the diferents professions.", Color.BLACK));
+        contentPanel.add(createLabel("* Total and Heretic of the different professions.", Color.BLACK));
 
         generalPanel.add(internalFrame1);
 
@@ -188,9 +185,13 @@ public class HistogramPanel extends JPanel {
     }
 
     private Component createLabel(String name, Color color) {
-        JLabel l = new JLabel(name);
+        JLabel l = new JLabel("<html><b>" + name + "<html><b>");
         l.setForeground(color);
         l.setOpaque(true);
+
+        Border border = BorderFactory.createEmptyBorder(5, 5, 1, 5);
+        l.setBorder(border);
+
         return l;
     }
 }
