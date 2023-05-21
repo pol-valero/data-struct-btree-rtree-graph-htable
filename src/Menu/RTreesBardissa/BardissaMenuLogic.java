@@ -3,9 +3,9 @@ package Menu.RTreesBardissa;
 import Auxiliar.MyArrayList;
 import Menu.Menu;
 import Parsers.DatasetLoaderF3;
-import RTreesF3.Entities.Hedge;
-import RTreesF3.Entities.Point;
-import RTreesF3.Entities.RTree;
+import RTreesF3.Entities.*;
+
+import javax.swing.*;
 
 public class BardissaMenuLogic {
 
@@ -107,6 +107,15 @@ public class BardissaMenuLogic {
                 square++;
             }
         }
+        // ANSI escape sequence to set the color
+        String colorEscape = "\u001B[38;2;" +
+                Integer.parseInt(color.substring(1, 3), 16) + ";" +
+                Integer.parseInt(color.substring(3, 5), 16) + ";" +
+                Integer.parseInt(color.substring(5, 7), 16) + "m";
+
+        // ANSI escape sequence to reset the color
+        String resetEscape = "\u001B[0m";
+
         if (circle > square){
             System.out.println("\nTipus majoritari: CIRCLE");
         }else if(circle < square){
@@ -114,7 +123,7 @@ public class BardissaMenuLogic {
         }else{
             System.out.println("\nTipus majoritari: SAME");
         }
-        System.out.println("Color mitjà: " + color + "\n");
+        System.out.println("Color mitjà: " + colorEscape + color + resetEscape + "\n");
 
     }
 
@@ -170,6 +179,9 @@ public class BardissaMenuLogic {
             DatasetLoaderF3.loadHedges(Menu.R_TREES_DATASET, rTree);
         }
         // System.out.println(rTree);
+    }
+    public static void visualRepresentation() {
+        rTree.showVisualRepresentation();
     }
 
 }

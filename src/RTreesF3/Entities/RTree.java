@@ -4,10 +4,16 @@ import Auxiliar.Algorithms.MergeSort;
 import Auxiliar.MyArrayList;
 import org.w3c.dom.css.Rect;
 
+import javax.lang.model.type.ArrayType;
+import javax.swing.*;
+
 import static java.lang.Math.sqrt;
 
 public class RTree {
-
+    public static double xMaxValue = -Double.MAX_VALUE;
+    public static double yMaxValue = -Double.MAX_VALUE;
+    public static double xMinValue = Double.MAX_VALUE;
+    public static double yMinValue = Double.MAX_VALUE;
     private static final int MAX_NODE_SIZE = 3;
     private static final int MIN_NODE_SIZE = MAX_NODE_SIZE / 3;
 
@@ -44,6 +50,20 @@ public class RTree {
     }
 
     private void add(Hedge hedge, Node currentNode) {
+        // Update the maximum and minimum point of the tree.
+        Point point = hedge.getPoint();
+
+        if (point.x >= xMaxValue) {
+            xMaxValue = point.x;
+        } else if (point.x < xMinValue) {
+            xMinValue = point.x;
+        }
+
+        if (point.y >= yMaxValue) {
+            yMaxValue = point.y;
+        } else if (point.y < yMinValue) {
+            yMinValue = point.y;
+        }
 
         //We go through the R-Tree until we find a leaf node, which contains Hedges
         while (!currentNode.isLeaf()) {
@@ -434,11 +454,34 @@ public class RTree {
         }
         if (currentNode.isLeaf()) {
             for (Hedge hedge : currentNode.getHedges()) {
-                temp.add(hedge);
+                if (temp.indexOf(hedge) == -1){
+                    temp.add(hedge);
+                }
             }
         }
     }
+    public void showVisualRepresentation() {
+        MyArrayList<Rectangle> temp = new MyArrayList<>();
+        MyArrayList<Point> points = new MyArrayList<>();
+        goAll(root, temp, points);
+        SwingUtilities.invokeLater(() -> GraphPanel.createAndShowGui(xMinValue, xMaxValue, yMinValue, yMaxValue, temp.toArray(new Rectangle[0]), points.toArray(new Point[0])));
+    }
 
-
-
+    private void goAll(Node currentNode, MyArrayList<Rectangle> temp, MyArrayList<Point> points){
+        if (!currentNode.isLeaf()){
+            for (Rectangle rectangle:currentNode.getRectangles()) {
+                goAll(rectangle.childNode, temp, points);
+                if (temp.indexOf(rectangle) == -1) {
+                    temp.add(rectangle);
+                }
+            }
+        }
+        if (currentNode.isLeaf()) {
+            for (Hedge hedge : currentNode.getHedges()) {
+                if (points.indexOf(hedge.getPoint()) == -1){
+                    points.add(hedge.getPoint());
+                }
+            }
+        }
+    }
 }
