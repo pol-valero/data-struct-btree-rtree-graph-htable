@@ -1,10 +1,9 @@
-package TreesF2.Entities.Trees;
+package BinaryTreesF2.Entities.Trees;
 
-import TreesF2.Entities.Citizen;
-import TreesF2.Entities.Node;
-import TreesF2.Entities.Tree;
+import BinaryTreesF2.Entities.Citizen;
+import BinaryTreesF2.Entities.Node;
 
-public class BinaryTree extends Tree {
+public class BSTTree extends BinaryTreesF2.Entities.BinaryTree {
 
     @Override
     public void addCitizen(Citizen citizen) {

@@ -1,9 +1,10 @@
 package Menu;
 
-import Menu.TaulesHeretges.HeretgesMenuOptions;
-import Menu.TreesBruixes.BruixesMenuOptions;
+import Menu.BinaryTreesBruixes.BruixesMenuOptions;
 import Menu.GraphsOrenetes.OrenetesMenuOptions;
-import TreesF2.Entities.ObjectType;
+import BinaryTreesF2.Entities.ObjectType;
+import Menu.RTreesBardissa.BardissaMenuOptions;
+import Menu.TaulesHeretges.HeretgesMenuOptions;
 
 import java.util.Scanner;
 
@@ -11,26 +12,39 @@ public class Menu {
 
     public final static String separator = System.lineSeparator();
     public static String GRAPHS_DATASET;
-    public static String TREES_DATASET;
+    public static String BINARY_TREES_DATASET;
+    public static String R_TREES_DATASET;
     public static String TABLES_DATASET;
 
 
-    public static final String MAIN_MENU = separator + "'`^\\ The Hashy Grail /^´'" + separator + separator+
+    public static final String MAIN_MENU = separator +
+            "'`^\\ The Hashy Grail /^´'" + separator + separator +
             "1. Sobre orenetes i cocos (Grafs)" +separator +
-            "2. Caça de bruixes (Arbres binaris de cerca)" + separator+
-            "3. PER ESPECIFICAR" + separator+
+            "2. Caça de bruixes (Arbres binaris de cerca)" + separator +
+            "3. Tanques de bardissa (Arbres R)" + separator +
             "4. D’heretges i blasfems (Taules)" + separator + separator +
             "5. Exit" + separator;
-    public static final String ORENETES_MENU = "A. Exploració del regne" + separator +
+
+    public static final String ORENETES_MENU =
+            "A. Exploració del regne" + separator +
             "B. Detecció de trajectes habituals" + separator +
             "C. Missatgeria premium" + separator + separator +
             "D. Tornar enrere" + separator;
 
-    public static final String BRUIXES_MENU = "A. Afegir habitant" + separator +
+    public static final String BRUIXES_MENU =
+            "A. Afegir habitant" + separator +
             "B. Eliminar habitant" + separator +
             "C. Representació visual" + separator +
             "D. Identificació de bruixes" + separator +
             "E. Batuda" + separator + separator +
+            "F. Tornar enrere" + separator;
+
+    public static final String BARDISSA_MENU =
+            "A. Afegir bardissa" + separator +
+            "B. Eliminar bardissa" + separator +
+            "C. Visualització" + separator +
+            "D. Cerca per àrea" + separator +
+            "E. Optimització estètica" + separator + separator +
             "F. Tornar enrere" + separator;
 
     public static final String HERETICS_MENU = "A. Afegir acusat" + separator +
@@ -54,7 +68,7 @@ public class Menu {
             switch (option) {
                 case 1 -> { return MainMenuOptions.ORENETES; }
                 case 2 -> { return MainMenuOptions.BRUIXES; }
-                case 3 -> { return MainMenuOptions.OPTION_3; }
+                case 3 -> { return MainMenuOptions.BARDISSA; }
                 case 4 -> { return MainMenuOptions.TAULES; }
                 case 5 -> { return MainMenuOptions.EXIT; }
             }
@@ -78,7 +92,7 @@ public class Menu {
 
     // Sub-menu for the WITCHES option (selected previously in the main menu).
     public static BruixesMenuOptions showWitchesMenu(String trees_dataset) {
-        TREES_DATASET = trees_dataset;
+        BINARY_TREES_DATASET = trees_dataset;
 
         System.out.println(separator + BRUIXES_MENU);
         String option = askForCharacter("Quina funcionalitat vol executar? ", 'A', 'F');
@@ -107,6 +121,23 @@ public class Menu {
             case "E" -> { return HeretgesMenuOptions.RABBITS_FINAL_TRIAL; }
             case "F" -> { return HeretgesMenuOptions.PROFESSIONS_HISTOGRAM; }
             default -> { return HeretgesMenuOptions.PREVIOUS_MENU; }
+        }
+    }
+
+    // Sub-menu for the HEDGE option (selected previously in the main menu).
+    public static BardissaMenuOptions showHedgeMenu(String RTreesDataset) {
+        R_TREES_DATASET = RTreesDataset;
+
+        System.out.println(separator + BARDISSA_MENU);
+        String option = askForCharacter("Quina funcionalitat vol executar? ", 'A', 'F');
+
+        switch (option) {
+            case "A" -> { return BardissaMenuOptions.ADD_HEDGE; }
+            case "B" -> { return BardissaMenuOptions.REMOVE_HEDGE; }
+            case "C" -> { return BardissaMenuOptions.VISUAL_REPRESENTATION; }
+            case "D" -> { return BardissaMenuOptions.AREA_SEARCH; }
+            case "E" -> { return BardissaMenuOptions.AESTHETIC_OPTIMIZATION; }
+            default -> { return BardissaMenuOptions.PREVIOUS_MENU; }
         }
     }
 
@@ -231,6 +262,29 @@ public class Menu {
                 Scanner sc = new Scanner(System.in);
                 System.out.print(askMessage);
                 option = Float.parseFloat(sc.nextLine());
+
+                if (option < min || option > max) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (option < min || option > max);
+
+        return option;
+    }
+
+    public static double askForDouble (String askMessage, double min, double max) {
+        double option = min - 1;   // Asegura que la condición del bucle se siga cumpliendo.
+        String errorMessage = "Error: Introdueix un número real entre " + min + " i " + max + "." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = Double.parseDouble(sc.nextLine());
 
                 if (option < min || option > max) {
                     System.out.println(errorMessage);

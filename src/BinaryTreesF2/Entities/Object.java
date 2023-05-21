@@ -1,4 +1,4 @@
-package TreesF2.Entities;
+package BinaryTreesF2.Entities;
 
 public class Object {
 	private final String name;	// Name of the object.
