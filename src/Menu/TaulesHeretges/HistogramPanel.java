@@ -161,7 +161,7 @@ public class HistogramPanel extends JPanel {
         internalFrame1.setContentPane(contentPanel);
 
         // Agrega los JLabel al contenido del JInternalFrame
-        contentPanel.add(createLabel("KING", Color.YELLOW));
+        contentPanel.add(createLabel("KING", Color.MAGENTA));
         contentPanel.add(createLabel("QUEEN", Color.CYAN));
         contentPanel.add(createLabel("KNIGHT", Color.GREEN));
         contentPanel.add(createLabel("PEASANT", Color.RED));

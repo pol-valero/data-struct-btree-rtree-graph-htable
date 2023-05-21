@@ -172,7 +172,7 @@ public class HeretgesMenuLogic {
 		HistogramPanel histogramPanel1 = new HistogramPanel();
 
 		// KING
-		addProfessionToHistogramPanel(professions[0][1], professions[0][0], Color.YELLOW, histogramPanel1);
+		addProfessionToHistogramPanel(professions[0][1], professions[0][0], Color.MAGENTA, histogramPanel1);
 		// QUEEN
 		addProfessionToHistogramPanel(professions[1][1], professions[1][0], Color.CYAN, histogramPanel1);
 		//KNIGHT
