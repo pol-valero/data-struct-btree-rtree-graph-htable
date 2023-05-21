@@ -108,6 +108,18 @@ public class GraphPanel extends JPanel {
             g2.drawLine(startX, y, startX - 5, y);
         }
 
+        // Bold font
+        Font boldFont = new Font("Arial", Font.BOLD, 12);
+        g2.setFont(boldFont);
+
+        // Draw x-axis label
+        g2.drawString("LONGITUDE", getWidth() / 2, startY + xAxisLabelHeight + 52);
+
+        // Draw y-axis label
+        g2.rotate(-Math.PI / 2, startX - yAxisLabelWidth - 12, getHeight() / 2);
+        g2.drawString("LATITUDE", startX - yAxisLabelWidth, getHeight() / 2 - 5);
+        g2.rotate(Math.PI / 2, startX - yAxisLabelWidth - 12, getHeight() / 2);
+
         // Draw rectangles
         g2.setColor(Color.RED);
 
@@ -130,8 +142,10 @@ public class GraphPanel extends JPanel {
             g2.drawLine(x1, y1, x2,y1);
             g2.drawLine(x2, y1, x2,y2);
         }
+
         g2.setStroke(new BasicStroke(1f));
         g2.setColor(Color.RED);
+
         for (Point point : points) {
             // Calculate the normalized coordinates within the bounded area
 
