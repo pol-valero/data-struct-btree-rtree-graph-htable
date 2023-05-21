@@ -1,4 +1,7 @@
-package RTreesF3.Entities;
+package RTreesF3.Algorithms;
+
+import RTreesF3.Entities.Hedge;
+import RTreesF3.Entities.Point;
 
 import static java.lang.Math.sqrt;
 

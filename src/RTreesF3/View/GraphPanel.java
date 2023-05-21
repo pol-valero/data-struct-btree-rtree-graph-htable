@@ -1,4 +1,6 @@
-package RTreesF3.Entities;
+package RTreesF3.View;
+
+import RTreesF3.Entities.Point;
 
 import java.awt.*;
 import java.util.Random;
@@ -25,7 +27,7 @@ public class GraphPanel extends JPanel {
     private int xDifference;
     private int startX;
     private int startY;
-    public GraphPanel(double minX, double maxX, double minY, double maxY, RTreesF3.Entities.Rectangle[] rectangles, Point[] points) {
+    public GraphPanel(double minX, double maxX, double minY, double maxY, RTreesF3.Entities.Rectangle[] rectangles, RTreesF3.Entities.Point[] points) {
         this.minX = minX;
         this.maxX = maxX;
         this.minY = minY;
@@ -123,7 +125,7 @@ public class GraphPanel extends JPanel {
         // Draw rectangles
         g2.setColor(Color.RED);
 
-        for (Rectangle rectangle : rectangles) {
+        for (RTreesF3.Entities.Rectangle rectangle : rectangles) {
             Random random = new Random();
             int red = random.nextInt(256);   // Valor de rojo entre 0 y 255
             int green = random.nextInt(256); // Valor de verde entre 0 y 255
@@ -146,7 +148,7 @@ public class GraphPanel extends JPanel {
         g2.setStroke(new BasicStroke(1f));
         g2.setColor(Color.RED);
 
-        for (Point point : points) {
+        for (RTreesF3.Entities.Point point : points) {
             // Calculate the normalized coordinates within the bounded area
 
             int x1 = startX + (int) (((point.x - minX) * xDifference) / ((maxX - minX) / numDivisions));
@@ -163,7 +165,7 @@ public class GraphPanel extends JPanel {
         return new Dimension(width, height);
     }
 
-    public static void createAndShowGui(double minX, double maxX, double minY, double maxY, Rectangle[] rectangles, Point[] points) {
+    public static void createAndShowGui(double minX, double maxX, double minY, double maxY, RTreesF3.Entities.Rectangle[] rectangles, Point[] points) {
         SwingUtilities.invokeLater(() -> {
             GraphPanel graphPanel = new GraphPanel(minX, maxX, minY, maxY, rectangles, points);
             JFrame frame = new JFrame("R Tree - Visual Representation");

@@ -2,12 +2,10 @@ package RTreesF3.Entities;
 
 import Auxiliar.Algorithms.MergeSort;
 import Auxiliar.MyArrayList;
-import org.w3c.dom.css.Rect;
+import RTreesF3.Algorithms.Knn;
+import RTreesF3.View.GraphPanel;
 
-import javax.lang.model.type.ArrayType;
 import javax.swing.*;
-
-import static java.lang.Math.sqrt;
 
 public class RTree {
     public static double xMaxValue = -Double.MAX_VALUE;
