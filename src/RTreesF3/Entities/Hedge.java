@@ -1,11 +1,14 @@
 package RTreesF3.Entities;
 
-public class Hedge implements IObject {
+import static java.lang.Math.sqrt;
+
+public class Hedge{
 
     private String type;
     private float size;
     private Point point;
     private String color;
+    public Node containerNode; //This attribute is not always used. Make sure it is not null before using.
 
     public Hedge(String type, float size, double latitude, double longitude, String color) {
         this.type = type;
@@ -31,8 +34,7 @@ public class Hedge implements IObject {
         return color;
     }
 
-    @Override
-    public boolean isRectangle() {
-        return false;
+    private double calculateDistance(Point p1, Point p2) {
+        return sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
     }
 }
