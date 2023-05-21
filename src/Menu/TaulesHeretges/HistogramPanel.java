@@ -9,8 +9,7 @@ import javax.swing.border.*;
 /**
  * extret de -> https://stackoverflow.com/questions/29708147/custom-graph-java-swing
  */
-public class HistogramPanel extends JPanel
-{
+public class HistogramPanel extends JPanel {
     private int histogramHeight = 200;
     private int barWidth = 50;
     private int barGap = 10;
@@ -147,16 +146,51 @@ public class HistogramPanel extends JPanel
         panel.addHistogramColumn(msg, value, color);
     }
 
-    public void ShowGUI(HistogramPanel panel)
-    {
+    public void ShowGUI(HistogramPanel panel) {
         panel.layoutHistogram();
-        JFrame frame = new JFrame("Histogram Panel");
+        JFrame frame = new JFrame("Histogram Window");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add( panel );
-        frame.setLocationByPlatform( true );
-        frame.pack();
-        frame.setVisible( true );
+        frame.setSize(1200, 600);
+
+        JPanel generalPanel = new JPanel(new BorderLayout());
+
+        JInternalFrame internalFrame1 = new JInternalFrame("Histogram Legend", true, true, true, true);
+        internalFrame1.setSize(300, 200);
+        internalFrame1.setVisible(true);
+
+        // Crea los JLabel con diferentes colores
+        JLabel label1 = new JLabel("KING");
+        label1.setForeground(Color.RED);
+        label1.setOpaque(true);
+
+        JLabel label2 = new JLabel("Label 2");
+        label2.setForeground(Color.GREEN);
+        label2.setOpaque(true);
+
+        JLabel label3 = new JLabel("Label 3");
+        label3.setForeground(Color.BLUE);
+        label3.setOpaque(true);
+
+        // Configura el layout del contenido del JInternalFrame
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        internalFrame1.setContentPane(contentPanel);
+
+        // Agrega los JLabel al contenido del JInternalFrame
+        contentPanel.add(label1);
+        contentPanel.add(label2);
+        contentPanel.add(label3);
+
+        generalPanel.add(internalFrame1);
+
+        JInternalFrame internalFrame2 = new JInternalFrame("Histogram", true, true, true, true);
+        internalFrame2.setSize(1200, 600);
+        internalFrame2.setLocation(320, 0);
+        internalFrame2.setVisible(true);
+        internalFrame2.add(panel);
+        generalPanel.add(internalFrame2);
+
+        frame.getContentPane().add(generalPanel, BorderLayout.CENTER);
+        frame.setVisible(true);
     }
-
-
 }

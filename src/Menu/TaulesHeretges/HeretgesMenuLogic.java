@@ -156,22 +156,43 @@ public class HeretgesMenuLogic {
 			}
 		}
 
-		showVisualRepresentation();
+		showVisualRepresentation(professions);
 	}
 
-	private static void showVisualRepresentation() {
+	private static void showVisualRepresentation(int[][] professions) {
 		// Make a table with the professions.
 		//
 		System.out.println("Generant histograma...");
 
+		// MINSTREL, KNIGHT, KING, QUEEN, PEASANT, SHRUBBER, CLERGYMAN o ENCHANTER
 		HistogramPanel histogramPanel1 = new HistogramPanel();
 
-		histogramPanel.addHistogramColumn("Total", 123, Color.YELLOW, histogramPanel1);
-		histogramPanel.addHistogramColumn("Heretic", 20, Color.YELLOW, histogramPanel1);
-		histogramPanel.addHistogramColumn("", 0, Color.BLACK, histogramPanel1);
-		histogramPanel.addHistogramColumn("Total", 300, Color.CYAN, histogramPanel1);
-		histogramPanel.addHistogramColumn("Heretic", 50, Color.CYAN, histogramPanel1);
+
+		// KING
+		addProfessionToHistogramPanel(professions[0][1], professions[0][0], Color.YELLOW, histogramPanel1);
+		// QUEEN
+		addProfessionToHistogramPanel(professions[1][1], professions[1][0], Color.CYAN, histogramPanel1);
+		//KNIGHT
+		addProfessionToHistogramPanel(professions[2][1], professions[1][0], Color.GREEN, histogramPanel1);
+		// PEASANT
+		addProfessionToHistogramPanel(professions[3][1], professions[3][0], Color.RED, histogramPanel1);
+		// MINSTREL
+		addProfessionToHistogramPanel(professions[4][1], professions[4][0], Color.BLUE, histogramPanel1);
+		// SHRUBBER
+		addProfessionToHistogramPanel(professions[5][1], professions[5][0], Color.PINK, histogramPanel1);
+		// CLERGYMAN
+		addProfessionToHistogramPanel(professions[6][1], professions[6][0], Color.ORANGE, histogramPanel1);
+		// ENCHANTER
+		addProfessionToHistogramPanel(professions[7][1], professions[7][0], Color.LIGHT_GRAY, histogramPanel1);
+
+		// Show GUI
 		histogramPanel.ShowGUI(histogramPanel1);
+	}
+
+	private static void addProfessionToHistogramPanel(int total, int heretic, Color color, HistogramPanel hp) {
+		histogramPanel.addHistogramColumn("Total", total, color, hp);
+		histogramPanel.addHistogramColumn("Heretic", heretic, color, hp);
+		histogramPanel.addHistogramColumn("", 0, Color.BLACK, hp);
 	}
 
 	private static void fillProfessions(int[][] professions, int profession, boolean heretic) {
