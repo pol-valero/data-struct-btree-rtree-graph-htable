@@ -1,14 +1,18 @@
-import Menu.TreesBruixes.BruixesMenuOptions;
+import Menu.BinaryTreesBruixes.BruixesMenuOptions;
 import Menu.Menu;
 import Menu.GraphsOrenetes.OrenetesMenuLogic;
-import Menu.TreesBruixes.BruixesMenuLogic;
+import Menu.BinaryTreesBruixes.BruixesMenuLogic;
 import Menu.GraphsOrenetes.OrenetesMenuOptions;
-import TreesF2.Entities.Trees.TreeType;
+import BinaryTreesF2.Entities.Trees.TreeType;
+import Menu.RTreesBardissa.BardissaMenuLogic;
+import Menu.RTreesBardissa.BardissaMenuOptions;
 
 public class Main {
 
-    private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed"; // Relative path inside /src folder
-    private final static String TREES_DATASET = "files/trees/treeXS.paed";     // Relative path inside /src folder
+    private final static String GRAPHS_DATASET = "files/graphs/graphsXXS.paed";     // Relative path inside /src folder
+    private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";   // Relative path inside /src folder
+    private final static TreeType treeType = TreeType.AVLTREE;  // Select the type of tree used with Binary Trees.
+    private final static String R_TREES_DATASET = "files/rtrees/rTreeXXS.paed";        // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -27,23 +31,39 @@ public class Main {
                     } while (orenetesOption != OrenetesMenuOptions.PREVIOUS_MENU);
                 }
 
-                // Trees (phase 2)
+                // Binary Trees (phase 2)
                 case BRUIXES -> { BruixesMenuOptions bruixesOption;
                     do {
-                        bruixesOption = Menu.showWitchesMenu(TREES_DATASET);
-                        BruixesMenuLogic.checkIfTreeCreated(TreeType.AVLTREE);  // Check if Tree is already created or not
+                        bruixesOption = Menu.showWitchesMenu(BINARY_TREES_DATASET);
+                        BruixesMenuLogic.checkIfTreeCreated(treeType);  // Check if BSTTree is already created or not
                         switch (bruixesOption) {
-                            case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();          // Add a node to the tree
-                            case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();    // Remove a node from the tree
-                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation();    // Visual tree representation
-                            case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();  //
-                            case BATUDA -> BruixesMenuLogic.showBatuda();   // Search between a range
+                            case ADD_CITIZEN -> BruixesMenuLogic.showAddCitizen();                              // Add a node to the tree
+                            case REMOVE_CITIZEN -> BruixesMenuLogic.showRemoveCitizen();                        // Remove a node from the tree
+                            case VISUAL_REPRESENTATION -> BruixesMenuLogic.showTreeRepresentation(treeType);    // Visual tree representation
+                            case WITCHES_IDENTIFICATION -> BruixesMenuLogic.showWitchIdentification();          // Search nodes with same, higher or lower value
+                            case BATUDA -> BruixesMenuLogic.showBatuda();                                       // Search nodes between a range of values
                         }
                     } while (bruixesOption != BruixesMenuOptions.PREVIOUS_MENU);
                 }
 
-                case OPTION_3 -> System.out.println(3);
+                // R-Trees (phase 3)
+                case BARDISSA -> { BardissaMenuOptions bardissaMenuOptions;
+                    do {
+                        bardissaMenuOptions = Menu.showHedgeMenu(R_TREES_DATASET);
+                        BardissaMenuLogic.checkIfTreeCreated();  // Check if RTree is already created or not
+
+                        switch (bardissaMenuOptions) {
+                            case ADD_HEDGE -> BardissaMenuLogic.showAddHedge();    // Add a hedge to the tree
+                            case REMOVE_HEDGE -> BardissaMenuLogic.showDeleteHedge();             // Remove a hedge from the tree
+                            case VISUAL_REPRESENTATION -> BardissaMenuLogic.visualRepresentation();// Visual R-BSTTree representation
+                            case AREA_SEARCH -> {BardissaMenuLogic.showAreaSearch();}              // Search points in an area
+                            case AESTHETIC_OPTIMIZATION -> BardissaMenuLogic.showKNN();  //
+                        }
+                    } while (bardissaMenuOptions != BardissaMenuOptions.PREVIOUS_MENU);
+                }
+
                 case OPTION_4 -> System.out.println(4);
+
                 case EXIT -> {
                     System.out.println(Menu.EXIT);
                     System.exit(0);

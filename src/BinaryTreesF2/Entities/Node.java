@@ -1,4 +1,4 @@
-package TreesF2.Entities;
+package BinaryTreesF2.Entities;
 
 import Auxiliar.MyArrayList;
 
@@ -26,16 +26,8 @@ public class Node {
         this.height = 0;    // Initialize height value for null nodes.
     }
 
-    public boolean sameID(int numCitizen, long otherID) {
-        return this.citizen.get(numCitizen).sameID(otherID);
-    }
-
     public Citizen[] getCitizens() {
         return citizen.toArray(new Citizen[0]);
-    }
-
-    public void setCitizens(Citizen[] citizens) {
-        this.citizen = new MyArrayList<>(citizens);
     }
 
     public float getCitizenWeight() {
@@ -73,10 +65,6 @@ public class Node {
 
         // Case where the node has both children
         height = Math.max(right.height, left.height) + 1;
-    }
-
-    public void printCitizen(int numCitizen, boolean tabInFront, boolean starInFront) {
-        citizen.get(numCitizen).printInfo(tabInFront, starInFront);
     }
 
     public void addCitizen(Citizen citizen) {
