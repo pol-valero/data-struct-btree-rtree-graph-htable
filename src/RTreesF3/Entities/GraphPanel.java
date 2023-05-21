@@ -87,7 +87,16 @@ public class GraphPanel extends JPanel {
             int x = startX + i * (getWidth() - 2 * padding - labelPadding) / numDivisions;
             String xLabel = String.format("%.5f", minX + (i * (maxX - minX) / numDivisions));
             int labelWidth = fontMetrics.stringWidth(xLabel);
-            g2.drawString(xLabel, x - labelWidth / 2, startY + xAxisLabelHeight);
+
+            // Girar el gráfico 90 grados en sentido antihorario
+            g2.rotate(-Math.PI / 2, x, startY + xAxisLabelHeight + labelWidth / 2);
+
+            // Dibujar el texto vertical
+            g2.drawString(xLabel, x - 15, startY + xAxisLabelHeight + 5 + labelWidth / 2);
+
+            // Restaurar la transformación original
+            g2.rotate(Math.PI / 2, x, startY + xAxisLabelHeight + labelWidth / 2);
+
             g2.drawLine(x, startY, x, startY + 5);
         }
 
