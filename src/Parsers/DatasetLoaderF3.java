@@ -11,7 +11,13 @@ import java.util.List;
 public class DatasetLoaderF3 {
 
     private static final String parseSeparator = ";";
+
+    private static int hedgeLinesNum;
     //private static final int EARTH_RADIUS_KM = 6371;
+
+    public static int getHedgeLinesNum (){
+        return hedgeLinesNum;
+    }
 
     private static Hedge csvLineToHedge(String csvLine) {
         String[] field = csvLine.split(parseSeparator);
@@ -28,7 +34,6 @@ public class DatasetLoaderF3 {
     public static void loadHedges(String pathName, RTree rTree) {
 
         Hedge hedge;
-        int hedgeLinesNum;
 
         Path path = Path.of(pathName);
 

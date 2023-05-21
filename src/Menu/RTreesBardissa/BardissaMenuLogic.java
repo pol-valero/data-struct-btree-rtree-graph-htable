@@ -87,6 +87,78 @@ public class BardissaMenuLogic {
 
     }
 
+    public static void showKNN() {
+        String firstPoint = Menu.askForString("\nEntra el punt a consultar (lat,long): ");
+        int k = Menu.askForInteger("Entra la quantitat de bardisses a considerar (K): ",0 , DatasetLoaderF3.getHedgeLinesNum());
+
+        Point p1 = new Point(Double.parseDouble(firstPoint.split(",")[1]), Double.parseDouble(firstPoint.split(",")[0]));
+
+        MyArrayList<Hedge> hedgesFound = rTree.KNN(p1, k);
+
+        int circle = 0;
+        int square = 0;
+        String color = hedgesFound.get(0).getColor();
+
+        for (Hedge hedge:hedgesFound) {
+            color = calculateColorAverage(color, hedge.getColor());
+            if (hedge.getType().equals("CIRCLE")){
+                circle++;
+            }else {
+                square++;
+            }
+        }
+        if (circle > square){
+            System.out.println("\nTipus majoritari: CIRCLE");
+        }else if(circle < square){
+            System.out.println("\nTipus majoritari: SQUARE");
+        }else{
+            System.out.println("\nTipus majoritari: SAME");
+        }
+        System.out.println("Color mitjà: " + color + "\n");
+
+    }
+
+    /**
+     Extret de
+     */
+    private static String calculateColorAverage(String color1, String color2) {
+        // Obtener los valores decimales de los componentes de color
+        int red1 = Integer.parseInt(color1.substring(1, 3), 16);
+        int green1 = Integer.parseInt(color1.substring(3, 5), 16);
+        int blue1 = Integer.parseInt(color1.substring(5, 7), 16);
+
+        int red2 = Integer.parseInt(color2.substring(1, 3), 16);
+        int green2 = Integer.parseInt(color2.substring(3, 5), 16);
+        int blue2 = Integer.parseInt(color2.substring(5, 7), 16);
+
+        // Calcular la media de cada componente de color
+        int averageRed = (red1 + red2) / 2;
+        int averageGreen = (green1 + green2) / 2;
+        int averageBlue = (blue1 + blue2) / 2;
+
+        // Convertir los valores decimales a hexadecimal
+        String hexRed = Integer.toHexString(averageRed);
+        String hexGreen = Integer.toHexString(averageGreen);
+        String hexBlue = Integer.toHexString(averageBlue);
+
+        // Asegurarse de que cada componente hexadecimal tenga 2 dígitos
+        hexRed = padZeroes(hexRed);
+        hexGreen = padZeroes(hexGreen);
+        hexBlue = padZeroes(hexBlue);
+
+        // Concatenar los componentes de color para formar el nuevo color
+        String averageColor = "#" + hexRed + hexGreen + hexBlue;
+        return averageColor;
+    }
+
+    // Método auxiliar para asegurarse de que un componente hexadecimal tenga 2 dígitos
+    private static String padZeroes(String hex) {
+        if (hex.length() < 2) {
+            hex = "0" + hex;
+        }
+        return hex;
+    }
+
     // We only create the tree if it was not already created before
     public static void checkIfTreeCreated() {
 
@@ -96,9 +168,8 @@ public class BardissaMenuLogic {
             rTree = new RTree();
 
             DatasetLoaderF3.loadHedges(Menu.R_TREES_DATASET, rTree);
-
         }
-        //System.out.println(rTree);
+        // System.out.println(rTree);
     }
 
 }

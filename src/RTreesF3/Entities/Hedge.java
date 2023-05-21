@@ -1,6 +1,8 @@
 package RTreesF3.Entities;
 
-public class Hedge {
+import static java.lang.Math.sqrt;
+
+public class Hedge{
 
     private String type;
     private float size;
@@ -32,4 +34,7 @@ public class Hedge {
         return color;
     }
 
+    private double calculateDistance(Point p1, Point p2) {
+        return sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+    }
 }

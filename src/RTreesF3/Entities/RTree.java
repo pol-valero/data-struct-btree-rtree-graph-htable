@@ -1,6 +1,10 @@
 package RTreesF3.Entities;
 
+import Auxiliar.Algorithms.MergeSort;
 import Auxiliar.MyArrayList;
+import org.w3c.dom.css.Rect;
+
+import static java.lang.Math.sqrt;
 
 public class RTree {
 
@@ -371,6 +375,68 @@ public class RTree {
         areaSearch(minPoint, maxPoint, root, hedgesFound);
 
         return hedgesFound;
+    }
+
+    public MyArrayList<Hedge> KNN(Point p1, int k) {
+
+        MyArrayList<Hedge> hedgesFound = new MyArrayList<>();
+
+        Node currentNode = root;
+        while (!currentNode.isLeaf()) {
+
+            Rectangle minRectangle = currentNode.getMinimumRectangle(p1);
+
+            currentNode = minRectangle.childNode;
+
+        }
+        MyArrayList<Hedge> all_hedges = new MyArrayList<>();
+
+        if (currentNode.getHedges().size() >= k){
+            all_hedges = currentNode.getHedges();
+        }else {
+            foundRectangle_k(k, currentNode, all_hedges);
+        }
+        classify(hedgesFound, all_hedges, k, p1);
+        return hedgesFound;
+    }
+
+    private void classify (MyArrayList<Hedge> hedgesFound, MyArrayList<Hedge> allHedges, int k, Point p1){
+        MyArrayList<Knn> all_list = new MyArrayList<>();
+        for (Hedge hedge:allHedges) {
+            all_list.add(new Knn(hedge, p1));
+        }
+        Knn[] test = all_list.toArray(new Knn[0]);
+        MergeSort.mergeSort(test, 0 , all_list.size() - 1);
+
+        for (int i = 0; i < k; i++) {
+            hedgesFound.add(test[i].getHedge());
+        }
+    }
+
+    private void foundRectangle_k(int k, Node currentNode, MyArrayList<Hedge> all_hedges) {
+        MyArrayList<Hedge> temp = new MyArrayList<>();
+        while (temp.size() < k){
+            temp = new MyArrayList<>();
+            currentNode = currentNode.parent.containerNode;
+            getHedges(currentNode, temp);
+        }
+
+        for (Hedge hedge:temp) {
+            all_hedges.add(hedge);
+        }
+    }
+
+    private void getHedges (Node currentNode, MyArrayList<Hedge> temp){
+        if (!currentNode.isLeaf()){
+            for (Rectangle rectangle:currentNode.getRectangles()) {
+                getHedges(rectangle.childNode, temp);
+            }
+        }
+        if (currentNode.isLeaf()) {
+            for (Hedge hedge : currentNode.getHedges()) {
+                temp.add(hedge);
+            }
+        }
     }
 
 
