@@ -158,28 +158,21 @@ public class HistogramPanel extends JPanel {
         internalFrame1.setSize(300, 200);
         internalFrame1.setVisible(true);
 
-        // Crea los JLabel con diferentes colores
-        JLabel label1 = new JLabel("KING");
-        label1.setForeground(Color.RED);
-        label1.setOpaque(true);
-
-        JLabel label2 = new JLabel("Label 2");
-        label2.setForeground(Color.GREEN);
-        label2.setOpaque(true);
-
-        JLabel label3 = new JLabel("Label 3");
-        label3.setForeground(Color.BLUE);
-        label3.setOpaque(true);
-
         // Configura el layout del contenido del JInternalFrame
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         internalFrame1.setContentPane(contentPanel);
 
         // Agrega los JLabel al contenido del JInternalFrame
-        contentPanel.add(label1);
-        contentPanel.add(label2);
-        contentPanel.add(label3);
+        contentPanel.add(createLabel("KING", Color.YELLOW));
+        contentPanel.add(createLabel("QUEEN", Color.CYAN));
+        contentPanel.add(createLabel("KNIGHT", Color.GREEN));
+        contentPanel.add(createLabel("PEASANT", Color.RED));
+        contentPanel.add(createLabel("MINSTREL", Color.BLUE));
+        contentPanel.add(createLabel("SHRUBBER", Color.PINK));
+        contentPanel.add(createLabel("CLERGYMAN", Color.ORANGE));
+        contentPanel.add(createLabel("ENCHANTER", Color.LIGHT_GRAY));
+        contentPanel.add(createLabel("* Total and Heretic of the diferents professions.", Color.BLACK));
 
         generalPanel.add(internalFrame1);
 
@@ -192,5 +185,12 @@ public class HistogramPanel extends JPanel {
 
         frame.getContentPane().add(generalPanel, BorderLayout.CENTER);
         frame.setVisible(true);
+    }
+
+    private Component createLabel(String name, Color color) {
+        JLabel l = new JLabel(name);
+        l.setForeground(color);
+        l.setOpaque(true);
+        return l;
     }
 }

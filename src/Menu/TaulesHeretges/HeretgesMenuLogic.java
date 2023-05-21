@@ -167,7 +167,6 @@ public class HeretgesMenuLogic {
 		// MINSTREL, KNIGHT, KING, QUEEN, PEASANT, SHRUBBER, CLERGYMAN o ENCHANTER
 		HistogramPanel histogramPanel1 = new HistogramPanel();
 
-
 		// KING
 		addProfessionToHistogramPanel(professions[0][1], professions[0][0], Color.YELLOW, histogramPanel1);
 		// QUEEN
