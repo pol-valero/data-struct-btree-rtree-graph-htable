@@ -4,6 +4,7 @@ import Menu.BinaryTreesBruixes.BruixesMenuOptions;
 import Menu.GraphsOrenetes.OrenetesMenuOptions;
 import BinaryTreesF2.Entities.ObjectType;
 import Menu.RTreesBardissa.BardissaMenuOptions;
+import Menu.TaulesHeretges.HeretgesMenuOptions;
 
 import java.util.Scanner;
 
@@ -13,14 +14,17 @@ public class Menu {
     public static String GRAPHS_DATASET;
     public static String BINARY_TREES_DATASET;
     public static String R_TREES_DATASET;
+    public static String TABLES_DATASET;
+
 
     public static final String MAIN_MENU = separator +
             "'`^\\ The Hashy Grail /^´'" + separator + separator +
             "1. Sobre orenetes i cocos (Grafs)" +separator +
             "2. Caça de bruixes (Arbres binaris de cerca)" + separator +
             "3. Tanques de bardissa (Arbres R)" + separator +
-            "4. PER ESPECIFICAR" + separator + separator +
+            "4. D’heretges i blasfems (Taules)" + separator + separator +
             "5. Exit" + separator;
+
     public static final String ORENETES_MENU =
             "A. Exploració del regne" + separator +
             "B. Detecció de trajectes habituals" + separator +
@@ -43,7 +47,15 @@ public class Menu {
             "E. Optimització estètica" + separator + separator +
             "F. Tornar enrere" + separator;
 
-    public static final String EXIT = "\u001B[31m "+separator+"Aturant The Hashy Grail..."+separator+" \u001B[0m";
+    public static final String HERETICS_MENU = "A. Afegir acusat" + separator +
+            "B. Eliminar acusat" + separator +
+            "C. Edicte de gràcia" + separator +
+            "D. Judici final (un acusat)" + separator +
+            "E. Judici final (rang)" + separator +
+            "F. Histograma per professions" + separator + separator +
+            "G. Tornar enrere" + separator;
+
+    public static final String EXIT = "\u001B[31m " + separator + "Aturant The Hashy Grail..." + separator + " \u001B[0m";
 
 
     // Shows main menu of the program and asks to choose an option.
@@ -57,7 +69,7 @@ public class Menu {
                 case 1 -> { return MainMenuOptions.ORENETES; }
                 case 2 -> { return MainMenuOptions.BRUIXES; }
                 case 3 -> { return MainMenuOptions.BARDISSA; }
-                case 4 -> { return MainMenuOptions.OPTION_4; }
+                case 4 -> { return MainMenuOptions.TAULES; }
                 case 5 -> { return MainMenuOptions.EXIT; }
             }
         } while (true);
@@ -95,6 +107,23 @@ public class Menu {
         }
     }
 
+    public static HeretgesMenuOptions showHereticsMenu(String tables_dataset) {
+        TABLES_DATASET = tables_dataset;
+
+        System.out.println(separator + HERETICS_MENU);
+        String option = askForCharacter("Quina funcionalitat vol executar? ", 'A', 'F');
+
+        switch (option) {
+            case "A" -> { return HeretgesMenuOptions.ADD_ACCUSED; }
+            case "B" -> { return HeretgesMenuOptions.REMOVE_ACCUSED; }
+            case "C" -> { return HeretgesMenuOptions.GRACE_EDICT; }
+            case "D" -> { return HeretgesMenuOptions.ACCUSED_FINAL_TRIAL; }
+            case "E" -> { return HeretgesMenuOptions.RABBITS_FINAL_TRIAL; }
+            case "F" -> { return HeretgesMenuOptions.PROFESSIONS_HISTOGRAM; }
+            default -> { return HeretgesMenuOptions.PREVIOUS_MENU; }
+        }
+    }
+
     // Sub-menu for the HEDGE option (selected previously in the main menu).
     public static BardissaMenuOptions showHedgeMenu(String RTreesDataset) {
         R_TREES_DATASET = RTreesDataset;
@@ -122,6 +151,29 @@ public class Menu {
                 Scanner sc = new Scanner(System.in);
                 System.out.print(askMessage);
                 option = Integer.parseInt(sc.nextLine());
+
+                if (option < min || option > max) {
+                    System.out.println(errorMessage);
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println(errorMessage);
+            }
+
+        } while (option < min || option > max);
+
+        return option;
+    }
+
+    public static long askForLong(String askMessage, long min, long max) {
+        long option = min - 1;   // Asegura que la condición del bucle se siga cumpliendo.
+        String errorMessage = "Error: Introdueix un número entre " + min + " i " + max + "." + separator;
+
+        do {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print(askMessage);
+                option = Long.parseLong(sc.nextLine());
 
                 if (option < min || option > max) {
                     System.out.println(errorMessage);

@@ -1,0 +1,11 @@
+package Menu.TaulesHeretges;
+
+public enum HeretgesMenuOptions {
+	ADD_ACCUSED,
+	REMOVE_ACCUSED,
+	GRACE_EDICT,
+	ACCUSED_FINAL_TRIAL,
+	RABBITS_FINAL_TRIAL,
+	PROFESSIONS_HISTOGRAM,
+	PREVIOUS_MENU;
+}

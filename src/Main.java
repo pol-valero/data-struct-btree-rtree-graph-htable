@@ -6,6 +6,8 @@ import Menu.GraphsOrenetes.OrenetesMenuOptions;
 import BinaryTreesF2.Entities.Trees.TreeType;
 import Menu.RTreesBardissa.BardissaMenuLogic;
 import Menu.RTreesBardissa.BardissaMenuOptions;
+import Menu.TaulesHeretges.HeretgesMenuLogic;
+import Menu.TaulesHeretges.HeretgesMenuOptions;
 
 public class Main {
 
@@ -13,6 +15,7 @@ public class Main {
     private final static String BINARY_TREES_DATASET = "files/trees/treeXS.paed";   // Relative path inside /src folder
     private final static TreeType treeType = TreeType.AVLTREE;  // Select the type of tree used with Binary Trees.
     private final static String R_TREES_DATASET = "files/rtrees/rTreeXXS.paed";        // Relative path inside /src folder
+    private final static String TABLES_DATASET = "files/tables/tablesS.paed";  // Relative path inside /src folder
 
     public static void main(String[] args) {
 
@@ -62,7 +65,22 @@ public class Main {
                     } while (bardissaMenuOptions != BardissaMenuOptions.PREVIOUS_MENU);
                 }
 
-                case OPTION_4 -> System.out.println(4);
+                case TAULES -> { HeretgesMenuOptions heretgesMenuOptions;
+                    do {
+                        heretgesMenuOptions = Menu.showHereticsMenu(TABLES_DATASET);
+                        HeretgesMenuLogic.checkIfTableCreated();
+
+                        switch (heretgesMenuOptions) {
+                            case ADD_ACCUSED -> HeretgesMenuLogic.addAccused();
+                            case REMOVE_ACCUSED -> HeretgesMenuLogic.removeAccused();
+                            case GRACE_EDICT -> HeretgesMenuLogic.edictOfGrace();
+                            case ACCUSED_FINAL_TRIAL -> HeretgesMenuLogic.accusedFinalTrial();
+                            case RABBITS_FINAL_TRIAL -> HeretgesMenuLogic.rabbitsFinalTrial();
+                            case PROFESSIONS_HISTOGRAM -> HeretgesMenuLogic.professionsHistogram();
+                        }
+
+                    } while (heretgesMenuOptions != HeretgesMenuOptions.PREVIOUS_MENU);
+                }
 
                 case EXIT -> {
                     System.out.println(Menu.EXIT);
