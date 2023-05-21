@@ -4,8 +4,7 @@ import HashMapsF4.Algorithms.Table;
 import HashMapsF4.Entities.Accused;
 import HashMapsF4.Entities.Profession;
 import Menu.TaulesHeretges.HeretgesMenuLogic;
-import TreesF2.Entities.Citizen;
-import TreesF2.Entities.Tree;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
