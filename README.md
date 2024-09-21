@@ -2,6 +2,13 @@
 
 This project implements a Graph, a Binary tree, an R tree and a Hash table from scratch. Among others things, in this project we compare the performance of each data structure in different use cases, so that we can determine which one is the most efficient for each use case.
 
+**Main features:** 
+- Add and remove nodes and edges in Graph. Find shortest path between two given nodes. 
+- Add and remove nodes in Binary Tree. Find a node with a certain value in the tree. 
+- Visual representation of Binary Tree and RTree.
+
+<br>
+
 **Programming Language:** Java
 
 **IDE Specifications:**
